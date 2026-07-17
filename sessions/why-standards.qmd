@@ -161,23 +161,45 @@ clinical programming comes from asking one stage to do another's work.
 [SDTM Concepts](sdtm-concepts.qmd) and [ADaM
 Concepts](adam-concepts.qmd) draw that line properly.
 
-::: {.callout-warning}
-## VERIFY
+::: {.callout-note collapse="true"}
+### Where the requirement actually comes from
 
-Claim: Regulatory authorities require CDISC-conformant study data for
-marketing applications — specifically, that FDA and PMDA mandate SDTM
-and ADaM (and define.xml as the accompanying data definition document)
-for applicable studies, with the requirement flowing from the FDA Data
-Standards Catalog and the Study Data Technical Conformance Guide.
+The argument in this session stands on its own, but the US regulatory
+chain behind it is short and worth knowing. Four documents do the work:
 
-Source needed: FDA Data Standards Catalog (current version, and the
-applicability/effective dates); FDA Study Data Technical Conformance
-Guide; PMDA notification on electronic study data submission.
+- **The statute and the guidance.** Under section 745A(a) of the FD&C
+  Act, once FDA specifies an electronic format in final guidance, that
+  format is *required*. The specifying document is *Providing
+  Regulatory Submissions in Electronic Format — Standardized Study
+  Data* [@fda2021estudy]. It applies to NDAs, ANDAs, certain BLAs and
+  certain commercial INDs, and — unusually for FDA guidance — has
+  binding effect. FDA may refuse to file (NDAs, BLAs) or refuse to
+  receive (ANDAs) a submission whose study data does not conform to
+  the required standards in the Catalog.
+- **The Data Standards Catalog** [@fdadsc11] is the list the guidance
+  points to: which standards FDA can process, review and archive, and
+  from when. It lists CDISC **SDTM** and **ADaM** (exchanged as XPT
+  files) and **Define-XML** among the required standards. The
+  requirement applies based on *study start date*: after 17 December
+  2016 for NDAs, ANDAs and BLAs; after 17 December 2017 for the
+  applicable INDs.
+- **The Study Data Technical Conformance Guide** [@fdatcg] is the
+  technical companion: how to organise, name and document the datasets,
+  including the data definition file (`define.xml`) that describes
+  every submitted dataset's metadata. You will build one in
+  [define.xml](define-xml.qmd).
+- **The Technical Rejection Criteria** [@fdatrc] make part of this
+  automatic. Validation rules run on receipt; among them: every study
+  must include a trial summary dataset (`ts.xpt`), SDTM data must
+  include a DM dataset and its `define.xml`, and ADaM data must include
+  ADSL and its `define.xml`. Fail these and the submission can be
+  rejected before a human reviewer ever sees it.
 
-Author: confirm the requirement, the naming of each document, and the
-dates before publish. The argument in this session deliberately does
-not depend on these specifics — it is made from the data — but the
-regulatory framing should be stated correctly or not at all.
+Two cautions. The dates above attach to *study start*, not submission
+date. And the Catalog is a living document — versions of SDTM, ADaM and
+Define-XML move in and out of the required set over time, so the
+version to consult is always the current one, at the FDA Study Data
+Standards Resources page.
 :::
 
 ::: {.callout-note collapse="true"}

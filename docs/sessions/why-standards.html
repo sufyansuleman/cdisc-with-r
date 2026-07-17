@@ -55,7 +55,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -563,19 +583,27 @@ Tip
 <li><strong>TLFs</strong> — the tables, listings and figures that go in the study report. (Part 4)</li>
 </ul>
 <p>Each stage has a different job, and a great deal of confusion in clinical programming comes from asking one stage to do another’s work. <a href="../sessions/sdtm-concepts.html">SDTM Concepts</a> and <a href="../sessions/adam-concepts.html">ADaM Concepts</a> draw that line properly.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>VERIFY
+<span class="screen-reader-only">Note</span>Where the requirement actually comes from
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Claim: Regulatory authorities require CDISC-conformant study data for marketing applications — specifically, that FDA and PMDA mandate SDTM and ADaM (and define.xml as the accompanying data definition document) for applicable studies, with the requirement flowing from the FDA Data Standards Catalog and the Study Data Technical Conformance Guide.</p>
-<p>Source needed: FDA Data Standards Catalog (current version, and the applicability/effective dates); FDA Study Data Technical Conformance Guide; PMDA notification on electronic study data submission.</p>
-<p>Author: confirm the requirement, the naming of each document, and the dates before publish. The argument in this session deliberately does not depend on these specifics — it is made from the data — but the regulatory framing should be stated correctly or not at all.</p>
+<p>The argument in this session stands on its own, but the US regulatory chain behind it is short and worth knowing. Four documents do the work:</p>
+<ul>
+<li><strong>The statute and the guidance.</strong> Under section 745A(a) of the FD&amp;C Act, once FDA specifies an electronic format in final guidance, that format is <em>required</em>. The specifying document is <em>Providing Regulatory Submissions in Electronic Format — Standardized Study Data</em> <span class="citation" data-cites="fda2021estudy">(<a href="#ref-fda2021estudy" role="doc-biblioref">U.S. Food and Drug Administration 2021</a>)</span>. It applies to NDAs, ANDAs, certain BLAs and certain commercial INDs, and — unusually for FDA guidance — has binding effect. FDA may refuse to file (NDAs, BLAs) or refuse to receive (ANDAs) a submission whose study data does not conform to the required standards in the Catalog.</li>
+<li><strong>The Data Standards Catalog</strong> <span class="citation" data-cites="fdadsc11">(<a href="#ref-fdadsc11" role="doc-biblioref">U.S. Food and Drug Administration 2025</a>)</span> is the list the guidance points to: which standards FDA can process, review and archive, and from when. It lists CDISC <strong>SDTM</strong> and <strong>ADaM</strong> (exchanged as XPT files) and <strong>Define-XML</strong> among the required standards. The requirement applies based on <em>study start date</em>: after 17 December 2016 for NDAs, ANDAs and BLAs; after 17 December 2017 for the applicable INDs.</li>
+<li><strong>The Study Data Technical Conformance Guide</strong> <span class="citation" data-cites="fdatcg">(<a href="#ref-fdatcg" role="doc-biblioref">U.S. Food and Drug Administration 2018</a>)</span> is the technical companion: how to organise, name and document the datasets, including the data definition file (<code>define.xml</code>) that describes every submitted dataset’s metadata. You will build one in <a href="../sessions/define-xml.html">define.xml</a>.</li>
+<li><strong>The Technical Rejection Criteria</strong> <span class="citation" data-cites="fdatrc">(<a href="#ref-fdatrc" role="doc-biblioref">U.S. Food and Drug Administration 2023</a>)</span> make part of this automatic. Validation rules run on receipt; among them: every study must include a trial summary dataset (<code>ts.xpt</code>), SDTM data must include a DM dataset and its <code>define.xml</code>, and ADaM data must include ADSL and its <code>define.xml</code>. Fail these and the submission can be rejected before a human reviewer ever sees it.</li>
+</ul>
+<p>Two cautions. The dates above attach to <em>study start</em>, not submission date. And the Catalog is a living document — versions of SDTM, ADaM and Define-XML move in and out of the required set over time, so the version to consult is always the current one, at the FDA Study Data Standards Resources page.</p>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1053,6 +1081,20 @@ Tip
 </div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-fdatcg" class="csl-entry" role="listitem">
+U.S. Food and Drug Administration. 2018. <span>“Study Data Technical Conformance Guide.”</span> U.S. Food; Drug Administration. <a href="https://www.fda.gov/industry/fda-resources-data-standards/study-data-standards-resources">https://www.fda.gov/industry/fda-resources-data-standards/study-data-standards-resources</a>.
+</div>
+<div id="ref-fda2021estudy" class="csl-entry" role="listitem">
+———. 2021. <span>“Providing Regulatory Submissions in Electronic Format — Standardized Study Data: Guidance for Industry.”</span> U.S. Department of Health; Human Services, Food; Drug Administration, CDER, CBER, OCE. <a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/providing-regulatory-submissions-electronic-format-standardized-study-data">https://www.fda.gov/regulatory-information/search-fda-guidance-documents/providing-regulatory-submissions-electronic-format-standardized-study-data</a>.
+</div>
+<div id="ref-fdatrc" class="csl-entry" role="listitem">
+———. 2023. <span>“Technical Rejection Criteria for Study Data: Self-Check Worksheet Instructions, Version 4.0.”</span> U.S. Food; Drug Administration. <a href="https://www.fda.gov/industry/fda-resources-data-standards/study-data-standards-resources">https://www.fda.gov/industry/fda-resources-data-standards/study-data-standards-resources</a>.
+</div>
+<div id="ref-fdadsc11" class="csl-entry" role="listitem">
+———. 2025. <span>“<span>FDA</span> Data Standards Catalog, Version 11.0.”</span> U.S. Food; Drug Administration. <a href="https://www.fda.gov/industry/fda-resources-data-standards/study-data-standards-resources">https://www.fda.gov/industry/fda-resources-data-standards/study-data-standards-resources</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
