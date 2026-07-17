@@ -30,3 +30,6 @@ renv/sandbox/
 # OS artifacts
 .DS_Store
 Thumbs.db
+
+# Local reference material (not distributed)
+SDTM Terminology.pdf
