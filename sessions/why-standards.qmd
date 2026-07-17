@@ -2,22 +2,31 @@
 title: "Why Standards"
 ---
 
+```{r setup}
+#| include: false
+#| eval: true
+library(tidyverse)
+```
+
 ::: {.callout-note}
 ### Session at a Glance
 
-**Total core time: about TODO minutes.**
+**Total core time: about 75 minutes.**
 
 | Section | Time | Type |
 |---|---|---|
-| When Do You Use This? + Learning Objectives | TODO | Reading |
-| Background | TODO | Reading |
-| Example 1 | TODO | Worked example |
-| Example 2 | TODO | Worked example |
-| What Can Go Wrong | TODO | Reading |
-| Exercises | TODO | Practice |
-| Comprehension Check | TODO | Self-test |
+| When Do You Use This? + Learning Objectives | 5 min | Reading |
+| Background | 15 min | Reading |
+| Example 1: Five Files, Five Conventions | 20 min | Worked example |
+| Example 2: One Question, Three Answers | 15 min | Worked example |
+| What Can Go Wrong | 10 min | Reading |
+| Comprehension Check | 10 min | Self-test |
 
-TODO: how the session splits across sittings for self-paced study.
+This session is shorter than most and has no exercise set: it is the
+argument for everything that follows, not a technique to practise. It
+fits one sitting. Read it before [The GLPX-001
+Trial](the-trial-glpx001.qmd), which introduces the data you will work
+with for the rest of the course.
 :::
 
 ::: {.callout-tip}
@@ -27,71 +36,613 @@ Every code chunk below is written so you can copy it into your R
 console (or an R script) and run it yourself, in the order shown.
 Where you see a "Run It Yourself" box, stop and run the code above it
 before reading the explanation that follows.
+
+Run R from the **project root** (open the repository's `.Rproj` file,
+or `setwd()` to the folder containing `_quarto.yml`). Every path in
+this course is written relative to that root, so `data/raw/dm_raw.csv`
+means what it says.
 :::
 
-## When Do You Use This?
+## When Do You Use This? {#sec-why-standards}
 
 ::: {.callout-tip}
-TODO: two or three concrete scenarios that this session answers, ending
-with the single question it addresses in bold. Cross-link the
-session(s) this one builds on.
+You have joined a study team and been handed five CSV files and a
+question: "how many patients had nausea?" Or a reviewer has asked why
+the subject count in your table is 400 when the demographics file has
+401 rows. Or someone says the word "SDTM" in a meeting and you nod.
+
+In each case the underlying problem is the same: **the data cannot be
+read correctly by anyone who does not already know this particular
+trial.** That is the problem standards solve, and this session
+demonstrates it before naming a single CDISC variable.
+
+This is the first session of the course and assumes no CDISC
+knowledge. It assumes you can read `dplyr`.
 :::
 
 ## Learning Objectives
 
 After completing this session you will be able to:
 
-- TODO
-- TODO
-- TODO
+- Explain why clinical data standards exist, in terms of the specific
+  problems they solve rather than the regulations that mandate them
+- Demonstrate, in R, that raw trial data carries structure and
+  vocabulary that only the study team understands
+- Distinguish the three things a standard fixes: variable naming,
+  dataset structure, and controlled vocabulary
+- Explain why "we will standardise it at the end" is a false economy
+- Describe the shape of the SDTM → ADaM → TLF pipeline the rest of
+  this course builds
 
-## Background: TODO (the one core idea)
+## Background: Data That Can Only Be Read by Its Author
 
-*Estimated time: ~TODO minutes (reading)*
+*Estimated time: ~15 minutes (reading)*
 
-TODO: introduce the single idea that ties the session together, concept
-before formula.
+Here is the single idea that ties this session together, and arguably
+the whole course:
 
-## Example 1: TODO
+::: {.callout-important}
+### The one thing to remember
 
-TODO: worked example on GLPX-001 data. Show the code, then the output,
-then explain it.
+**Raw trial data can only be read by someone who already knows the
+trial. A standard is what lets it be read by someone who doesn't.**
+:::
 
+Every dataset carries two kinds of information. There is the data
+itself: the numbers, the dates, the terms. And there is the knowledge
+required to interpret it: that `colldt` means the date the sample was
+collected, that a blank `AEENDT` means the event was still ongoing
+rather than that someone forgot, that subject `101-012` appears twice
+for a reason.
+
+In a normal research project, that second kind of information lives in
+someone's head, and that is survivable. You wrote the data; you can
+read the data. If a colleague needs it, you explain it to them over
+coffee.
+
+Clinical trials break this arrangement in three ways at once.
+
+**Scale.** A regulator receives study data from many sponsors, for many
+trials, in many therapeutic areas, every year. Nobody at the agency can
+have coffee with every study team. If each sponsor invents its own
+layout, then reviewing $n$ trials requires understanding $n$ different
+conventions, and no tool built for one submission works on the next.
+
+**Time.** A trial's data outlives the people who made it. Regulators
+may return to a submission years later; a safety signal may surface
+long after the study team has moved on. "Ask the programmer who built
+it" stops being an available answer.
+
+**Consequence.** If a reviewer misreads your adverse event data, the
+result is not an awkward correction in a journal. It is a wrong
+conclusion about whether a drug harms people.
+
+So the industry did the only thing that scales: it agreed, in advance,
+on what the columns are called, how the datasets are shaped, and which
+words are allowed in them. That agreement is what CDISC publishes.
+
+### A standard fixes three separate things
+
+It is worth separating these now, because learners routinely collapse
+them into "renaming columns," and then wonder why the rest of the
+course is hard.
+
+| What is fixed | The question it answers | Where this course covers it |
+|---|---|---|
+| **Variable naming** | What is this column called, in every trial? | [SDTM Concepts](sdtm-concepts.qmd) |
+| **Dataset structure** | What is one row, and which datasets exist? | [SDTM Concepts](sdtm-concepts.qmd), [The DM Domain](sdtm-dm.qmd) |
+| **Controlled vocabulary** | Which values is this column allowed to hold? | [SDTM Concepts](sdtm-concepts.qmd), [Events and Findings](sdtm-events-findings.qmd) |
+
+Example 1 below demonstrates the first two problems in the GLPX-001
+raw data. Example 2 demonstrates the third. Neither example needs you
+to know any CDISC yet — that is the point. You should feel the problem
+before you are handed the solution.
+
+### The shape of what is coming
+
+The rest of this course is one pipeline, and it is worth seeing the
+whole shape before you meet any of its parts:
+
+- **Raw data** — what the study team receives: an EDC export, a lab
+  vendor's file, each with its own conventions. This is where you are
+  now.
+- **SDTM** — the raw data, reorganised and renamed to the standard,
+  with the original values preserved. It answers: *what happened in
+  this trial?* (Part 2)
+- **ADaM** — analysis-ready datasets derived from SDTM, carrying the
+  variables a statistician needs to run the analysis and a reviewer
+  needs to reproduce it. It answers: *what does the trial show?*
+  (Part 3)
+- **TLFs** — the tables, listings and figures that go in the study
+  report. (Part 4)
+
+Each stage has a different job, and a great deal of confusion in
+clinical programming comes from asking one stage to do another's work.
+[SDTM Concepts](sdtm-concepts.qmd) and [ADaM
+Concepts](adam-concepts.qmd) draw that line properly.
+
+::: {.callout-warning}
+## VERIFY
+
+Claim: Regulatory authorities require CDISC-conformant study data for
+marketing applications — specifically, that FDA and PMDA mandate SDTM
+and ADaM (and define.xml as the accompanying data definition document)
+for applicable studies, with the requirement flowing from the FDA Data
+Standards Catalog and the Study Data Technical Conformance Guide.
+
+Source needed: FDA Data Standards Catalog (current version, and the
+applicability/effective dates); FDA Study Data Technical Conformance
+Guide; PMDA notification on electronic study data submission.
+
+Author: confirm the requirement, the naming of each document, and the
+dates before publish. The argument in this session deliberately does
+not depend on these specifics — it is made from the data — but the
+regulatory framing should be stated correctly or not at all.
+:::
+
+::: {.callout-note collapse="true"}
+### Why not just write good documentation instead?
+
+A reasonable objection: if the problem is that knowledge lives in
+someone's head, why not write it down? A thorough data dictionary per
+trial would solve it, wouldn't it?
+
+It solves the *comprehension* problem and not the *automation* one. A
+reviewer who can read your dictionary still cannot run last year's
+program against your data, because your column is called `colldt` and
+last year's was called `SAMPDT`. Documentation lets a human understand
+$n$ conventions one at a time. A standard lets one program read all
+$n$. The difference compounds: every validation rule, every review
+tool, and every analysis macro is written once against the standard
+rather than once per trial.
+
+This is also why the standard is not negotiable per-study. A standard
+that each sponsor adapts to taste is a dictionary with extra steps.
+:::
+
+## Example 1: Five Files, Five Conventions
+
+*Estimated time: ~20 minutes (worked example)*
+
+GLPX-001 is a simulated Phase III trial of a GLP-1-class agent in type
+2 diabetes. [The next session](the-trial-glpx001.qmd) introduces it
+properly. For now you only need to know that its raw data is what a
+study team actually receives: an export from the EDC system where sites
+enter data, plus a separate file from the central laboratory that
+analyses the blood samples. Two organisations, two sets of habits.
+
+Load all five raw files and look at nothing but their shape:
+
+```{r read-raw}
+#| eval: true
+
+raw_paths <- list.files("data/raw", pattern = "\\.csv$", full.names = TRUE)
+
+raw <- raw_paths |>
+  set_names(\(p) basename(p)) |>
+  map(\(p) read_csv(p, show_col_types = FALSE,
+                    col_types = cols(.default = col_character())))
+
+tibble(
+  file    = names(raw),
+  rows    = map_int(raw, nrow),
+  columns = map_chr(raw, \(d) paste(names(d), collapse = ", "))
+)
+```
+
+::: {.callout-tip}
 ### Run It Yourself
 
-TODO: the exact code block the learner should execute before reading on.
+Run the chunk above. You should see five files: `ae_raw.csv` (389
+rows), `dm_raw.csv` (401), `ex_raw.csv` (400), `lb_raw.csv` (12,389)
+and `vs_raw.csv` (12,788).
 
+Before reading on, look only at the `columns` column and answer one
+question: **if you had to write a single function that returned the
+subject identifier from any of these five files, what would it look
+like?**
+:::
+
+Everything here is read as character deliberately. Left to itself,
+`read_csv()` guesses types, and a guess is exactly the kind of
+trial-specific knowledge we are trying to expose rather than hide. A
+date that is sometimes `2024-03-12` and sometimes `1969` is not a date
+column to R; it is a mess, and we want to see the mess.
+
+The answer to the question in the box is that your function needs a
+lookup table, because the files do not agree:
+
+```{r subject-col}
+#| eval: true
+
+tibble(
+  file           = names(raw),
+  subject_column = map_chr(raw, \(d) {
+    paste(grep("subjid", names(d), ignore.case = TRUE, value = TRUE),
+          collapse = ", ")
+  }),
+  date_columns   = map_chr(raw, \(d) {
+    paste(grep("dt$", names(d), ignore.case = TRUE, value = TRUE),
+          collapse = ", ")
+  })
+)
+```
+
+::: {.callout-note}
 ### Reading the Output Line by Line
 
-TODO: map each line of output to its plain-English meaning.
+| What you see | What it means |
+|---|---|
+| `SUBJID` in four files, `subjid` in `lb_raw.csv` | The lab vendor lower-cases its columns. R is case-sensitive, so `dm$SUBJID` and `lb$subjid` are different names for the same concept. Every join you write must know this. |
+| `BIRTHDT`, `RANDDT`, `AESTDT`, `AEENDT`, `EXSTDT`, `EXENDT`, `VSDT`, `colldt` | Eight date columns, eight names, no shared pattern. `colldt` does not even end in the same convention as the others. |
+| `ae_raw.csv` has 389 rows | Fewer rows than subjects. Adverse event data has one row per *event*, not per subject — and subjects with no events have no rows at all. |
+| `lb_raw.csv` has 12,389 rows | One row per subject per visit per test. The same trial, at a completely different granularity. |
 
-## Example 2: TODO
+Notice what the last two rows of that table mean: **"one row" means
+something different in every file.** Structure is not a presentational
+detail you can fix with `rename()`.
+:::
 
-TODO: a second worked example.
+The `grep()` in that chunk is itself the lesson. To find the subject
+column, we had to search for it with a case-insensitive pattern,
+because we already knew — from having looked — that it might be
+upper or lower case. A standard is what makes that search unnecessary.
 
+### When two sources disagree about a fact
+
+Both the EDC and the lab file record each subject's sex. They were
+entered by different people, at different times, into different
+systems. Nothing forces them to agree, so let us check whether they do:
+
+```{r sex-conflict}
+#| eval: true
+
+edc_sex <- raw[["dm_raw.csv"]] |> distinct(SUBJID, edc_sex = SEX)
+lab_sex <- raw[["lb_raw.csv"]] |> distinct(subjid, lab_sex = sex)
+
+edc_sex |>
+  inner_join(lab_sex, by = join_by(SUBJID == subjid)) |>
+  filter(edc_sex != lab_sex)
+```
+
+::: {.callout-tip}
 ### Run It Yourself
 
-TODO.
+Run the chunk above. Exactly one subject comes back: `111-003`, whom
+the EDC records as `F` and the lab records as `M`.
+
+Now sit with the awkward part: **which one is right?** The data cannot
+tell you. Nothing in either file is malformed. Both values are
+perfectly valid. They simply disagree, and you have no way to resolve
+it from the data alone.
+:::
+
+This is not a trick, and it is not rare. It is a defect deliberately
+built into the GLPX-001 simulation because it is one of the most
+ordinary things that happens in a real trial. You will resolve this
+subject properly in [The DM Domain](sdtm-dm.qmd), where you will see
+that the standard's contribution is not to *know* the answer, but to
+force the question to be asked and the decision to be recorded.
+
+Note the join itself: `join_by(SUBJID == subjid)`. Because the two
+files name the same concept differently, the join cannot be written
+without trial-specific knowledge. After standardisation it can.
+
+### Counting subjects is not `nrow()`
+
+One more, and it is the one that catches everybody:
+
+```{r count-subjects}
+#| eval: true
+
+dm <- raw[["dm_raw.csv"]]
+
+nrow(dm)
+n_distinct(dm$SUBJID)
+```
+
+The demographics file has 401 rows and 400 subjects. If you reported
+`nrow(dm)` as the number of enrolled subjects, you would be wrong, and
+nothing in the file would warn you:
+
+```{r count-subjects-dup}
+#| eval: true
+
+dm |>
+  add_count(SUBJID, name = "rows_for_this_subject") |>
+  filter(rows_for_this_subject > 1) |>
+  select(SUBJID, SITEID, RANDDT, ARM)
+```
+
+::: {.callout-note}
+### Reading the Output Line by Line
+
+Subject `101-012` has two rows: one at site `101` randomised on
+`2024-03-06`, one at site `108` randomised on `2024-03-27`. Read them
+as a story rather than as a bug. A subject was screened at one site,
+moved, and was enrolled again at another site under the same subject
+number. Both rows are things that genuinely happened and both were
+genuinely recorded.
+
+The file is not corrupt. It simply has no rule that says *one row per
+subject* — so nobody enforced one, and a plausible sequence of events
+produced two. The standard's contribution here is the rule itself,
+stated in advance and checkable by a machine. You will apply it in
+[The DM Domain](sdtm-dm.qmd).
+:::
+
+This is the whole argument in miniature. Three ordinary questions —
+what is the subject column, what sex is subject `111-003`, how many
+subjects are there — and each one needed knowledge that is not in the
+data.
+
+## Example 2: One Question, Three Answers
+
+*Estimated time: ~15 minutes (worked example)*
+
+Naming and structure are the visible problems. Vocabulary is the one
+that will actually hurt you, because it produces answers rather than
+errors.
+
+Here is a question a regulator genuinely asks, and one of the simplest
+questions available: **how many subjects had nausea?**
+
+Start by looking at what sites typed into the adverse event term
+field:
+
+```{r ae-terms}
+#| eval: true
+
+ae <- raw[["ae_raw.csv"]]
+
+ae |> count(AETERM, sort = TRUE)
+```
+
+::: {.callout-tip}
+### Run It Yourself
+
+Run the chunk above and read the whole list — all 25 rows, not just
+the top. Find every row that a clinician would call nausea. There are
+four of them.
+:::
+
+::: {.callout-note}
+### Reading the Output Line by Line
+
+| What you see | What it means |
+|---|---|
+| `Nausea` (61), `NAUSEA` (2), `nausea` (2) | The same event, typed three ways. Case is not meaningful here — but R has no way to know that. |
+| `Diarrhoea` (56), `DIARRHOEA` (2), `diarrhoea` (1), `Diarrea` (1) | Case again, plus a misspelling. `Diarrea` is a typo that no case-folding will rescue. |
+| `nausea and vomitting` (1) | Two clinical events in one field, and a misspelling. This is not a formatting problem; it is a *data* problem. One AE record is describing two AEs. |
+| 25 rows in total | Twenty-five distinct strings for what sites believed were ordinary, common events. |
+:::
+
+How many distinct things are actually in this column?
+
+```{r ae-distinct}
+#| eval: true
+
+n_distinct(ae$AETERM)
+n_distinct(toupper(ae$AETERM))
+```
+
+Twenty-five as recorded; twelve once you ignore case. But GLPX-001 only
+ever produced **ten** clinical concepts. Upper-casing gets you from 25
+to 12, and then stops:
+
+```{r ae-upper-terms}
+#| eval: true
+
+sort(unique(toupper(ae$AETERM)))
+```
+
+The two extra entries are `DIARREA` and `NAUSEA AND VOMITTING`. No
+string operation will fix them, because fixing them requires knowing
+that "Diarrea" means diarrhoea and that "nausea and vomitting" is two
+events. That knowledge is medical, not textual.
+
+### Three defensible rules, three different answers
+
+Now answer the regulator's question. Watch what happens:
+
+```{r nausea-count}
+#| eval: true
+
+tibble(
+  rule = c("AETERM == 'Nausea'",
+           "toupper(AETERM) == 'NAUSEA'",
+           "toupper(AETERM) contains 'NAUSEA'"),
+  subjects = c(
+    ae |> filter(AETERM == "Nausea")                    |> distinct(SUBJID) |> nrow(),
+    ae |> filter(toupper(AETERM) == "NAUSEA")           |> distinct(SUBJID) |> nrow(),
+    ae |> filter(str_detect(toupper(AETERM), "NAUSEA")) |> distinct(SUBJID) |> nrow()
+  )
+)
+```
+
+::: {.callout-tip}
+### Run It Yourself
+
+Run the chunk above. You should get **61**, **65** and **66**.
+
+Before reading on: which of those three numbers would you put in a
+safety table? Notice that you cannot answer that question from the
+data either.
+:::
+
+::: {.callout-note}
+### Reading the Output Line by Line
+
+| Rule | Subjects | What it does |
+|---|---|---|
+| `AETERM == 'Nausea'` | 61 | Exact match. Silently drops the four subjects whose term was typed in a different case. Wrong, and looks fine. |
+| `toupper(AETERM) == 'NAUSEA'` | 65 | Case-insensitive exact match. Catches `NAUSEA` and `nausea`. Still misses `nausea and vomitting`. |
+| `str_detect(toupper(AETERM), 'NAUSEA')` | 66 | Substring match. Catches all four spellings — but it counts `nausea and vomitting` as nausea, which is *arguably* right, while quietly failing to also count it as vomiting, which is *definitely* wrong. |
+
+Three rules, all defensible, all written by a competent R programmer in
+good faith. Three different numbers in a safety table.
+:::
+
+None of these is a bug. Every one of them runs, returns a plausible
+integer, and produces no warning. That is precisely what makes this the
+dangerous failure mode: **a naming problem throws an error, a
+vocabulary problem returns a number.**
+
+The standard's answer has two halves, and this course covers both:
+
+- **Controlled terminology** — the column is not free text. It may hold
+  only values from a published list, so `Nausea`, `NAUSEA` and `nausea`
+  cannot coexist, because two of them are not legal values. You will
+  check values against the published lists programmatically rather than
+  from memory in [SDTM Concepts](sdtm-concepts.qmd).
+- **Coding** — a human (or a human-supervised process) maps each
+  verbatim term a site typed to a dictionary term, and *both* are kept:
+  the original words and the coded concept. `Diarrea` and
+  `nausea and vomitting` are resolved by that step, not by code.
+
+Notice that the raw verbatim text is never destroyed. That is a
+principle worth carrying through the whole course: standardisation adds
+an interpretation alongside the original. It does not overwrite it.
 
 ## What Can Go Wrong
 
-TODO: failure modes and misuse patterns.
+*Estimated time: ~10 minutes (reading)*
 
+**Treating standardisation as renaming**
+
+The most common misreading of this session is "so I should call the
+column `USUBJID` instead of `subjid`." Renaming is the easiest third of
+the job and the least important. Example 1 showed structure differing
+(one row per event vs per subject per visit per test) and Example 2
+showed vocabulary differing. `rename()` addresses neither. If your
+mental model of SDTM is a lookup table of old name → new name, Part 2
+will not make sense.
+
+**"We'll standardise at the end"**
+
+Standardising is a *decision-recording* activity, not a formatting one.
+Look again at subject `111-003`: resolving that conflict requires
+someone to find out which value is right. That is easy while the site
+is still open and the data manager still remembers the query. It is
+expensive a year later and impossible after the study closes. Every
+deferred standardisation decision gets more costly, and some of them
+become unanswerable. The dates in `dm_raw.csv` are the same story:
+someone knew, at the time, why a subject's birth date was recorded as
+`1969`.
+
+**Assuming the vendor's file is the trustworthy one**
+
+The lab file looks more authoritative — machine-generated, consistent
+formatting, no free text. It is still the file with the wrong sex for
+subject `111-003` (or the right one; you do not know yet). Tidiness is
+not accuracy.
+
+**Believing a validator's silence**
+
+Conformance tools check that data conforms to the standard. They cannot
+check that it is true. Every one of the three nausea counts would pass
+a conformance check on the resulting dataset, because each produces a
+structurally valid number. Passing validation means you have not made a
+*standards* error; it says nothing about whether you have made a
+*scientific* one.
+
+::: {.callout-warning}
 ### Common misinterpretations
 
-TODO.
+**"Standards are bureaucratic overhead imposed by regulators"**
+The regulation exists because the problem does, not the other way
+round. Everything demonstrated in this session — the disagreeing sex,
+the duplicated subject, the 25 spellings — would still be a problem for
+your own team six months from now if no agency existed.
+
+**"My data is clean, so this doesn't apply to me"**
+Nothing in the GLPX-001 raw data is dirty in the ordinary sense. There
+are no impossible values, no corrupted rows, no encoding errors. Every
+problem in this session came from *clean data with no agreed meaning*.
+
+**"The CRO/vendor handles CDISC, so I don't need to know it"**
+Someone still has to decide what sex subject `111-003` is, and that
+someone needs to understand both the trial and the standard. Delegating
+the mapping does not delegate the decisions — it just means you approve
+decisions you did not make.
+
+**"Once the data conforms, the analysis is objective"**
+The three nausea counts differ by rule choice, not by data quality. The
+standard removes the *arbitrary* differences (naming, case, structure)
+so that the remaining differences are visible and arguable. It does not
+remove judgement; it exposes it.
+:::
 
 ## Exercises
 
-TODO: link the exercise file(s) for this session, or state that this
-session has no exercise.
+This session has no exercise set. It makes an argument rather than
+teaching a technique, and the argument is best tested by the
+[Comprehension Check](#comprehension-check) below.
+
+The first exercises arrive with [The DM Domain](sdtm-dm.qmd), by which
+point you will have something to build. If you want to do something
+now, re-run Example 2's three nausea rules against `Diarrhoea` instead,
+and see how many different answers you can defend.
 
 ## Comprehension Check
 
-TODO: three to five short self-test questions.
+*Estimated time: ~10 minutes*
+
+1. In your own words, why can't a thorough data dictionary for each
+   trial replace a standard?
+2. `dm_raw.csv` has 401 rows and 400 subjects. Why is this not a data
+   error, and what does the standard contribute?
+3. Three defensible R rules gave 61, 65 and 66 subjects with nausea.
+   Which is correct, and what does your answer tell you about where the
+   fix has to happen?
+4. A colleague says: "The lab file is machine-generated, so where the
+   EDC and the lab disagree, trust the lab." What is wrong with this
+   reasoning?
+5. Name the three distinct things a standard fixes, and give an example
+   of each from the GLPX-001 raw data.
 
 ::: {.callout-note collapse="true"}
 ### Answers
 
-TODO: answers, collapsed.
+1. A dictionary solves comprehension, not automation. A reviewer can
+   read your dictionary and understand your data, but they still cannot
+   run an existing program against it, because your columns have your
+   names. Documentation scales linearly with the number of trials (read
+   each one); a standard is written against once and applies to all of
+   them. Every validation rule and review tool in the industry depends
+   on that second property.
+
+2. Subject `101-012` was screened at one site and enrolled again at
+   another after moving, producing two genuine, correctly recorded
+   rows. The raw data has no rule saying one row per subject, so
+   nothing prevented it. The standard contributes the rule itself —
+   stated in advance, applying to every trial, and checkable by a
+   machine rather than by someone noticing.
+
+3. None of them is correct as a *code* problem, which is the point. 61
+   is wrong (it drops case variants). 65 and 66 differ only in how they
+   treat `nausea and vomitting`, and neither handles it properly,
+   because that record describes two events and no filter can split it.
+   The fix cannot happen in the analysis; it has to happen upstream, by
+   constraining the column to a controlled vocabulary and coding the
+   verbatim terms. If your rule choice changes the answer, the answer
+   is not in the data yet.
+
+4. It confuses consistency with accuracy. The lab file is
+   machine-generated in its *formatting*, but the sex value in it
+   originated from a human at some point, exactly like the EDC value.
+   Neither file is more likely to be right *a priori*, and the
+   disagreement is evidence that at least one human-entered value is
+   wrong. Resolving it requires going back to the source, not picking
+   the tidier file. (Note also that the lab file is where the duplicate
+   record and the missing unit live.)
+
+5. **Variable naming**: `SUBJID` in four files and `subjid` in the lab
+   file — the same concept, two names, so no join can be written
+   generically. **Dataset structure**: `ae_raw.csv` has one row per
+   event (389 rows, fewer than the 400 subjects), while `lb_raw.csv`
+   has one row per subject per visit per test (12,389 rows) — "one row"
+   means something different in each. **Controlled vocabulary**:
+   `AETERM` holds 25 distinct strings for 10 clinical concepts,
+   including `Diarrea` and `nausea and vomitting`.
 :::

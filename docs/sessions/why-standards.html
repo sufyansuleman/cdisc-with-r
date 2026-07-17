@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -76,6 +111,35 @@ ul.task-list li input[type="checkbox"] {
 <meta name="twitter:description" content="">
 <script data-goatcounter="https://cdiscwithr.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -292,22 +356,23 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#when-do-you-use-this" id="toc-when-do-you-use-this" class="nav-link active" data-scroll-target="#when-do-you-use-this"><span class="header-section-number">2.1</span> When Do You Use This?</a></li>
+  <li><a href="#sec-why-standards" id="toc-sec-why-standards" class="nav-link active" data-scroll-target="#sec-why-standards"><span class="header-section-number">2.1</span> When Do You Use This?</a></li>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives"><span class="header-section-number">2.2</span> Learning Objectives</a></li>
-  <li><a href="#background-todo-the-one-core-idea" id="toc-background-todo-the-one-core-idea" class="nav-link" data-scroll-target="#background-todo-the-one-core-idea"><span class="header-section-number">2.3</span> Background: TODO (the one core idea)</a></li>
-  <li><a href="#example-1-todo" id="toc-example-1-todo" class="nav-link" data-scroll-target="#example-1-todo"><span class="header-section-number">2.4</span> Example 1: TODO</a>
+  <li><a href="#background-data-that-can-only-be-read-by-its-author" id="toc-background-data-that-can-only-be-read-by-its-author" class="nav-link" data-scroll-target="#background-data-that-can-only-be-read-by-its-author"><span class="header-section-number">2.3</span> Background: Data That Can Only Be Read by Its Author</a>
   <ul class="collapse">
-  <li><a href="#run-it-yourself" id="toc-run-it-yourself" class="nav-link" data-scroll-target="#run-it-yourself"><span class="header-section-number">2.4.1</span> Run It Yourself</a></li>
-  <li><a href="#reading-the-output-line-by-line" id="toc-reading-the-output-line-by-line" class="nav-link" data-scroll-target="#reading-the-output-line-by-line"><span class="header-section-number">2.4.2</span> Reading the Output Line by Line</a></li>
+  <li><a href="#a-standard-fixes-three-separate-things" id="toc-a-standard-fixes-three-separate-things" class="nav-link" data-scroll-target="#a-standard-fixes-three-separate-things"><span class="header-section-number">2.3.1</span> A standard fixes three separate things</a></li>
+  <li><a href="#the-shape-of-what-is-coming" id="toc-the-shape-of-what-is-coming" class="nav-link" data-scroll-target="#the-shape-of-what-is-coming"><span class="header-section-number">2.3.2</span> The shape of what is coming</a></li>
   </ul></li>
-  <li><a href="#example-2-todo" id="toc-example-2-todo" class="nav-link" data-scroll-target="#example-2-todo"><span class="header-section-number">2.5</span> Example 2: TODO</a>
+  <li><a href="#example-1-five-files-five-conventions" id="toc-example-1-five-files-five-conventions" class="nav-link" data-scroll-target="#example-1-five-files-five-conventions"><span class="header-section-number">2.4</span> Example 1: Five Files, Five Conventions</a>
   <ul class="collapse">
-  <li><a href="#run-it-yourself-1" id="toc-run-it-yourself-1" class="nav-link" data-scroll-target="#run-it-yourself-1"><span class="header-section-number">2.5.1</span> Run It Yourself</a></li>
+  <li><a href="#when-two-sources-disagree-about-a-fact" id="toc-when-two-sources-disagree-about-a-fact" class="nav-link" data-scroll-target="#when-two-sources-disagree-about-a-fact"><span class="header-section-number">2.4.1</span> When two sources disagree about a fact</a></li>
+  <li><a href="#counting-subjects-is-not-nrow" id="toc-counting-subjects-is-not-nrow" class="nav-link" data-scroll-target="#counting-subjects-is-not-nrow"><span class="header-section-number">2.4.2</span> Counting subjects is not <code>nrow()</code></a></li>
   </ul></li>
-  <li><a href="#what-can-go-wrong" id="toc-what-can-go-wrong" class="nav-link" data-scroll-target="#what-can-go-wrong"><span class="header-section-number">2.6</span> What Can Go Wrong</a>
+  <li><a href="#example-2-one-question-three-answers" id="toc-example-2-one-question-three-answers" class="nav-link" data-scroll-target="#example-2-one-question-three-answers"><span class="header-section-number">2.5</span> Example 2: One Question, Three Answers</a>
   <ul class="collapse">
-  <li><a href="#common-misinterpretations" id="toc-common-misinterpretations" class="nav-link" data-scroll-target="#common-misinterpretations"><span class="header-section-number">2.6.1</span> Common misinterpretations</a></li>
+  <li><a href="#three-defensible-rules-three-different-answers" id="toc-three-defensible-rules-three-different-answers" class="nav-link" data-scroll-target="#three-defensible-rules-three-different-answers"><span class="header-section-number">2.5.1</span> Three defensible rules, three different answers</a></li>
   </ul></li>
+  <li><a href="#what-can-go-wrong" id="toc-what-can-go-wrong" class="nav-link" data-scroll-target="#what-can-go-wrong"><span class="header-section-number">2.6</span> What Can Go Wrong</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">2.7</span> Exercises</a></li>
   <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">2.8</span> Comprehension Check</a></li>
   </ul>
@@ -345,7 +410,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Total core time: about TODO minutes.</strong></p>
+<p><strong>Total core time: about 75 minutes.</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -357,42 +422,37 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>When Do You Use This? + Learning Objectives</td>
-<td>TODO</td>
+<td>5 min</td>
 <td>Reading</td>
 </tr>
 <tr class="even">
 <td>Background</td>
-<td>TODO</td>
+<td>15 min</td>
 <td>Reading</td>
 </tr>
 <tr class="odd">
-<td>Example 1</td>
-<td>TODO</td>
+<td>Example 1: Five Files, Five Conventions</td>
+<td>20 min</td>
 <td>Worked example</td>
 </tr>
 <tr class="even">
-<td>Example 2</td>
-<td>TODO</td>
+<td>Example 2: One Question, Three Answers</td>
+<td>15 min</td>
 <td>Worked example</td>
 </tr>
 <tr class="odd">
 <td>What Can Go Wrong</td>
-<td>TODO</td>
+<td>10 min</td>
 <td>Reading</td>
 </tr>
 <tr class="even">
-<td>Exercises</td>
-<td>TODO</td>
-<td>Practice</td>
-</tr>
-<tr class="odd">
 <td>Comprehension Check</td>
-<td>TODO</td>
+<td>10 min</td>
 <td>Self-test</td>
 </tr>
 </tbody>
 </table>
-<p>TODO: how the session splits across sittings for self-paced study.</p>
+<p>This session is shorter than most and has no exercise set: it is the argument for everything that follows, not a technique to practise. It fits one sitting. Read it before <a href="../sessions/the-trial-glpx001.html">The GLPX-001 Trial</a>, which introduces the data you will work with for the rest of the course.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -406,10 +466,11 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="callout-body-container callout-body">
 <p>Every code chunk below is written so you can copy it into your R console (or an R script) and run it yourself, in the order shown. Where you see a “Run It Yourself” box, stop and run the code above it before reading the explanation that follows.</p>
+<p>Run R from the <strong>project root</strong> (open the repository’s <code>.Rproj</code> file, or <code>setwd()</code> to the folder containing <code>_quarto.yml</code>). Every path in this course is written relative to that root, so <code>data/raw/dm_raw.csv</code> means what it says.</p>
 </div>
 </div>
-<section id="when-do-you-use-this" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="when-do-you-use-this"><span class="header-section-number">2.1</span> When Do You Use This?</h2>
+<section id="sec-why-standards" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="sec-why-standards"><span class="header-section-number">2.1</span> When Do You Use This?</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -420,7 +481,9 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>TODO: two or three concrete scenarios that this session answers, ending with the single question it addresses in bold. Cross-link the session(s) this one builds on.</p>
+<p>You have joined a study team and been handed five CSV files and a question: “how many patients had nausea?” Or a reviewer has asked why the subject count in your table is 400 when the demographics file has 401 rows. Or someone says the word “SDTM” in a meeting and you nod.</p>
+<p>In each case the underlying problem is the same: <strong>the data cannot be read correctly by anyone who does not already know this particular trial.</strong> That is the problem standards solve, and this session demonstrates it before naming a single CDISC variable.</p>
+<p>This is the first session of the course and assumes no CDISC knowledge. It assumes you can read <code>dplyr</code>.</p>
 </div>
 </div>
 </section>
@@ -428,53 +491,546 @@ Tip
 <h2 data-number="2.2" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">2.2</span> Learning Objectives</h2>
 <p>After completing this session you will be able to:</p>
 <ul>
-<li>TODO</li>
-<li>TODO</li>
-<li>TODO</li>
+<li>Explain why clinical data standards exist, in terms of the specific problems they solve rather than the regulations that mandate them</li>
+<li>Demonstrate, in R, that raw trial data carries structure and vocabulary that only the study team understands</li>
+<li>Distinguish the three things a standard fixes: variable naming, dataset structure, and controlled vocabulary</li>
+<li>Explain why “we will standardise it at the end” is a false economy</li>
+<li>Describe the shape of the SDTM → ADaM → TLF pipeline the rest of this course builds</li>
 </ul>
 </section>
-<section id="background-todo-the-one-core-idea" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="background-todo-the-one-core-idea"><span class="header-section-number">2.3</span> Background: TODO (the one core idea)</h2>
-<p><em>Estimated time: ~TODO minutes (reading)</em></p>
-<p>TODO: introduce the single idea that ties the session together, concept before formula.</p>
+<section id="background-data-that-can-only-be-read-by-its-author" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="background-data-that-can-only-be-read-by-its-author"><span class="header-section-number">2.3</span> Background: Data That Can Only Be Read by Its Author</h2>
+<p><em>Estimated time: ~15 minutes (reading)</em></p>
+<p>Here is the single idea that ties this session together, and arguably the whole course:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>The one thing to remember
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Raw trial data can only be read by someone who already knows the trial. A standard is what lets it be read by someone who doesn’t.</strong></p>
+</div>
+</div>
+<p>Every dataset carries two kinds of information. There is the data itself: the numbers, the dates, the terms. And there is the knowledge required to interpret it: that <code>colldt</code> means the date the sample was collected, that a blank <code>AEENDT</code> means the event was still ongoing rather than that someone forgot, that subject <code>101-012</code> appears twice for a reason.</p>
+<p>In a normal research project, that second kind of information lives in someone’s head, and that is survivable. You wrote the data; you can read the data. If a colleague needs it, you explain it to them over coffee.</p>
+<p>Clinical trials break this arrangement in three ways at once.</p>
+<p><strong>Scale.</strong> A regulator receives study data from many sponsors, for many trials, in many therapeutic areas, every year. Nobody at the agency can have coffee with every study team. If each sponsor invents its own layout, then reviewing <span class="math inline">\(n\)</span> trials requires understanding <span class="math inline">\(n\)</span> different conventions, and no tool built for one submission works on the next.</p>
+<p><strong>Time.</strong> A trial’s data outlives the people who made it. Regulators may return to a submission years later; a safety signal may surface long after the study team has moved on. “Ask the programmer who built it” stops being an available answer.</p>
+<p><strong>Consequence.</strong> If a reviewer misreads your adverse event data, the result is not an awkward correction in a journal. It is a wrong conclusion about whether a drug harms people.</p>
+<p>So the industry did the only thing that scales: it agreed, in advance, on what the columns are called, how the datasets are shaped, and which words are allowed in them. That agreement is what CDISC publishes.</p>
+<section id="a-standard-fixes-three-separate-things" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="a-standard-fixes-three-separate-things"><span class="header-section-number">2.3.1</span> A standard fixes three separate things</h3>
+<p>It is worth separating these now, because learners routinely collapse them into “renaming columns,” and then wonder why the rest of the course is hard.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>What is fixed</th>
+<th>The question it answers</th>
+<th>Where this course covers it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Variable naming</strong></td>
+<td>What is this column called, in every trial?</td>
+<td><a href="../sessions/sdtm-concepts.html">SDTM Concepts</a></td>
+</tr>
+<tr class="even">
+<td><strong>Dataset structure</strong></td>
+<td>What is one row, and which datasets exist?</td>
+<td><a href="../sessions/sdtm-concepts.html">SDTM Concepts</a>, <a href="../sessions/sdtm-dm.html">The DM Domain</a></td>
+</tr>
+<tr class="odd">
+<td><strong>Controlled vocabulary</strong></td>
+<td>Which values is this column allowed to hold?</td>
+<td><a href="../sessions/sdtm-concepts.html">SDTM Concepts</a>, <a href="../sessions/sdtm-events-findings.html">Events and Findings</a></td>
+</tr>
+</tbody>
+</table>
+<p>Example 1 below demonstrates the first two problems in the GLPX-001 raw data. Example 2 demonstrates the third. Neither example needs you to know any CDISC yet — that is the point. You should feel the problem before you are handed the solution.</p>
 </section>
-<section id="example-1-todo" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="example-1-todo"><span class="header-section-number">2.4</span> Example 1: TODO</h2>
-<p>TODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.</p>
-<section id="run-it-yourself" class="level3" data-number="2.4.1">
-<h3 data-number="2.4.1" class="anchored" data-anchor-id="run-it-yourself"><span class="header-section-number">2.4.1</span> Run It Yourself</h3>
-<p>TODO: the exact code block the learner should execute before reading on.</p>
+<section id="the-shape-of-what-is-coming" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="the-shape-of-what-is-coming"><span class="header-section-number">2.3.2</span> The shape of what is coming</h3>
+<p>The rest of this course is one pipeline, and it is worth seeing the whole shape before you meet any of its parts:</p>
+<ul>
+<li><strong>Raw data</strong> — what the study team receives: an EDC export, a lab vendor’s file, each with its own conventions. This is where you are now.</li>
+<li><strong>SDTM</strong> — the raw data, reorganised and renamed to the standard, with the original values preserved. It answers: <em>what happened in this trial?</em> (Part 2)</li>
+<li><strong>ADaM</strong> — analysis-ready datasets derived from SDTM, carrying the variables a statistician needs to run the analysis and a reviewer needs to reproduce it. It answers: <em>what does the trial show?</em> (Part 3)</li>
+<li><strong>TLFs</strong> — the tables, listings and figures that go in the study report. (Part 4)</li>
+</ul>
+<p>Each stage has a different job, and a great deal of confusion in clinical programming comes from asking one stage to do another’s work. <a href="../sessions/sdtm-concepts.html">SDTM Concepts</a> and <a href="../sessions/adam-concepts.html">ADaM Concepts</a> draw that line properly.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>VERIFY
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Claim: Regulatory authorities require CDISC-conformant study data for marketing applications — specifically, that FDA and PMDA mandate SDTM and ADaM (and define.xml as the accompanying data definition document) for applicable studies, with the requirement flowing from the FDA Data Standards Catalog and the Study Data Technical Conformance Guide.</p>
+<p>Source needed: FDA Data Standards Catalog (current version, and the applicability/effective dates); FDA Study Data Technical Conformance Guide; PMDA notification on electronic study data submission.</p>
+<p>Author: confirm the requirement, the naming of each document, and the dates before publish. The argument in this session deliberately does not depend on these specifics — it is made from the data — but the regulatory framing should be stated correctly or not at all.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why not just write good documentation instead?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A reasonable objection: if the problem is that knowledge lives in someone’s head, why not write it down? A thorough data dictionary per trial would solve it, wouldn’t it?</p>
+<p>It solves the <em>comprehension</em> problem and not the <em>automation</em> one. A reviewer who can read your dictionary still cannot run last year’s program against your data, because your column is called <code>colldt</code> and last year’s was called <code>SAMPDT</code>. Documentation lets a human understand <span class="math inline">\(n\)</span> conventions one at a time. A standard lets one program read all <span class="math inline">\(n\)</span>. The difference compounds: every validation rule, every review tool, and every analysis macro is written once against the standard rather than once per trial.</p>
+<p>This is also why the standard is not negotiable per-study. A standard that each sponsor adapts to taste is a dictionary with extra steps.</p>
+</div>
+</div>
+</div>
 </section>
-<section id="reading-the-output-line-by-line" class="level3" data-number="2.4.2">
-<h3 data-number="2.4.2" class="anchored" data-anchor-id="reading-the-output-line-by-line"><span class="header-section-number">2.4.2</span> Reading the Output Line by Line</h3>
-<p>TODO: map each line of output to its plain-English meaning.</p>
+</section>
+<section id="example-1-five-files-five-conventions" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="example-1-five-files-five-conventions"><span class="header-section-number">2.4</span> Example 1: Five Files, Five Conventions</h2>
+<p><em>Estimated time: ~20 minutes (worked example)</em></p>
+<p>GLPX-001 is a simulated Phase III trial of a GLP-1-class agent in type 2 diabetes. <a href="../sessions/the-trial-glpx001.html">The next session</a> introduces it properly. For now you only need to know that its raw data is what a study team actually receives: an export from the EDC system where sites enter data, plus a separate file from the central laboratory that analyses the blood samples. Two organisations, two sets of habits.</p>
+<p>Load all five raw files and look at nothing but their shape:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>raw_paths <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"data/raw"</span>, <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.csv$"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> raw_paths <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_names</span>(\(p) <span class="fu">basename</span>(p)) <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(\(p) <span class="fu">read_csv</span>(p, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>())))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">file    =</span> <span class="fu">names</span>(raw),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">rows    =</span> <span class="fu">map_int</span>(raw, nrow),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">columns =</span> <span class="fu">map_chr</span>(raw, \(d) <span class="fu">paste</span>(<span class="fu">names</span>(d), <span class="at">collapse =</span> <span class="st">", "</span>))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+  file        rows columns                                                      
+  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;                                                        
+1 ae_raw.csv   389 SUBJID, AETERM, AESTDT, AEENDT, AESEV, AESER, AEOUT          
+2 dm_raw.csv   401 SUBJID, SITEID, BIRTHDT, SEX, RACE, ETHNIC, COUNTRY, RANDDT,…
+3 ex_raw.csv   400 SUBJID, DRUG, DOSE, DOSEU, FREQ, EXSTDT, EXENDT              
+4 lb_raw.csv 12389 subjid, sex, visit, colldt, test, result, unit               
+5 vs_raw.csv 12788 SUBJID, VISIT, VSDT, TEST, RESULT, UNIT                      </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Run It Yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Run the chunk above. You should see five files: <code>ae_raw.csv</code> (389 rows), <code>dm_raw.csv</code> (401), <code>ex_raw.csv</code> (400), <code>lb_raw.csv</code> (12,389) and <code>vs_raw.csv</code> (12,788).</p>
+<p>Before reading on, look only at the <code>columns</code> column and answer one question: <strong>if you had to write a single function that returned the subject identifier from any of these five files, what would it look like?</strong></p>
+</div>
+</div>
+<p>Everything here is read as character deliberately. Left to itself, <code>read_csv()</code> guesses types, and a guess is exactly the kind of trial-specific knowledge we are trying to expose rather than hide. A date that is sometimes <code>2024-03-12</code> and sometimes <code>1969</code> is not a date column to R; it is a mess, and we want to see the mess.</p>
+<p>The answer to the question in the box is that your function needs a lookup table, because the files do not agree:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file           =</span> <span class="fu">names</span>(raw),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">subject_column =</span> <span class="fu">map_chr</span>(raw, \(d) {</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="fu">grep</span>(<span class="st">"subjid"</span>, <span class="fu">names</span>(d), <span class="at">ignore.case =</span> <span class="cn">TRUE</span>, <span class="at">value =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">collapse =</span> <span class="st">", "</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  }),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">date_columns   =</span> <span class="fu">map_chr</span>(raw, \(d) {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="fu">grep</span>(<span class="st">"dt$"</span>, <span class="fu">names</span>(d), <span class="at">ignore.case =</span> <span class="cn">TRUE</span>, <span class="at">value =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">collapse =</span> <span class="st">", "</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+  file       subject_column date_columns   
+  &lt;chr&gt;      &lt;chr&gt;          &lt;chr&gt;          
+1 ae_raw.csv SUBJID         AESTDT, AEENDT 
+2 dm_raw.csv SUBJID         BIRTHDT, RANDDT
+3 ex_raw.csv SUBJID         EXSTDT, EXENDT 
+4 lb_raw.csv subjid         colldt         
+5 vs_raw.csv SUBJID         VSDT           </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reading the Output Line by Line
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What you see</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>SUBJID</code> in four files, <code>subjid</code> in <code>lb_raw.csv</code></td>
+<td>The lab vendor lower-cases its columns. R is case-sensitive, so <code>dm$SUBJID</code> and <code>lb$subjid</code> are different names for the same concept. Every join you write must know this.</td>
+</tr>
+<tr class="even">
+<td><code>BIRTHDT</code>, <code>RANDDT</code>, <code>AESTDT</code>, <code>AEENDT</code>, <code>EXSTDT</code>, <code>EXENDT</code>, <code>VSDT</code>, <code>colldt</code></td>
+<td>Eight date columns, eight names, no shared pattern. <code>colldt</code> does not even end in the same convention as the others.</td>
+</tr>
+<tr class="odd">
+<td><code>ae_raw.csv</code> has 389 rows</td>
+<td>Fewer rows than subjects. Adverse event data has one row per <em>event</em>, not per subject — and subjects with no events have no rows at all.</td>
+</tr>
+<tr class="even">
+<td><code>lb_raw.csv</code> has 12,389 rows</td>
+<td>One row per subject per visit per test. The same trial, at a completely different granularity.</td>
+</tr>
+</tbody>
+</table>
+<p>Notice what the last two rows of that table mean: <strong>“one row” means something different in every file.</strong> Structure is not a presentational detail you can fix with <code>rename()</code>.</p>
+</div>
+</div>
+<p>The <code>grep()</code> in that chunk is itself the lesson. To find the subject column, we had to search for it with a case-insensitive pattern, because we already knew — from having looked — that it might be upper or lower case. A standard is what makes that search unnecessary.</p>
+<section id="when-two-sources-disagree-about-a-fact" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="when-two-sources-disagree-about-a-fact"><span class="header-section-number">2.4.1</span> When two sources disagree about a fact</h3>
+<p>Both the EDC and the lab file record each subject’s sex. They were entered by different people, at different times, into different systems. Nothing forces them to agree, so let us check whether they do:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>edc_sex <span class="ot">&lt;-</span> raw[[<span class="st">"dm_raw.csv"</span>]] <span class="sc">|&gt;</span> <span class="fu">distinct</span>(SUBJID, <span class="at">edc_sex =</span> SEX)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>lab_sex <span class="ot">&lt;-</span> raw[[<span class="st">"lb_raw.csv"</span>]] <span class="sc">|&gt;</span> <span class="fu">distinct</span>(subjid, <span class="at">lab_sex =</span> sex)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>edc_sex <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(lab_sex, <span class="at">by =</span> <span class="fu">join_by</span>(SUBJID <span class="sc">==</span> subjid)) <span class="sc">|&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(edc_sex <span class="sc">!=</span> lab_sex)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  SUBJID  edc_sex lab_sex
+  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+1 111-003 F       M      </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Run It Yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Run the chunk above. Exactly one subject comes back: <code>111-003</code>, whom the EDC records as <code>F</code> and the lab records as <code>M</code>.</p>
+<p>Now sit with the awkward part: <strong>which one is right?</strong> The data cannot tell you. Nothing in either file is malformed. Both values are perfectly valid. They simply disagree, and you have no way to resolve it from the data alone.</p>
+</div>
+</div>
+<p>This is not a trick, and it is not rare. It is a defect deliberately built into the GLPX-001 simulation because it is one of the most ordinary things that happens in a real trial. You will resolve this subject properly in <a href="../sessions/sdtm-dm.html">The DM Domain</a>, where you will see that the standard’s contribution is not to <em>know</em> the answer, but to force the question to be asked and the decision to be recorded.</p>
+<p>Note the join itself: <code>join_by(SUBJID == subjid)</code>. Because the two files name the same concept differently, the join cannot be written without trial-specific knowledge. After standardisation it can.</p>
+</section>
+<section id="counting-subjects-is-not-nrow" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="counting-subjects-is-not-nrow"><span class="header-section-number">2.4.2</span> Counting subjects is not <code>nrow()</code></h3>
+<p>One more, and it is the one that catches everybody:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dm <span class="ot">&lt;-</span> raw[[<span class="st">"dm_raw.csv"</span>]]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(dm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 401</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_distinct</span>(dm<span class="sc">$</span>SUBJID)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 400</code></pre>
+</div>
+</div>
+<p>The demographics file has 401 rows and 400 subjects. If you reported <code>nrow(dm)</code> as the number of enrolled subjects, you would be wrong, and nothing in the file would warn you:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dm <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_count</span>(SUBJID, <span class="at">name =</span> <span class="st">"rows_for_this_subject"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rows_for_this_subject <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SUBJID, SITEID, RANDDT, ARM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  SUBJID  SITEID RANDDT     ARM    
+  &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;  
+1 101-012 101    2024-03-06 Placebo
+2 101-012 108    2024-03-27 Placebo</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reading the Output Line by Line
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Subject <code>101-012</code> has two rows: one at site <code>101</code> randomised on <code>2024-03-06</code>, one at site <code>108</code> randomised on <code>2024-03-27</code>. Read them as a story rather than as a bug. A subject was screened at one site, moved, and was enrolled again at another site under the same subject number. Both rows are things that genuinely happened and both were genuinely recorded.</p>
+<p>The file is not corrupt. It simply has no rule that says <em>one row per subject</em> — so nobody enforced one, and a plausible sequence of events produced two. The standard’s contribution here is the rule itself, stated in advance and checkable by a machine. You will apply it in <a href="../sessions/sdtm-dm.html">The DM Domain</a>.</p>
+</div>
+</div>
+<p>This is the whole argument in miniature. Three ordinary questions — what is the subject column, what sex is subject <code>111-003</code>, how many subjects are there — and each one needed knowledge that is not in the data.</p>
 </section>
 </section>
-<section id="example-2-todo" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="example-2-todo"><span class="header-section-number">2.5</span> Example 2: TODO</h2>
-<p>TODO: a second worked example.</p>
-<section id="run-it-yourself-1" class="level3" data-number="2.5.1">
-<h3 data-number="2.5.1" class="anchored" data-anchor-id="run-it-yourself-1"><span class="header-section-number">2.5.1</span> Run It Yourself</h3>
-<p>TODO.</p>
+<section id="example-2-one-question-three-answers" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="example-2-one-question-three-answers"><span class="header-section-number">2.5</span> Example 2: One Question, Three Answers</h2>
+<p><em>Estimated time: ~15 minutes (worked example)</em></p>
+<p>Naming and structure are the visible problems. Vocabulary is the one that will actually hurt you, because it produces answers rather than errors.</p>
+<p>Here is a question a regulator genuinely asks, and one of the simplest questions available: <strong>how many subjects had nausea?</strong></p>
+<p>Start by looking at what sites typed into the adverse event term field:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ae <span class="ot">&lt;-</span> raw[[<span class="st">"ae_raw.csv"</span>]]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>ae <span class="sc">|&gt;</span> <span class="fu">count</span>(AETERM, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 25 × 2
+   AETERM                      n
+   &lt;chr&gt;                   &lt;int&gt;
+ 1 Nasopharyngitis            63
+ 2 Nausea                     61
+ 3 Diarrhoea                  56
+ 4 Headache                   36
+ 5 Constipation               32
+ 6 Vomiting                   29
+ 7 Decreased appetite         26
+ 8 Dizziness                  25
+ 9 Injection site reaction    24
+10 Hypoglycaemia              13
+# ℹ 15 more rows</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Run It Yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Run the chunk above and read the whole list — all 25 rows, not just the top. Find every row that a clinician would call nausea. There are four of them.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reading the Output Line by Line
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What you see</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Nausea</code> (61), <code>NAUSEA</code> (2), <code>nausea</code> (2)</td>
+<td>The same event, typed three ways. Case is not meaningful here — but R has no way to know that.</td>
+</tr>
+<tr class="even">
+<td><code>Diarrhoea</code> (56), <code>DIARRHOEA</code> (2), <code>diarrhoea</code> (1), <code>Diarrea</code> (1)</td>
+<td>Case again, plus a misspelling. <code>Diarrea</code> is a typo that no case-folding will rescue.</td>
+</tr>
+<tr class="odd">
+<td><code>nausea and vomitting</code> (1)</td>
+<td>Two clinical events in one field, and a misspelling. This is not a formatting problem; it is a <em>data</em> problem. One AE record is describing two AEs.</td>
+</tr>
+<tr class="even">
+<td>25 rows in total</td>
+<td>Twenty-five distinct strings for what sites believed were ordinary, common events.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>How many distinct things are actually in this column?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_distinct</span>(ae<span class="sc">$</span>AETERM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 25</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_distinct</span>(<span class="fu">toupper</span>(ae<span class="sc">$</span>AETERM))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12</code></pre>
+</div>
+</div>
+<p>Twenty-five as recorded; twelve once you ignore case. But GLPX-001 only ever produced <strong>ten</strong> clinical concepts. Upper-casing gets you from 25 to 12, and then stops:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">unique</span>(<span class="fu">toupper</span>(ae<span class="sc">$</span>AETERM)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "CONSTIPATION"            "DECREASED APPETITE"     
+ [3] "DIARREA"                 "DIARRHOEA"              
+ [5] "DIZZINESS"               "HEADACHE"               
+ [7] "HYPOGLYCAEMIA"           "INJECTION SITE REACTION"
+ [9] "NASOPHARYNGITIS"         "NAUSEA"                 
+[11] "NAUSEA AND VOMITTING"    "VOMITING"               </code></pre>
+</div>
+</div>
+<p>The two extra entries are <code>DIARREA</code> and <code>NAUSEA AND VOMITTING</code>. No string operation will fix them, because fixing them requires knowing that “Diarrea” means diarrhoea and that “nausea and vomitting” is two events. That knowledge is medical, not textual.</p>
+<section id="three-defensible-rules-three-different-answers" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="three-defensible-rules-three-different-answers"><span class="header-section-number">2.5.1</span> Three defensible rules, three different answers</h3>
+<p>Now answer the regulator’s question. Watch what happens:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">rule =</span> <span class="fu">c</span>(<span class="st">"AETERM == 'Nausea'"</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>           <span class="st">"toupper(AETERM) == 'NAUSEA'"</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>           <span class="st">"toupper(AETERM) contains 'NAUSEA'"</span>),</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">subjects =</span> <span class="fu">c</span>(</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    ae <span class="sc">|&gt;</span> <span class="fu">filter</span>(AETERM <span class="sc">==</span> <span class="st">"Nausea"</span>)                    <span class="sc">|&gt;</span> <span class="fu">distinct</span>(SUBJID) <span class="sc">|&gt;</span> <span class="fu">nrow</span>(),</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    ae <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">toupper</span>(AETERM) <span class="sc">==</span> <span class="st">"NAUSEA"</span>)           <span class="sc">|&gt;</span> <span class="fu">distinct</span>(SUBJID) <span class="sc">|&gt;</span> <span class="fu">nrow</span>(),</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    ae <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(<span class="fu">toupper</span>(AETERM), <span class="st">"NAUSEA"</span>)) <span class="sc">|&gt;</span> <span class="fu">distinct</span>(SUBJID) <span class="sc">|&gt;</span> <span class="fu">nrow</span>()</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  rule                              subjects
+  &lt;chr&gt;                                &lt;int&gt;
+1 AETERM == 'Nausea'                      61
+2 toupper(AETERM) == 'NAUSEA'             65
+3 toupper(AETERM) contains 'NAUSEA'       66</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Run It Yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Run the chunk above. You should get <strong>61</strong>, <strong>65</strong> and <strong>66</strong>.</p>
+<p>Before reading on: which of those three numbers would you put in a safety table? Notice that you cannot answer that question from the data either.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reading the Output Line by Line
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rule</th>
+<th>Subjects</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>AETERM == 'Nausea'</code></td>
+<td>61</td>
+<td>Exact match. Silently drops the four subjects whose term was typed in a different case. Wrong, and looks fine.</td>
+</tr>
+<tr class="even">
+<td><code>toupper(AETERM) == 'NAUSEA'</code></td>
+<td>65</td>
+<td>Case-insensitive exact match. Catches <code>NAUSEA</code> and <code>nausea</code>. Still misses <code>nausea and vomitting</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>str_detect(toupper(AETERM), 'NAUSEA')</code></td>
+<td>66</td>
+<td>Substring match. Catches all four spellings — but it counts <code>nausea and vomitting</code> as nausea, which is <em>arguably</em> right, while quietly failing to also count it as vomiting, which is <em>definitely</em> wrong.</td>
+</tr>
+</tbody>
+</table>
+<p>Three rules, all defensible, all written by a competent R programmer in good faith. Three different numbers in a safety table.</p>
+</div>
+</div>
+<p>None of these is a bug. Every one of them runs, returns a plausible integer, and produces no warning. That is precisely what makes this the dangerous failure mode: <strong>a naming problem throws an error, a vocabulary problem returns a number.</strong></p>
+<p>The standard’s answer has two halves, and this course covers both:</p>
+<ul>
+<li><strong>Controlled terminology</strong> — the column is not free text. It may hold only values from a published list, so <code>Nausea</code>, <code>NAUSEA</code> and <code>nausea</code> cannot coexist, because two of them are not legal values. You will check values against the published lists programmatically rather than from memory in <a href="../sessions/sdtm-concepts.html">SDTM Concepts</a>.</li>
+<li><strong>Coding</strong> — a human (or a human-supervised process) maps each verbatim term a site typed to a dictionary term, and <em>both</em> are kept: the original words and the coded concept. <code>Diarrea</code> and <code>nausea and vomitting</code> are resolved by that step, not by code.</li>
+</ul>
+<p>Notice that the raw verbatim text is never destroyed. That is a principle worth carrying through the whole course: standardisation adds an interpretation alongside the original. It does not overwrite it.</p>
 </section>
 </section>
 <section id="what-can-go-wrong" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">2.6</span> What Can Go Wrong</h2>
-<p>TODO: failure modes and misuse patterns.</p>
-<section id="common-misinterpretations" class="level3" data-number="2.6.1">
-<h3 data-number="2.6.1" class="anchored" data-anchor-id="common-misinterpretations"><span class="header-section-number">2.6.1</span> Common misinterpretations</h3>
-<p>TODO.</p>
-</section>
+<p><em>Estimated time: ~10 minutes (reading)</em></p>
+<p><strong>Treating standardisation as renaming</strong></p>
+<p>The most common misreading of this session is “so I should call the column <code>USUBJID</code> instead of <code>subjid</code>.” Renaming is the easiest third of the job and the least important. Example 1 showed structure differing (one row per event vs per subject per visit per test) and Example 2 showed vocabulary differing. <code>rename()</code> addresses neither. If your mental model of SDTM is a lookup table of old name → new name, Part 2 will not make sense.</p>
+<p><strong>“We’ll standardise at the end”</strong></p>
+<p>Standardising is a <em>decision-recording</em> activity, not a formatting one. Look again at subject <code>111-003</code>: resolving that conflict requires someone to find out which value is right. That is easy while the site is still open and the data manager still remembers the query. It is expensive a year later and impossible after the study closes. Every deferred standardisation decision gets more costly, and some of them become unanswerable. The dates in <code>dm_raw.csv</code> are the same story: someone knew, at the time, why a subject’s birth date was recorded as <code>1969</code>.</p>
+<p><strong>Assuming the vendor’s file is the trustworthy one</strong></p>
+<p>The lab file looks more authoritative — machine-generated, consistent formatting, no free text. It is still the file with the wrong sex for subject <code>111-003</code> (or the right one; you do not know yet). Tidiness is not accuracy.</p>
+<p><strong>Believing a validator’s silence</strong></p>
+<p>Conformance tools check that data conforms to the standard. They cannot check that it is true. Every one of the three nausea counts would pass a conformance check on the resulting dataset, because each produces a structurally valid number. Passing validation means you have not made a <em>standards</em> error; it says nothing about whether you have made a <em>scientific</em> one.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common misinterpretations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>“Standards are bureaucratic overhead imposed by regulators”</strong> The regulation exists because the problem does, not the other way round. Everything demonstrated in this session — the disagreeing sex, the duplicated subject, the 25 spellings — would still be a problem for your own team six months from now if no agency existed.</p>
+<p><strong>“My data is clean, so this doesn’t apply to me”</strong> Nothing in the GLPX-001 raw data is dirty in the ordinary sense. There are no impossible values, no corrupted rows, no encoding errors. Every problem in this session came from <em>clean data with no agreed meaning</em>.</p>
+<p><strong>“The CRO/vendor handles CDISC, so I don’t need to know it”</strong> Someone still has to decide what sex subject <code>111-003</code> is, and that someone needs to understand both the trial and the standard. Delegating the mapping does not delegate the decisions — it just means you approve decisions you did not make.</p>
+<p><strong>“Once the data conforms, the analysis is objective”</strong> The three nausea counts differ by rule choice, not by data quality. The standard removes the <em>arbitrary</em> differences (naming, case, structure) so that the remaining differences are visible and arguable. It does not remove judgement; it exposes it.</p>
+</div>
+</div>
 </section>
 <section id="exercises" class="level2" data-number="2.7">
 <h2 data-number="2.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">2.7</span> Exercises</h2>
-<p>TODO: link the exercise file(s) for this session, or state that this session has no exercise.</p>
+<p>This session has no exercise set. It makes an argument rather than teaching a technique, and the argument is best tested by the <a href="#comprehension-check">Comprehension Check</a> below.</p>
+<p>The first exercises arrive with <a href="../sessions/sdtm-dm.html">The DM Domain</a>, by which point you will have something to build. If you want to do something now, re-run Example 2’s three nausea rules against <code>Diarrhoea</code> instead, and see how many different answers you can defend.</p>
 </section>
 <section id="comprehension-check" class="level2" data-number="2.8">
 <h2 data-number="2.8" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">2.8</span> Comprehension Check</h2>
-<p>TODO: three to five short self-test questions.</p>
+<p><em>Estimated time: ~10 minutes</em></p>
+<ol type="1">
+<li>In your own words, why can’t a thorough data dictionary for each trial replace a standard?</li>
+<li><code>dm_raw.csv</code> has 401 rows and 400 subjects. Why is this not a data error, and what does the standard contribute?</li>
+<li>Three defensible R rules gave 61, 65 and 66 subjects with nausea. Which is correct, and what does your answer tell you about where the fix has to happen?</li>
+<li>A colleague says: “The lab file is machine-generated, so where the EDC and the lab disagree, trust the lab.” What is wrong with this reasoning?</li>
+<li>Name the three distinct things a standard fixes, and give an example of each from the GLPX-001 raw data.</li>
+</ol>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -483,9 +1039,15 @@ Tip
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>TODO: answers, collapsed.</p>
+<ol type="1">
+<li><p>A dictionary solves comprehension, not automation. A reviewer can read your dictionary and understand your data, but they still cannot run an existing program against it, because your columns have your names. Documentation scales linearly with the number of trials (read each one); a standard is written against once and applies to all of them. Every validation rule and review tool in the industry depends on that second property.</p></li>
+<li><p>Subject <code>101-012</code> was screened at one site and enrolled again at another after moving, producing two genuine, correctly recorded rows. The raw data has no rule saying one row per subject, so nothing prevented it. The standard contributes the rule itself — stated in advance, applying to every trial, and checkable by a machine rather than by someone noticing.</p></li>
+<li><p>None of them is correct as a <em>code</em> problem, which is the point. 61 is wrong (it drops case variants). 65 and 66 differ only in how they treat <code>nausea and vomitting</code>, and neither handles it properly, because that record describes two events and no filter can split it. The fix cannot happen in the analysis; it has to happen upstream, by constraining the column to a controlled vocabulary and coding the verbatim terms. If your rule choice changes the answer, the answer is not in the data yet.</p></li>
+<li><p>It confuses consistency with accuracy. The lab file is machine-generated in its <em>formatting</em>, but the sex value in it originated from a human at some point, exactly like the EDC value. Neither file is more likely to be right <em>a priori</em>, and the disagreement is evidence that at least one human-entered value is wrong. Resolving it requires going back to the source, not picking the tidier file. (Note also that the lab file is where the duplicate record and the missing unit live.)</p></li>
+<li><p><strong>Variable naming</strong>: <code>SUBJID</code> in four files and <code>subjid</code> in the lab file — the same concept, two names, so no join can be written generically. <strong>Dataset structure</strong>: <code>ae_raw.csv</code> has one row per event (389 rows, fewer than the 400 subjects), while <code>lb_raw.csv</code> has one row per subject per visit per test (12,389 rows) — “one row” means something different in each. <strong>Controlled vocabulary</strong>: <code>AETERM</code> holds 25 distinct strings for 10 clinical concepts, including <code>Diarrea</code> and <code>nausea and vomitting</code>.</p></li>
+</ol>
 </div>
 </div>
 </div>

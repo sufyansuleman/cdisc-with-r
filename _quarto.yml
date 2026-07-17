@@ -1,6 +1,10 @@
 project:
   type: book
   output-dir: docs
+  # Chunks run from the project root, so paths in sessions match what a
+  # learner types after opening the .Rproj — data/raw/dm_raw.csv, not
+  # ../data/raw/dm_raw.csv.
+  execute-dir: project
 
 book:
   title: "CDISC with R"
