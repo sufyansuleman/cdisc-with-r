@@ -31,5 +31,10 @@ renv/sandbox/
 .DS_Store
 Thumbs.db
 
-# Local reference material (not distributed)
+# Local reference material (not distributed). CT is checked
+# programmatically via the sdtm.terminology package instead.
 SDTM Terminology.pdf
+Providing-Regulatory-Submissions-In-Electronic-Format.pdf
+Study-Data-Technical-Conformance.pdf
+TRC-Worksheet Instructions_v4.0.pdf
+fda-dscv11.0.xlsx
