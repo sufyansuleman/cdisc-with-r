@@ -17,14 +17,10 @@
 # teaches — so column names and values here must never be mistaken for
 # CDISC standards.
 #
-# DELIBERATE DEFECTS — these are curriculum, never "clean them up":
-#   D1  partial and missing birth dates          -> sessions/sdtm-dm.qmd
-#   D2  one subject enrolled at two sites        -> sessions/sdtm-dm.qmd
-#   D3  an AE with no start date                 -> sessions/sdtm-events-findings.qmd
-#   D4  a lab result with a missing unit         -> sessions/sdtm-events-findings.qmd
-#   D5  an out-of-range value that is real       -> sessions/sdtm-events-findings.qmd, sessions/adae-adlb.qmd
-#   D6  a duplicate lab record                   -> sessions/sdtm-events-findings.qmd
-#   D7  sex disagrees between EDC and lab file   -> sessions/sdtm-dm.qmd
+# DELIBERATE DEFECTS — these are curriculum, never "clean them up".
+# The defect_registry below is the single source of truth: which subject
+# carries which defect, and which session teaches it. Placement is driven
+# FROM that table; defects are never placed positionally.
 #
 # Reproducibility: fixed seed; identical output on every run.
 
@@ -53,6 +49,40 @@ visits <- tibble(
 n_visits <- nrow(visits)
 
 fmt_date <- function(x) format(x, "%Y-%m-%d")
+
+# ---- Defect registry -------------------------------------------------------
+# Single source of truth for every deliberate flaw in GLPX-001.
+# Defects are the curriculum, not bugs. Each is taught in exactly one session.
+# Placement is driven FROM this table. Never place a defect positionally.
+#
+# usubjid values are raw SUBJIDs from the simulated cohort (fixed seed);
+# main() asserts they exist before anything is written. D3 lives in the lab
+# file but is a dm defect: the EDC and the lab disagree about the subject.
+
+defect_registry <- tribble(
+  ~id,  ~domain, ~usubjid,  ~seq, ~defect,                                 ~teaches_in,
+  "D1", "dm",    "102-005", NA,   "partial birth date (YYYY-MM)",          "sdtm-dm",
+  "D1", "dm",    "110-023", NA,   "partial birth date (YYYY-MM)",          "sdtm-dm",
+  "D1", "dm",    "111-057", NA,   "partial birth date (YYYY)",             "sdtm-dm",
+  "D1", "dm",    "103-141", NA,   "missing birth date",                    "sdtm-dm",
+  "D2", "dm",    "101-012", NA,   "enrolled at two sites",                 "sdtm-dm",
+  "D3", "dm",    "111-003", NA,   "sex inconsistent across raw sources",   "sdtm-dm",
+  "D4", "ae",    "103-199", 1L,   "AE with no start date",                 "sdtm-events-findings",
+  "D5", "lb",    "101-052", NA,   "out-of-range HbA1c, genuine not error", "sdtm-events-findings",
+  "D6", "lb",    "101-010", NA,   "byte-perfect duplicate record",         "sdtm-events-findings",
+  "D7", "lb",    "101-037", NA,   "missing unit",                          "sdtm-events-findings"
+)
+
+# Invariant: no subject carries two defects. Entangled defects teach nothing —
+# a learner who trips both at once cannot attribute cause to either.
+stopifnot(!any(duplicated(na.omit(defect_registry$usubjid))))
+
+# Invariant: every defect names the session that teaches it.
+stopifnot(all(nzchar(defect_registry$teaches_in)))
+
+defect_subject <- function(id) {
+  defect_registry$usubjid[defect_registry$id == id]
+}
 
 # ---- Subject-level frame (internal; feeds every domain simulator) ----------
 
@@ -105,18 +135,25 @@ simulate_dm <- function(subjects) {
 
   # D1: partial and missing birth dates (site staff couldn't obtain full
   # DOB). Teaches date imputation in sessions/sdtm-dm.qmd.
-  dm$BIRTHDT[5]  <- substr(dm$BIRTHDT[5], 1, 7)   # "YYYY-MM"
-  dm$BIRTHDT[23] <- substr(dm$BIRTHDT[23], 1, 7)
-  dm$BIRTHDT[57] <- substr(dm$BIRTHDT[57], 1, 4)  # "YYYY"
-  dm$BIRTHDT[141] <- ""                            # missing entirely
+  d1 <- filter(defect_registry, id == "D1")
+  for (k in seq_len(nrow(d1))) {
+    i <- which(dm$SUBJID == d1$usubjid[k])
+    dm$BIRTHDT[i] <- switch(
+      d1$defect[k],
+      "partial birth date (YYYY-MM)" = substr(dm$BIRTHDT[i], 1, 7),
+      "partial birth date (YYYY)"    = substr(dm$BIRTHDT[i], 1, 4),
+      "missing birth date"           = ""
+    )
+  }
 
-  # D2: subject 12 was screened at one site, moved, and was enrolled
+  # D2: this subject was screened at one site, moved, and was enrolled
   # again at another site under the same subject number — two DM rows,
   # same SUBJID, different SITEID. Teaches the one-row-per-subject rule
   # in sessions/sdtm-dm.qmd.
-  dup <- dm[12, ]
-  dup$SITEID <- ifelse(dm$SITEID[12] == "101", "108", "101")
-  dup$RANDDT <- fmt_date(as.Date(dm$RANDDT[12]) + 21)
+  i <- which(dm$SUBJID == defect_subject("D2"))
+  dup <- dm[i, ]
+  dup$SITEID <- ifelse(dm$SITEID[i] == "101", "108", "101")
+  dup$RANDDT <- fmt_date(as.Date(dm$RANDDT[i]) + 21)
   dm <- bind_rows(dm, dup) |> arrange(SUBJID)
 
   dm
@@ -173,9 +210,10 @@ simulate_ae <- function(subjects) {
   ae$AESEV[sev] <- "SEVERE"
   ae$AESER[sev] <- "Y"
 
-  # D3: one AE reported by phone; the start date was never obtained.
+  # D4: one AE reported by phone; the start date was never obtained.
   # Teaches missing-date handling in sessions/sdtm-events-findings.qmd.
-  ae$AESTDT[nrow(ae) %/% 2] <- ""
+  d4 <- filter(defect_registry, id == "D4")
+  ae$AESTDT[which(ae$SUBJID == d4$usubjid)[d4$seq]] <- ""
 
   arrange(ae, SUBJID, AESTDT)
 }
@@ -222,23 +260,30 @@ simulate_lb <- function(subjects, visits) {
   # D5: one screening HbA1c of 13.9% — far out of range and REAL: a
   # genuinely poorly controlled patient, not a data error. Teaches that
   # range checks flag values for review, not deletion
-  # (sessions/sdtm-events-findings.qmd, sessions/adae-adlb.qmd).
-  hi <- which(lb$test == "HBA1C" & lb$visit == "SCREENING")[7]
+  # (sessions/sdtm-events-findings.qmd).
+  hi <- which(lb$subjid == defect_subject("D5") &
+                lb$test == "HBA1C" & lb$visit == "SCREENING")
+  stopifnot(length(hi) == 1)
   lb$result[hi] <- 13.9
 
-  # D4: one result arrived with the unit field blank.
+  # D7: one result arrived with the unit field blank.
   # Teaches unit reconciliation in sessions/sdtm-events-findings.qmd.
-  lb$unit[which(lb$test == "GLUC")[40]] <- ""
+  ui <- which(lb$subjid == defect_subject("D7") &
+                lb$test == "GLUC" & lb$visit == "WEEK 8")
+  stopifnot(length(ui) == 1)
+  lb$unit[ui] <- ""
 
-  # D7: the lab file has this subject as "M"; the EDC has "F". One of
+  # D3: the lab file has this subject as "M"; the EDC has "F". One of
   # them is wrong and the mapping has to decide which. Teaches source
   # reconciliation in sessions/sdtm-dm.qmd.
-  mismatch_id <- subjects$subjid[subjects$sex == "F"][1]
-  lb$sex[lb$subjid == mismatch_id] <- "M"
+  lb$sex[lb$subjid == defect_subject("D3")] <- "M"
 
   # D6: one record was transmitted twice by the vendor — a byte-perfect
   # duplicate. Teaches de-duplication in sessions/sdtm-events-findings.qmd.
-  lb <- bind_rows(lb, lb[200, ])
+  dup_row <- filter(lb, subjid == defect_subject("D6"),
+                    visit == "SCREENING", test == "HBA1C")
+  stopifnot(nrow(dup_row) == 1)
+  lb <- bind_rows(lb, dup_row)
 
   arrange(lb, subjid, colldt, test)
 }
@@ -299,6 +344,10 @@ main <- function(out_dir = file.path("data", "raw")) {
   dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
   subjects <- make_subjects(n_subjects, n_sites, arms)
+
+  # A seed change must break the registry loudly, not silently relocate
+  # the curriculum onto different subjects.
+  stopifnot(all(defect_registry$usubjid %in% subjects$subjid))
 
   raw <- list(
     dm_raw = simulate_dm(subjects),
