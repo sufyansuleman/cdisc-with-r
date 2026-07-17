@@ -1,0 +1,32 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Quarto build cache and artifacts (docs/ is COMMITTED — never ignore it)
+/_freeze/
+/.quarto/
+/_book/
+
+# Quarto render artifacts
+rendered.log
+*.log
+**/*.quarto_ipynb
+sessions/*_files/
+exercises/*_files/
+
+# RStudio project file (local IDE settings)
+*.Rproj
+
+# renv (mode PINNED only; renv.lock IS committed)
+renv/library/
+renv/staging/
+renv/local/
+renv/cellar/
+renv/lock/
+renv/python/
+renv/sandbox/
+
+# OS artifacts
+.DS_Store
+Thumbs.db

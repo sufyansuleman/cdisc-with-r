@@ -1,0 +1,63 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "CDISC with R"
+  subtitle: "SDTM, ADaM and TLFs from scratch using a simulated Phase III trial"
+  author:
+    - name: "Sufyan Suleman"
+      orcid: "0000-0001-6612-6915"
+  chapters:
+  - index.qmd
+  - sessions/setup.qmd
+  - part: "Part 1: Foundations"
+    chapters:
+    - sessions/why-standards.qmd
+    - sessions/the-trial-glpx001.qmd
+  - part: "Part 2: SDTM"
+    chapters:
+    - sessions/sdtm-concepts.qmd
+    - sessions/sdtm-dm.qmd
+    - sessions/sdtm-events-findings.qmd
+    - sessions/define-xml.qmd
+  - part: "Part 3: ADaM"
+    chapters:
+    - sessions/adam-concepts.qmd
+    - sessions/adsl.qmd
+    - sessions/adae-adlb.qmd
+  - part: "Part 4: Outputs and Submission"
+    chapters:
+    - sessions/tlf.qmd
+    - sessions/adrg-and-submission.qmd
+    - sessions/dataset-json.qmd
+  - part: "Exercises"
+    chapters:
+    - exercises/sdtm-dm.qmd
+    - exercises/sdtm-events-findings.qmd
+    - exercises/adsl.qmd
+    - exercises/adae-adlb.qmd
+    - exercises/tlf.qmd
+
+bibliography:
+  - references.bib
+
+editor:
+  markdown:
+    wrap: 72
+    canonical: true
+
+format:
+  html:
+    theme: "cosmo"
+    number-sections: true
+    include-in-header:
+      - text: |
+          <meta name="description" content="A free, self-paced, hands-on course on CDISC clinical data standards in R: building SDTM domains, ADaM datasets, and tables, listings and figures from scratch using a simulated Phase III trial.">
+          <meta name="keywords" content="CDISC, SDTM, ADaM, define-XML, Dataset-JSON, TLF, clinical trials, clinical data standards, R programming, pharmaverse, regulatory submission, clinical programming">
+          <meta property="og:description" content="A free, self-paced, hands-on course on CDISC clinical data standards in R: building SDTM domains, ADaM datasets, and tables, listings and figures from scratch using a simulated Phase III trial.">
+          <meta name="twitter:description" content="A free, self-paced, hands-on course on CDISC clinical data standards in R: building SDTM domains, ADaM datasets, and tables, listings and figures from scratch using a simulated Phase III trial.">
+          <script data-goatcounter="https://cdiscwithr.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+execute:
+  freeze: auto

@@ -1,0 +1,53 @@
+---
+title: "Before You Begin: Setup"
+---
+
+::: {.callout-note}
+### Session at a Glance
+
+**Total core time: about TODO minutes.**
+
+| Section | Time | Type |
+|---|---|---|
+| Install the tools | TODO | Hands-on |
+| Restore the course library | TODO | Hands-on |
+| Check you are ready | TODO | Hands-on |
+
+TODO: fill in the time budget once the session is written.
+:::
+
+## What You Will Install
+
+TODO: R, an IDE (RStudio or Positron), Quarto, and Git.
+
+## Why This Course Pins Its Packages
+
+TODO: explain that reproducibility is part of the subject matter in
+regulated clinical work, and that this repository practises what it
+teaches: `renv.lock` records the exact version of every package the
+course uses, and restoring it is your first taste of a reproducible
+pipeline. The lockfile is a teaching artifact, not overhead.
+
+## Restore the Course Library
+
+TODO: walk through cloning the repo and running, once, in R at the
+project root:
+
+```r
+renv::restore()
+```
+
+TODO: show what a successful restore looks like, and note the expected
+duration (minutes, not tens of minutes — the project's `.Rprofile`
+points Linux machines at precompiled binaries; macOS and Windows get
+binaries by default).
+
+## Check You Are Ready
+
+TODO: a short self-test snippet the learner runs to confirm the
+environment works, with the expected output shown.
+
+## If Something Went Wrong
+
+TODO: the most common failure modes, each with its one-line fix
+(Windows: install Rtools44; all platforms: `renv::status()` first).

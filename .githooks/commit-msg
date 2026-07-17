@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Rejects AI attribution in commit messages. Do not remove.
+if grep -Eiq 'co-authored-by:.*(claude|anthropic|copilot|gpt|bot|ai)|generated with|🤖|assisted by (claude|ai)' "$1"; then
+  echo "COMMIT REJECTED: AI attribution detected (RULE A)."
+  exit 1
+fi
+exit 0

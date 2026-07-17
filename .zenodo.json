@@ -1,0 +1,30 @@
+{
+  "title": "CDISC with R",
+  "description": "A free, self-paced, hands-on course on CDISC clinical data standards in R: building SDTM domains, ADaM datasets, define-XML, tables, listings and figures, and Dataset-JSON from scratch using a simulated Phase III trial (GLPX-001). All data is synthetic.",
+  "upload_type": "lesson",
+  "access_right": "open",
+  "license": "cc-by-nc-sa-4.0",
+  "language": "eng",
+  "version": "0.1",
+  "creators": [
+    {
+      "name": "Suleman, Sufyan",
+      "orcid": "0000-0001-6612-6915",
+      "affiliation": "Department of Biomedicine, Faculty of Health, Aarhus University, Denmark"
+    }
+  ],
+  "keywords": [
+    "CDISC",
+    "SDTM",
+    "ADaM",
+    "define-XML",
+    "Dataset-JSON",
+    "TLF",
+    "clinical trials",
+    "clinical data standards",
+    "R programming",
+    "pharmaverse",
+    "regulatory submission",
+    "clinical programming"
+  ]
+}

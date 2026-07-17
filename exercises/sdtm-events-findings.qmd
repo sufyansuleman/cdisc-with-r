@@ -1,0 +1,29 @@
+---
+title: "Exercise 2 — SDTM: Events and Findings"
+---
+
+## Goal
+
+TODO: one sentence.
+
+## Setup
+
+TODO: starting code.
+
+## Task
+
+1. TODO
+2. TODO
+
+## Acceptance criteria
+
+- [ ] TODO
+- [ ] TODO
+
+::: {.callout-tip collapse="true"}
+## Hint
+
+TODO: hint.
+:::
+
+> Solutions are in the paid tier.

@@ -1,0 +1,97 @@
+---
+title: "Define-XML"
+---
+
+::: {.callout-note}
+### Session at a Glance
+
+**Total core time: about TODO minutes.**
+
+| Section | Time | Type |
+|---|---|---|
+| When Do You Use This? + Learning Objectives | TODO | Reading |
+| Background | TODO | Reading |
+| Example 1 | TODO | Worked example |
+| Example 2 | TODO | Worked example |
+| What Can Go Wrong | TODO | Reading |
+| Exercises | TODO | Practice |
+| Comprehension Check | TODO | Self-test |
+
+TODO: how the session splits across sittings for self-paced study.
+:::
+
+::: {.callout-tip}
+### How to Use the Code in This Session
+
+Every code chunk below is written so you can copy it into your R
+console (or an R script) and run it yourself, in the order shown.
+Where you see a "Run It Yourself" box, stop and run the code above it
+before reading the explanation that follows.
+:::
+
+## When Do You Use This?
+
+::: {.callout-tip}
+TODO: two or three concrete scenarios that this session answers, ending
+with the single question it addresses in bold. Cross-link the
+session(s) this one builds on.
+:::
+
+## Learning Objectives
+
+After completing this session you will be able to:
+
+- TODO
+- TODO
+- TODO
+
+## Background: TODO (the one core idea)
+
+*Estimated time: ~TODO minutes (reading)*
+
+TODO: introduce the single idea that ties the session together, concept
+before formula.
+
+## Example 1: TODO
+
+TODO: worked example on GLPX-001 data. Show the code, then the output,
+then explain it.
+
+### Run It Yourself
+
+TODO: the exact code block the learner should execute before reading on.
+
+### Reading the Output Line by Line
+
+TODO: map each line of output to its plain-English meaning.
+
+## Example 2: TODO
+
+TODO: a second worked example.
+
+### Run It Yourself
+
+TODO.
+
+## What Can Go Wrong
+
+TODO: failure modes and misuse patterns.
+
+### Common misinterpretations
+
+TODO.
+
+## Exercises
+
+TODO: link the exercise file(s) for this session, or state that this
+session has no exercise.
+
+## Comprehension Check
+
+TODO: three to five short self-test questions.
+
+::: {.callout-note collapse="true"}
+### Answers
+
+TODO: answers, collapsed.
+:::
