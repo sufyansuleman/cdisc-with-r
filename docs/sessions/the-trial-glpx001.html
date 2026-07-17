@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -292,22 +327,25 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#when-do-you-use-this" id="toc-when-do-you-use-this" class="nav-link active" data-scroll-target="#when-do-you-use-this"><span class="header-section-number">3.1</span> When Do You Use This?</a></li>
+  <li><a href="#sec-the-trial" id="toc-sec-the-trial" class="nav-link active" data-scroll-target="#sec-the-trial"><span class="header-section-number">3.1</span> When Do You Use This?</a></li>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives"><span class="header-section-number">3.2</span> Learning Objectives</a></li>
-  <li><a href="#background-todo-the-one-core-idea" id="toc-background-todo-the-one-core-idea" class="nav-link" data-scroll-target="#background-todo-the-one-core-idea"><span class="header-section-number">3.3</span> Background: TODO (the one core idea)</a></li>
-  <li><a href="#example-1-todo" id="toc-example-1-todo" class="nav-link" data-scroll-target="#example-1-todo"><span class="header-section-number">3.4</span> Example 1: TODO</a>
+  <li><a href="#background-the-protocol-is-a-prediction-machine" id="toc-background-the-protocol-is-a-prediction-machine" class="nav-link" data-scroll-target="#background-the-protocol-is-a-prediction-machine"><span class="header-section-number">3.3</span> Background: The Protocol Is a Prediction Machine</a>
   <ul class="collapse">
-  <li><a href="#run-it-yourself" id="toc-run-it-yourself" class="nav-link" data-scroll-target="#run-it-yourself"><span class="header-section-number">3.4.1</span> Run It Yourself</a></li>
-  <li><a href="#reading-the-output-line-by-line" id="toc-reading-the-output-line-by-line" class="nav-link" data-scroll-target="#reading-the-output-line-by-line"><span class="header-section-number">3.4.2</span> Reading the Output Line by Line</a></li>
+  <li><a href="#the-trial" id="toc-the-trial" class="nav-link" data-scroll-target="#the-trial"><span class="header-section-number">3.3.1</span> The trial</a></li>
+  <li><a href="#the-visit-schedule" id="toc-the-visit-schedule" class="nav-link" data-scroll-target="#the-visit-schedule"><span class="header-section-number">3.3.2</span> The visit schedule</a></li>
+  <li><a href="#two-sources-two-sets-of-habits" id="toc-two-sources-two-sets-of-habits" class="nav-link" data-scroll-target="#two-sources-two-sets-of-habits"><span class="header-section-number">3.3.3</span> Two sources, two sets of habits</a></li>
   </ul></li>
-  <li><a href="#example-2-todo" id="toc-example-2-todo" class="nav-link" data-scroll-target="#example-2-todo"><span class="header-section-number">3.5</span> Example 2: TODO</a>
+  <li><a href="#example-1-predict-the-data-before-opening-it" id="toc-example-1-predict-the-data-before-opening-it" class="nav-link" data-scroll-target="#example-1-predict-the-data-before-opening-it"><span class="header-section-number">3.4</span> Example 1: Predict the Data Before Opening It</a>
   <ul class="collapse">
-  <li><a href="#run-it-yourself-1" id="toc-run-it-yourself-1" class="nav-link" data-scroll-target="#run-it-yourself-1"><span class="header-section-number">3.5.1</span> Run It Yourself</a></li>
+  <li><a href="#accounting-for-every-missing-row" id="toc-accounting-for-every-missing-row" class="nav-link" data-scroll-target="#accounting-for-every-missing-row"><span class="header-section-number">3.4.1</span> Accounting for every missing row</a></li>
   </ul></li>
-  <li><a href="#what-can-go-wrong" id="toc-what-can-go-wrong" class="nav-link" data-scroll-target="#what-can-go-wrong"><span class="header-section-number">3.6</span> What Can Go Wrong</a>
+  <li><a href="#example-2-reading-the-trials-story-in-the-raw-data" id="toc-example-2-reading-the-trials-story-in-the-raw-data" class="nav-link" data-scroll-target="#example-2-reading-the-trials-story-in-the-raw-data"><span class="header-section-number">3.5</span> Example 2: Reading the Trial’s Story in the Raw Data</a>
   <ul class="collapse">
-  <li><a href="#common-misinterpretations" id="toc-common-misinterpretations" class="nav-link" data-scroll-target="#common-misinterpretations"><span class="header-section-number">3.6.1</span> Common misinterpretations</a></li>
+  <li><a href="#randomisation-and-enrolment" id="toc-randomisation-and-enrolment" class="nav-link" data-scroll-target="#randomisation-and-enrolment"><span class="header-section-number">3.5.1</span> Randomisation and enrolment</a></li>
+  <li><a href="#the-primary-endpoint-emerging" id="toc-the-primary-endpoint-emerging" class="nav-link" data-scroll-target="#the-primary-endpoint-emerging"><span class="header-section-number">3.5.2</span> The primary endpoint, emerging</a></li>
+  <li><a href="#nominal-versus-actual-dates" id="toc-nominal-versus-actual-dates" class="nav-link" data-scroll-target="#nominal-versus-actual-dates"><span class="header-section-number">3.5.3</span> Nominal versus actual dates</a></li>
   </ul></li>
+  <li><a href="#what-can-go-wrong" id="toc-what-can-go-wrong" class="nav-link" data-scroll-target="#what-can-go-wrong"><span class="header-section-number">3.6</span> What Can Go Wrong</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">3.7</span> Exercises</a></li>
   <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">3.8</span> Comprehension Check</a></li>
   </ul>
@@ -345,8 +383,13 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Total core time: about TODO minutes.</strong></p>
+<p><strong>Total core time: about 85 minutes.</strong></p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Section</th>
@@ -357,42 +400,37 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>When Do You Use This? + Learning Objectives</td>
-<td>TODO</td>
+<td>5 min</td>
 <td>Reading</td>
 </tr>
 <tr class="even">
 <td>Background</td>
-<td>TODO</td>
+<td>20 min</td>
 <td>Reading</td>
 </tr>
 <tr class="odd">
-<td>Example 1</td>
-<td>TODO</td>
+<td>Example 1: Predict the Data Before Opening It</td>
+<td>20 min</td>
 <td>Worked example</td>
 </tr>
 <tr class="even">
-<td>Example 2</td>
-<td>TODO</td>
+<td>Example 2: Reading the Trial’s Story in the Raw Data</td>
+<td>20 min</td>
 <td>Worked example</td>
 </tr>
 <tr class="odd">
 <td>What Can Go Wrong</td>
-<td>TODO</td>
+<td>10 min</td>
 <td>Reading</td>
 </tr>
 <tr class="even">
-<td>Exercises</td>
-<td>TODO</td>
-<td>Practice</td>
-</tr>
-<tr class="odd">
 <td>Comprehension Check</td>
-<td>TODO</td>
+<td>10 min</td>
 <td>Self-test</td>
 </tr>
 </tbody>
 </table>
-<p>TODO: how the session splits across sittings for self-paced study.</p>
+<p>For self-paced study this splits naturally into two sittings: Background and Example 1 first, the rest later. Every later session uses this trial, so time spent here repays itself for the remainder of the course.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -406,10 +444,11 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="callout-body-container callout-body">
 <p>Every code chunk below is written so you can copy it into your R console (or an R script) and run it yourself, in the order shown. Where you see a “Run It Yourself” box, stop and run the code above it before reading the explanation that follows.</p>
+<p>As in <a href="../sessions/why-standards.html">Why Standards</a>, run R from the project root, so that <code>data/raw/dm_raw.csv</code> means what it says.</p>
 </div>
 </div>
-<section id="when-do-you-use-this" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="when-do-you-use-this"><span class="header-section-number">3.1</span> When Do You Use This?</h2>
+<section id="sec-the-trial" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-the-trial"><span class="header-section-number">3.1</span> When Do You Use This?</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -420,7 +459,9 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>TODO: two or three concrete scenarios that this session answers, ending with the single question it addresses in bold. Cross-link the session(s) this one builds on.</p>
+<p>A data transfer arrives from the lab vendor and someone asks you: “is it complete?” Or you are handed a study’s raw data on your first day and need to know what you are looking at before the Monday meeting. Or a listing you produced has 181 subjects at the final visit and a reviewer wants to know where the other 219 went.</p>
+<p>None of these questions is answerable from the data alone. They are answerable from the data <em>plus the design</em>. This session asks: <strong>what must you know about a trial before you can judge whether its data is complete?</strong></p>
+<p>This session builds directly on <a href="../sessions/why-standards.html">Why Standards</a>, which showed that raw data cannot be read without trial-specific knowledge. Here you acquire that knowledge for the one trial this course uses throughout.</p>
 </div>
 </div>
 </section>
@@ -428,53 +469,583 @@ Tip
 <h2 data-number="3.2" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">3.2</span> Learning Objectives</h2>
 <p>After completing this session you will be able to:</p>
 <ul>
-<li>TODO</li>
-<li>TODO</li>
-<li>TODO</li>
+<li>Describe the design of GLPX-001 — population, arms, duration, endpoints, visit schedule — from its summary</li>
+<li>Predict the expected shape of every raw file from the design alone, before opening it</li>
+<li>Account for every gap between prediction and reality, and say which gaps are the trial’s history and which are data problems</li>
+<li>Name the two organisations that produced the raw files and the conventions each brought with it</li>
+<li>Read the emerging treatment effect out of raw lab data — and explain why that number is not yet an analysis</li>
 </ul>
 </section>
-<section id="background-todo-the-one-core-idea" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="background-todo-the-one-core-idea"><span class="header-section-number">3.3</span> Background: TODO (the one core idea)</h2>
-<p><em>Estimated time: ~TODO minutes (reading)</em></p>
-<p>TODO: introduce the single idea that ties the session together, concept before formula.</p>
+<section id="background-the-protocol-is-a-prediction-machine" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="background-the-protocol-is-a-prediction-machine"><span class="header-section-number">3.3</span> Background: The Protocol Is a Prediction Machine</h2>
+<p><em>Estimated time: ~20 minutes (reading)</em></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>The one thing to remember
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>The design tells you what the data must look like before you open a single file. Every gap between that prediction and the files is a piece of the trial’s real history — and your job is to account for all of it.</strong></p>
+</div>
+</div>
+<p>A clinical trial is one of the most pre-specified activities in science. Who can enrol, what they receive, when they are seen, what is measured at each visit — all of it is written down before the first subject walks in. That has a consequence which this session exploits: <strong>you can compute the shape of the data from the design.</strong> If 400 subjects each attend 8 visits and give 4 lab tests per visit, the lab file has 12,800 rows. Before you open it.</p>
+<p>Reality then edits that prediction. Subjects leave early. Someone is enrolled twice. A vendor transmits a record twice. Each edit leaves an arithmetic trace, and the discipline of this session — predict first, then look, then account for the difference — is the single most useful habit you can bring to a new study. It converts “here are five mysterious files” into “here are two discrepancies I need to explain.”</p>
+<section id="the-trial" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="the-trial"><span class="header-section-number">3.3.1</span> The trial</h3>
+<p>GLPX-001 is a simulated Phase III, randomised, double-blind, placebo-controlled trial of <strong>GLPX</strong>, a fictional GLP-1-class agent, in adults with type 2 diabetes.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Design element</th>
+<th>GLPX-001</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Phase</td>
+<td>III</td>
+</tr>
+<tr class="even">
+<td>Population</td>
+<td>Adults with type 2 diabetes</td>
+</tr>
+<tr class="odd">
+<td>Arms</td>
+<td>GLPX 10 mg once weekly vs placebo, randomised 1:1</td>
+</tr>
+<tr class="even">
+<td>Blinding</td>
+<td>Double-blind</td>
+</tr>
+<tr class="odd">
+<td>Treatment duration</td>
+<td>26 weeks</td>
+</tr>
+<tr class="even">
+<td>Primary endpoint</td>
+<td>Change in HbA1c from baseline to week 26 (central lab)</td>
+</tr>
+<tr class="odd">
+<td>Key secondary endpoint</td>
+<td>Percent change in body weight (vital signs)</td>
+</tr>
+<tr class="even">
+<td>Planned enrolment</td>
+<td>400 subjects across 12 sites</td>
+</tr>
+</tbody>
+</table>
+<p>Every value in the data is synthetic, generated by <a href="https://github.com/sufyansuleman/cdisc-with-r/blob/main/R/simulate_trial.R"><code>R/simulate_trial.R</code></a> with a fixed seed. No real patient information exists anywhere in this course. The <em>structure</em>, however, is deliberately realistic — this is what a study team receives.</p>
 </section>
-<section id="example-1-todo" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="example-1-todo"><span class="header-section-number">3.4</span> Example 1: TODO</h2>
-<p>TODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.</p>
-<section id="run-it-yourself" class="level3" data-number="3.4.1">
-<h3 data-number="3.4.1" class="anchored" data-anchor-id="run-it-yourself"><span class="header-section-number">3.4.1</span> Run It Yourself</h3>
-<p>TODO: the exact code block the learner should execute before reading on.</p>
+<section id="the-visit-schedule" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="the-visit-schedule"><span class="header-section-number">3.3.2</span> The visit schedule</h3>
+<p>Subjects are screened two weeks before dosing, then seen at baseline and every four weeks (with a final gap of six) until week 26:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Visit</th>
+<th>Nominal study day</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SCREENING</td>
+<td>−14</td>
+</tr>
+<tr class="even">
+<td>BASELINE</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>WEEK 4</td>
+<td>29</td>
+</tr>
+<tr class="even">
+<td>WEEK 8</td>
+<td>57</td>
+</tr>
+<tr class="odd">
+<td>WEEK 12</td>
+<td>85</td>
+</tr>
+<tr class="even">
+<td>WEEK 16</td>
+<td>113</td>
+</tr>
+<tr class="odd">
+<td>WEEK 20</td>
+<td>141</td>
+</tr>
+<tr class="even">
+<td>WEEK 26</td>
+<td>182</td>
+</tr>
+</tbody>
+</table>
+<p>“Nominal” is doing real work in that column heading: day 29 is when the week-4 visit is <em>supposed</em> to happen. Actual visit dates scatter around the nominal day, because subjects have lives. You will see this in Example 2.</p>
 </section>
-<section id="reading-the-output-line-by-line" class="level3" data-number="3.4.2">
-<h3 data-number="3.4.2" class="anchored" data-anchor-id="reading-the-output-line-by-line"><span class="header-section-number">3.4.2</span> Reading the Output Line by Line</h3>
-<p>TODO: map each line of output to its plain-English meaning.</p>
+<section id="two-sources-two-sets-of-habits" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="two-sources-two-sets-of-habits"><span class="header-section-number">3.3.3</span> Two sources, two sets of habits</h3>
+<p>The five raw files come from two different organisations, and everything about their formatting reflects that:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Source</th>
+<th>One row is…</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>dm_raw.csv</code></td>
+<td>EDC (site-entered)</td>
+<td>one subject’s demographics and randomisation</td>
+</tr>
+<tr class="even">
+<td><code>ae_raw.csv</code></td>
+<td>EDC (site-entered)</td>
+<td>one adverse event</td>
+</tr>
+<tr class="odd">
+<td><code>vs_raw.csv</code></td>
+<td>EDC (site-entered)</td>
+<td>one vital-sign measurement at one visit</td>
+</tr>
+<tr class="even">
+<td><code>ex_raw.csv</code></td>
+<td>EDC (site-entered)</td>
+<td>one subject’s dosing record</td>
+</tr>
+<tr class="odd">
+<td><code>lb_raw.csv</code></td>
+<td>Central laboratory vendor</td>
+<td>one lab result at one visit</td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>EDC</strong> (electronic data capture) system is where site staff type what happens: demographics, adverse events, vital signs, dosing. The <strong>central lab</strong> is a separate company that receives blood samples and returns results in its own file, with its own column conventions — you saw in <a href="../sessions/why-standards.html">Why Standards</a> that it lower-cases its column names and carries its own copy of each subject’s sex. Four lab tests are measured at every visit: HbA1c, glucose, ALT and creatinine.</p>
+<p>This split matters beyond formatting. The trial’s <em>primary endpoint</em> lives in the vendor’s file, not in the EDC. When you standardise this trial’s data in Part 2, the lab file’s conventions — not the EDC’s — will be the ones you spend the most time reconciling.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why measure the primary endpoint centrally?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Twelve sites could each measure HbA1c locally. The trial instead ships every sample to one laboratory. The reason is comparability: a single assay, calibrated once, produces values that can be compared across sites and visits without asking whether site 104’s analyser runs high. The cost is operational — samples travel, results arrive on the vendor’s schedule in the vendor’s format, and the study team must reconcile a file it does not control. That trade — scientific consistency for logistical dependence — is typical of how trials allocate measurement, and it is why “which source produced this number?” is always worth asking.</p>
+</div>
+</div>
+</div>
 </section>
 </section>
-<section id="example-2-todo" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="example-2-todo"><span class="header-section-number">3.5</span> Example 2: TODO</h2>
-<p>TODO: a second worked example.</p>
-<section id="run-it-yourself-1" class="level3" data-number="3.5.1">
-<h3 data-number="3.5.1" class="anchored" data-anchor-id="run-it-yourself-1"><span class="header-section-number">3.5.1</span> Run It Yourself</h3>
-<p>TODO.</p>
+<section id="example-1-predict-the-data-before-opening-it" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="example-1-predict-the-data-before-opening-it"><span class="header-section-number">3.4</span> Example 1: Predict the Data Before Opening It</h2>
+<p><em>Estimated time: ~20 minutes (worked example)</em></p>
+<p>The design table above is enough to predict four of the five file shapes. Do the arithmetic first, honestly, before looking:</p>
+<ul>
+<li><code>dm_raw</code> — one row per subject: <strong>400 rows</strong></li>
+<li><code>ex_raw</code> — one dosing record per subject: <strong>400 rows</strong></li>
+<li><code>lb_raw</code> — 400 subjects × 8 visits × 4 tests: <strong>12,800 rows</strong></li>
+<li><code>vs_raw</code> — 400 subjects × 8 visits × 4 vitals, plus height measured once at screening: <strong>13,200 rows</strong></li>
+</ul>
+<p>(<code>ae_raw</code> is deliberately absent — hold that thought for the end of this example.)</p>
+<p>Now look:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>raw_paths <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"data/raw"</span>, <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.csv$"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> raw_paths <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_names</span>(\(p) <span class="fu">basename</span>(p)) <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(\(p) <span class="fu">read_csv</span>(p, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>())))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>n_subj <span class="ot">&lt;-</span> <span class="dv">400</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">file      =</span> <span class="fu">c</span>(<span class="st">"dm_raw"</span>, <span class="st">"ex_raw"</span>, <span class="st">"lb_raw"</span>, <span class="st">"vs_raw"</span>),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">predicted =</span> <span class="fu">c</span>(n_subj, n_subj, n_subj <span class="sc">*</span> <span class="dv">8</span> <span class="sc">*</span> <span class="dv">4</span>, n_subj <span class="sc">*</span> <span class="dv">8</span> <span class="sc">*</span> <span class="dv">4</span> <span class="sc">+</span> n_subj),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">actual    =</span> <span class="fu">c</span>(<span class="fu">nrow</span>(raw[[<span class="st">"dm_raw.csv"</span>]]), <span class="fu">nrow</span>(raw[[<span class="st">"ex_raw.csv"</span>]]),</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                <span class="fu">nrow</span>(raw[[<span class="st">"lb_raw.csv"</span>]]), <span class="fu">nrow</span>(raw[[<span class="st">"vs_raw.csv"</span>]]))</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gap =</span> actual <span class="sc">-</span> predicted)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  file   predicted actual   gap
+  &lt;chr&gt;      &lt;dbl&gt;  &lt;int&gt; &lt;dbl&gt;
+1 dm_raw       400    401     1
+2 ex_raw       400    400     0
+3 lb_raw     12800  12389  -411
+4 vs_raw     13200  12788  -412</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Run It Yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Run the chunk above. Two files match the prediction and two miss by hundreds: <code>dm_raw</code> is <strong>+1</strong>, <code>ex_raw</code> is exactly right, <code>lb_raw</code> is <strong>−411</strong>, and <code>vs_raw</code> is <strong>−412</strong>.</p>
+<p>Before reading on, try to explain the pattern yourself. Why would the two <em>visit-driven</em> files be short by almost exactly the same amount? And why is <code>dm_raw</code> — the simplest file in the study — the one with too <em>many</em> rows?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reading the Output Line by Line
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Row</th>
+<th>What the gap means</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>dm_raw +1</code></td>
+<td>401 rows for 400 subjects. You met this in <a href="../sessions/why-standards.html">Why Standards</a>: one subject enrolled at two sites. A <em>data</em> problem, resolved in <a href="../sessions/sdtm-dm.html">The DM Domain</a>.</td>
+</tr>
+<tr class="even">
+<td><code>ex_raw 0</code></td>
+<td>One dosing record per randomised subject, and every subject was dosed. The tidiest file in the trial.</td>
+</tr>
+<tr class="odd">
+<td><code>lb_raw −411</code></td>
+<td>Hundreds of lab results that “should” exist don’t. This is not a data problem — it is the trial’s history, and the next chunk accounts for it.</td>
+</tr>
+<tr class="even">
+<td><code>vs_raw −412</code></td>
+<td>The same history, seen by the other measuring instrument — and one row <em>more</em> missing than the lab file. That difference of exactly 1 matters.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="accounting-for-every-missing-row" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="accounting-for-every-missing-row"><span class="header-section-number">3.4.1</span> Accounting for every missing row</h3>
+<p>The prediction assumed every subject attends every visit. Check that assumption:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>lb <span class="ot">&lt;-</span> raw[[<span class="st">"lb_raw.csv"</span>]]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>visits_per_subject <span class="ot">&lt;-</span> lb <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(subjid, visit) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(subjid, <span class="at">name =</span> <span class="st">"visits"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>visits_per_subject <span class="sc">|&gt;</span> <span class="fu">count</span>(visits, <span class="at">name =</span> <span class="st">"subjects"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  visits subjects
+   &lt;int&gt;    &lt;int&gt;
+1      3        6
+2      4       10
+3      5        4
+4      6        8
+5      7        5
+6      8      367</code></pre>
+</div>
+</div>
+<p>Not everyone reached week 26: <strong>367 subjects completed all 8 visits, and 33 left early</strong> — after as few as 3 visits. Trials call this early discontinuation, and at roughly 8% of subjects over 26 weeks it is unremarkable. Now make the corrected prediction:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>total_visits <span class="ot">&lt;-</span> lb <span class="sc">|&gt;</span> <span class="fu">distinct</span>(subjid, visit) <span class="sc">|&gt;</span> <span class="fu">nrow</span>()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>total_visits</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3097</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">lb_expected =</span> total_visits <span class="sc">*</span> <span class="dv">4</span>,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">lb_actual   =</span> <span class="fu">nrow</span>(lb),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">vs_expected =</span> total_visits <span class="sc">*</span> <span class="dv">4</span> <span class="sc">+</span> <span class="dv">400</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">vs_actual   =</span> <span class="fu">nrow</span>(raw[[<span class="st">"vs_raw.csv"</span>]]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lb_expected   lb_actual vs_expected   vs_actual 
+      12388       12389       12788       12788 </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reading the Output Line by Line
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The 400 subjects actually attended <strong>3,097</strong> subject-visits between them. Four lab tests per attended visit predicts 3,097 × 4 = 12,388 rows; the file has <strong>12,389</strong> — one row too many. Four vitals per attended visit plus 400 height measurements predicts 12,788; the file has exactly <strong>12,788</strong>.</p>
+<p>So after accounting for dropout, <code>vs_raw</code> reconciles to the row and <code>lb_raw</code> carries <strong>exactly one surplus record</strong>. You do not yet know which record it is or why it is there — that is a job for <a href="../sessions/sdtm-events-findings.html">Events and Findings</a> — but you know it exists, you found it with arithmetic rather than by staring at 12,000 rows, and you know the vendor file is the one carrying it.</p>
+<p>This is the method in miniature: dropout explained 411 missing rows and 412 missing rows in one stroke, and what refused to reconcile — one single row — is precisely the thing worth investigating.</p>
+</div>
+</div>
+<p>And <code>ae_raw</code>? Its row count was never predictable. Adverse events are not on the visit schedule; they happen when they happen, to some subjects and not others. The file has 389 rows covering 262 subjects — 138 subjects have no rows at all, and nothing about the design could have told you those numbers in advance. Scheduled data can be reconciled against the protocol; event data cannot. That distinction — <em>findings on a schedule</em> versus <em>events as they occur</em> — becomes a load-bearing idea in <a href="../sessions/sdtm-concepts.html">SDTM Concepts</a>.</p>
+</section>
+</section>
+<section id="example-2-reading-the-trials-story-in-the-raw-data" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="example-2-reading-the-trials-story-in-the-raw-data"><span class="header-section-number">3.5</span> Example 2: Reading the Trial’s Story in the Raw Data</h2>
+<p><em>Estimated time: ~20 minutes (worked example)</em></p>
+<p>Shape is only the first layer. The values tell the trial’s story: who was randomised where and when, who stayed, and what the drug did.</p>
+<section id="randomisation-and-enrolment" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="randomisation-and-enrolment"><span class="header-section-number">3.5.1</span> Randomisation and enrolment</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dm <span class="ot">&lt;-</span> raw[[<span class="st">"dm_raw.csv"</span>]]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>dm <span class="sc">|&gt;</span> <span class="fu">distinct</span>(SUBJID, ARM) <span class="sc">|&gt;</span> <span class="fu">count</span>(ARM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  ARM            n
+  &lt;chr&gt;      &lt;int&gt;
+1 GLPX 10 mg   200
+2 Placebo      200</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(dm<span class="sc">$</span>RANDDT)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2024-01-16" "2024-07-13"</code></pre>
+</div>
+</div>
+<p>Exactly 200 per arm — but note what the code had to do to show it. <code>count(ARM)</code> on the raw file gives 200 and <strong>201</strong>, because of the duplicated subject; only after <code>distinct(SUBJID, ARM)</code> does the true 1:1 randomisation appear. The first subject was randomised in mid-January 2024 and the last in mid-July: enrolment took about six months, which means the trial’s calendar spans well over a year and no two subjects are at the same visit on the same date. Keep that in mind whenever you are tempted to think of “week 26” as a point in time. It is a point in <em>each subject’s</em> time.</p>
+</section>
+<section id="the-primary-endpoint-emerging" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="the-primary-endpoint-emerging"><span class="header-section-number">3.5.2</span> The primary endpoint, emerging</h3>
+<p>The primary endpoint is the change in HbA1c from baseline to week 26. The raw lab file already contains its raw material. Look at the group means by visit — remembering from <a href="../sessions/why-standards.html">Why Standards</a> that the lab file names things its own way, and noting that because we read everything as text, <code>result</code> must be converted before it can be averaged:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>visit_order <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"SCREENING"</span>, <span class="st">"BASELINE"</span>, <span class="st">"WEEK 4"</span>, <span class="st">"WEEK 8"</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"WEEK 12"</span>, <span class="st">"WEEK 16"</span>, <span class="st">"WEEK 20"</span>, <span class="st">"WEEK 26"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>hba1c <span class="ot">&lt;-</span> lb <span class="sc">|&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(test <span class="sc">==</span> <span class="st">"HBA1C"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">result =</span> <span class="fu">as.numeric</span>(result)) <span class="sc">|&gt;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(dm <span class="sc">|&gt;</span> <span class="fu">distinct</span>(SUBJID, ARM),</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">by =</span> <span class="fu">join_by</span>(subjid <span class="sc">==</span> SUBJID)) <span class="sc">|&gt;</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">visit =</span> <span class="fu">factor</span>(visit, <span class="at">levels =</span> visit_order))</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>hba1c_means <span class="ot">&lt;-</span> hba1c <span class="sc">|&gt;</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_hba1c =</span> <span class="fu">mean</span>(result), <span class="at">n =</span> <span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(ARM, visit)) <span class="sc">|&gt;</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(visit, ARM)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>hba1c_means</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 16 × 4
+   ARM        visit     mean_hba1c     n
+   &lt;chr&gt;      &lt;fct&gt;          &lt;dbl&gt; &lt;int&gt;
+ 1 GLPX 10 mg SCREENING       8.37   200
+ 2 Placebo    SCREENING       8.45   201
+ 3 GLPX 10 mg BASELINE        8.28   200
+ 4 Placebo    BASELINE        8.45   200
+ 5 GLPX 10 mg WEEK 4          8.13   200
+ 6 Placebo    WEEK 4          8.42   200
+ 7 GLPX 10 mg WEEK 8          7.90   196
+ 8 Placebo    WEEK 8          8.36   198
+ 9 GLPX 10 mg WEEK 12         7.64   191
+10 Placebo    WEEK 12         8.31   193
+11 GLPX 10 mg WEEK 16         7.50   189
+12 Placebo    WEEK 16         8.24   191
+13 GLPX 10 mg WEEK 20         7.27   183
+14 Placebo    WEEK 20         8.23   189
+15 GLPX 10 mg WEEK 26         6.90   181
+16 Placebo    WEEK 26         8.14   186</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>week_lookup <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">visit =</span> <span class="fu">factor</span>(visit_order, <span class="at">levels =</span> visit_order),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">week  =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>, <span class="dv">16</span>, <span class="dv">20</span>, <span class="dv">26</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>hba1c_means <span class="sc">|&gt;</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(week_lookup, <span class="at">by =</span> <span class="st">"visit"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> mean_hba1c, <span class="at">colour =</span> ARM, <span class="at">shape =</span> ARM)) <span class="sc">+</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"GLPX 10 mg"</span> <span class="ot">=</span> <span class="st">"steelblue"</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"Placebo"</span>    <span class="ot">=</span> <span class="st">"tomato"</span>)) <span class="sc">+</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>, <span class="dv">16</span>, <span class="dv">20</span>, <span class="dv">26</span>)) <span class="sc">+</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title  =</span> <span class="st">"Mean HbA1c by visit and arm (raw central-lab data)"</span>,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x      =</span> <span class="st">"Nominal week"</span>,</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y      =</span> <span class="st">"Mean HbA1c (%)"</span>,</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="cn">NULL</span>, <span class="at">shape =</span> <span class="cn">NULL</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="the-trial-glpx001_files/figure-html/hba1c-plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Run It Yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Run both chunks. In the table, both arms should start indistinguishable (screening means 8.37 vs 8.45) and then separate: by week 26 the GLPX arm mean is <strong>6.90%</strong> against placebo’s <strong>8.14%</strong>. The plot shows the same story as two diverging lines.</p>
+<p>Now look at the <code>n</code> column and answer honestly: what is quietly happening to the denominators as the weeks pass?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reading the Output Line by Line
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What you see</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Screening means 8.37 / 8.45</td>
+<td>The arms start balanced — this is what successful randomisation looks like, the same baseline comparability you would check in any trial.</td>
+</tr>
+<tr class="even">
+<td>GLPX falls to 6.90, placebo drifts to 8.14</td>
+<td>A treatment effect of roughly 1.2 percentage points is emerging, alongside a small placebo response. For a 26-week glucose-lowering trial, an entirely plausible picture.</td>
+</tr>
+<tr class="odd">
+<td><code>n</code> falls from 200/201 to 181/186</td>
+<td>The denominators shrink as subjects discontinue. Each week’s mean describes <em>the subjects still present that week</em> — a subtly different population at every visit.</td>
+</tr>
+<tr class="even">
+<td>Placebo <code>n</code> is 201 at screening</td>
+<td>The duplicated subject again, still inflating any count that forgets about them.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The <code>n</code> column is the important one, and it is why this plot is a <em>description</em>, not an analysis. If subjects who leave early differ from those who stay — sicker, less tolerant of side effects — then comparing week-26 means among survivors quietly changes the question being asked. Deciding what “change from baseline to week 26” means when some week-26 values are missing is a genuine analytical decision, made in advance and documented — and building the datasets that carry such decisions is exactly what Part 3 of this course is about. For now, the honest statement is: <em>the raw data shows the arms separating.</em> How much, in whom, under what handling of the missing — that is what the rest of the pipeline exists to answer.</p>
+</section>
+<section id="nominal-versus-actual-dates" class="level3" data-number="3.5.3">
+<h3 data-number="3.5.3" class="anchored" data-anchor-id="nominal-versus-actual-dates"><span class="header-section-number">3.5.3</span> Nominal versus actual dates</h3>
+<p>One last look, this time at a single subject. The schedule says the week-4 blood draw happens on study day 29. Did it?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>sched <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">visit =</span> visit_order,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">nominal_day =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">14</span>, <span class="dv">1</span>, <span class="dv">29</span>, <span class="dv">57</span>, <span class="dv">85</span>, <span class="dv">113</span>, <span class="dv">141</span>, <span class="dv">182</span>))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>lb <span class="sc">|&gt;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(subjid <span class="sc">==</span> <span class="st">"101-026"</span>, test <span class="sc">==</span> <span class="st">"HBA1C"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(sched, <span class="at">by =</span> <span class="st">"visit"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(dm <span class="sc">|&gt;</span> <span class="fu">select</span>(SUBJID, RANDDT),</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">by =</span> <span class="fu">join_by</span>(subjid <span class="sc">==</span> SUBJID)) <span class="sc">|&gt;</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">actual_day =</span> <span class="fu">as.integer</span>(<span class="fu">as.Date</span>(colldt) <span class="sc">-</span> <span class="fu">as.Date</span>(RANDDT)) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(visit, nominal_day, colldt, actual_day)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 4
+  visit     nominal_day colldt     actual_day
+  &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;
+1 SCREENING         -14 2024-04-21        -14
+2 BASELINE            1 2024-05-07          2
+3 WEEK 4             29 2024-06-02         28
+4 WEEK 8             57 2024-07-03         59
+5 WEEK 12            85 2024-07-30         86
+6 WEEK 16           113 2024-08-25        112
+7 WEEK 20           141 2024-09-22        140
+8 WEEK 26           182 2024-11-05        184</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reading the Output Line by Line
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Subject <code>101-026</code> attended every visit, but almost never on the nominal day: the draws land a day or two either side of schedule. Nothing is wrong here — visit windows exist precisely because humans cannot be scheduled to the day. But it means “week 4” is a <em>label</em>, not a date, and any analysis that needs elapsed time must compute it from actual dates, per subject. The <code>+ 1</code> in the study-day arithmetic is itself a convention — here, counting the randomisation day itself as day 1 — and the exact rule (including how days before the reference date are numbered) is one of the things a standard pins down so that every programmer computes it identically. You will meet study days formally, and precisely, in <a href="../sessions/sdtm-concepts.html">SDTM Concepts</a>.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="what-can-go-wrong" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">3.6</span> What Can Go Wrong</h2>
-<p>TODO: failure modes and misuse patterns.</p>
-<section id="common-misinterpretations" class="level3" data-number="3.6.1">
-<h3 data-number="3.6.1" class="anchored" data-anchor-id="common-misinterpretations"><span class="header-section-number">3.6.1</span> Common misinterpretations</h3>
-<p>TODO.</p>
-</section>
+<p><em>Estimated time: ~10 minutes (reading)</em></p>
+<p><strong>Treating the data as the trial</strong></p>
+<p>The files record what was <em>captured</em>, not everything that happened. <code>ae_raw</code> holds the adverse events that sites entered; a symptom a subject never mentioned is nowhere. The 33 early discontinuations appear only as absent rows — the data does not say <em>why</em> any of them left. Statements like “there were 389 adverse events” should always be heard as “389 were recorded.”</p>
+<p><strong>Assuming the schedule describes the data</strong></p>
+<p>Every prediction in Example 1 that used “8 visits” was wrong until corrected for dropout. Any code that hard-codes the visit count — a loop over 8 visits, a join against a complete subject-visit grid — will silently invent rows for visits that never happened. Build the attended-visit set from the data, then reconcile it against the schedule; never the other way round.</p>
+<p><strong>Averaging over shrinking denominators without noticing</strong></p>
+<p>The week-26 means in Example 2 describe 367 of 400 subjects. Nothing in <code>mean(result)</code> warns you. Whenever a summary spans visits, put <code>n</code> beside it — as a habit, not a flourish. A mean whose denominator you have not checked is a number you do not yet understand.</p>
+<p><strong>Trusting the tidy file more</strong></p>
+<p><code>ex_raw</code> reconciled perfectly and <code>lb_raw</code> is machine-generated, yet the lab file carries the surplus record and (as you saw in <a href="../sessions/why-standards.html">Why Standards</a>) a sex value that contradicts the EDC. Tidiness measures formatting discipline, not truth.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common misinterpretations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>“400 subjects means 400 rows”</strong> Only in subject-level files, and even there only after the one-row-per-subject rule is actually enforced — <code>dm_raw</code> has 401. Every file’s row count follows from <em>its</em> granularity: per subject, per event, or per subject-visit-measurement.</p>
+<p><strong>“The gap between predicted and actual rows means the transfer is broken”</strong> Most of the gap (411 of 412 rows here) was the trial’s legitimate history — dropout. The skill is not “expect the prediction to hold”; it is “account for every unit of the difference, and investigate the remainder.”</p>
+<p><strong>“The treatment effect is visible in the raw data, so the analysis is basically done”</strong> The raw means answer “what did surviving subjects average, per visit?” The trial’s question — the effect of treatment on change from baseline, in everyone randomised, with missing data handled as pre-specified — is a different and harder question. The distance between those two questions is Parts 2 through 4 of this course.</p>
+<p><strong>“Screening values and baseline values are the same thing”</strong> GLPX-001 measures HbA1c at both, two weeks apart, and the means differ (8.37 at screening, 8.28 at baseline for GLPX). Which one is “baseline” for analysis is a definition, not an observation — and defining it is a decision you will make explicitly in <a href="../sessions/adsl.html">ADSL</a>.</p>
+</div>
+</div>
 </section>
 <section id="exercises" class="level2" data-number="3.7">
 <h2 data-number="3.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">3.7</span> Exercises</h2>
-<p>TODO: link the exercise file(s) for this session, or state that this session has no exercise.</p>
+<p>This session has no exercise set — its method <em>is</em> the exercise. If you want to practise it now: re-derive <code>vs_raw</code>’s row count from <code>total_visits</code> without looking back at Example 1, and confirm your arithmetic against <code>nrow()</code>. Then try the same style of reconciliation on <code>ae_raw</code> and articulate, in one sentence, why it cannot be done.</p>
+<p>The first full exercise set arrives with <a href="../sessions/sdtm-dm.html">The DM Domain</a>.</p>
 </section>
 <section id="comprehension-check" class="level2" data-number="3.8">
 <h2 data-number="3.8" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">3.8</span> Comprehension Check</h2>
-<p>TODO: three to five short self-test questions.</p>
+<p><em>Estimated time: ~10 minutes</em></p>
+<ol type="1">
+<li>Why did <code>ex_raw</code> match its predicted row count exactly while <code>lb_raw</code> fell 411 rows short? Both cover the same 400 subjects.</li>
+<li><code>count(ARM)</code> on <code>dm_raw</code> gives 200 and 201. Is the trial’s randomisation unbalanced? What is the correct check?</li>
+<li>After correcting for attended visits, <code>vs_raw</code> reconciled exactly and <code>lb_raw</code> had one extra row. Why was the surplus <em>findable</em> without inspecting a single record?</li>
+<li>Where does the primary endpoint’s raw data live, which organisation produced it, and why does that arrangement exist?</li>
+<li>A colleague reports “mean HbA1c at week 26 was 6.90% on GLPX” and moves on. What should you ask before letting that number into a report?</li>
+</ol>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -483,9 +1054,15 @@ Tip
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>TODO: answers, collapsed.</p>
+<ol type="1">
+<li><p>Their granularities respond differently to reality. <code>ex_raw</code> has one row per <em>subject</em>, and every randomised subject has a dosing record, so dropout does not remove rows — it only shortens the dosing period recorded in <code>EXENDT</code>. <code>lb_raw</code> has one row per subject per <em>attended visit</em> per test, so every visit a subject missed removes four rows. Same subjects, different units of observation.</p></li>
+<li><p>No — it is exactly 200 per arm. The raw count is inflated by the subject with two DM rows, who happens to sit in the placebo arm. The correct check counts <em>subjects</em>, not rows: <code>distinct(SUBJID, ARM) |&gt; count(ARM)</code>. The general habit: know a file’s granularity before trusting any count over it.</p></li>
+<li><p>Because both findings files are driven by the same attended visits. Once <code>total_visits</code> was known, each file had an exact expected count (× 4 tests; × 4 vitals + 400 heights). <code>vs_raw</code> landing exactly on its prediction confirmed the accounting was right, which made <code>lb_raw</code>’s +1 a real anomaly rather than a rounding error in the method. Arithmetic isolated one suspect row out of 12,389 without reading any of them.</p></li>
+<li><p>HbA1c is measured by the central laboratory and arrives in <code>lb_raw.csv</code>, the vendor’s file — not the EDC. One lab, one assay, one calibration makes values comparable across 12 sites and 8 visits. The price is a file whose conventions the study team does not control, which is where much of Part 2’s reconciliation work comes from.</p></li>
+<li><p>At minimum: <em>what was the denominator?</em> (181 of 200 randomised — the survivors), <em>compared to what?</em> (placebo also fell, to 8.14, so the drug’s effect is the difference, not the drop), and <em>change from which baseline, handled how for the missing?</em> None of these has a wrong answer in the raw data; they have <em>undefined</em> answers until the analysis datasets define them. That is why the pipeline continues past the raw files.</p></li>
+</ol>
 </div>
 </div>
 </div>
