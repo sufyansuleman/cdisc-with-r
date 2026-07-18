@@ -2,22 +2,32 @@
 title: "SDTM: The DM Domain"
 ---
 
+```{r setup}
+#| include: false
+#| eval: true
+library(tidyverse)
+library(sdtm.terminology)
+```
+
 ::: {.callout-note}
 ### Session at a Glance
 
-**Total core time: about TODO minutes.**
+**Total core time: about 100 minutes.**
 
 | Section | Time | Type |
 |---|---|---|
-| When Do You Use This? + Learning Objectives | TODO | Reading |
-| Background | TODO | Reading |
-| Example 1 | TODO | Worked example |
-| Example 2 | TODO | Worked example |
-| What Can Go Wrong | TODO | Reading |
-| Exercises | TODO | Practice |
-| Comprehension Check | TODO | Self-test |
+| When Do You Use This? + Learning Objectives | 5 min | Reading |
+| Background: the DM contract | 20 min | Reading |
+| Example 1: Building DM from the raw files | 30 min | Worked example |
+| Example 2: RFSTDTC and the study-day rule | 15 min | Worked example |
+| What Can Go Wrong | 10 min | Reading |
+| Exercises | 15 min | Practice |
+| Comprehension Check | 10 min | Self-test |
 
-TODO: how the session splits across sittings for self-paced study.
+This is the busiest session in Part 2: it builds the course's first
+real SDTM dataset, resolves three of the raw data's deliberate defects,
+and sets the reference date that every later study-day calculation
+uses. For self-paced study, split after Example 1.
 :::
 
 ::: {.callout-tip}
@@ -26,72 +36,733 @@ TODO: how the session splits across sittings for self-paced study.
 Every code chunk below is written so you can copy it into your R
 console (or an R script) and run it yourself, in the order shown.
 Where you see a "Run It Yourself" box, stop and run the code above it
-before reading the explanation that follows.
+before reading the explanation that follows. Run R from the project
+root, as in earlier sessions.
+
+Controlled-terminology checks use the **`sdtm.terminology`** package,
+as introduced in [SDTM Concepts](sdtm-concepts.qmd).
 :::
 
-## When Do You Use This?
+## When Do You Use This? {#sec-sdtm-dm}
 
 ::: {.callout-tip}
-TODO: two or three concrete scenarios that this session answers, ending
-with the single question it addresses in bold. Cross-link the
-session(s) this one builds on.
+Every mapping effort starts here: DM is the first domain anyone builds,
+because every other domain assumes it exists. You will also recognise
+this session's problems personally by now — the demographics file with
+401 rows for 400 subjects, and the subject whose sex differs between
+the EDC and the lab file, have both been sitting unresolved since [Why
+Standards](why-standards.qmd). And any question of the form "what study
+day was that?" is unanswerable until someone sets each subject's
+reference date.
+
+So the question this session answers: **which dataset must exist,
+correctly, before any other dataset can be built — and what does
+building it actually involve?**
+
+Builds on [SDTM Concepts](sdtm-concepts.qmd) (classes, cores,
+controlled terminology) and [The Trial: GLPX-001](the-trial-glpx001.qmd)
+(the raw files and their defects).
 :::
 
 ## Learning Objectives
 
 After completing this session you will be able to:
 
-- TODO
-- TODO
-- TODO
+- Build a conformant DM dataset from raw EDC data, one record per
+  subject
+- Construct USUBJID and explain why its format is a sponsor decision
+  with consequences
+- Resolve a multi-site enrolment and a cross-source sex conflict into
+  single DM values, and record the decisions
+- Represent partial and missing birth dates at their true precision,
+  without imputation
+- Set RFSTDTC from first exposure and derive the reference-date pairs
+- Compute study days across the reference date, including why there is
+  no day zero
+- Check every CT-governed DM value programmatically before submission
 
-## Background: TODO (the one core idea)
+## Background: The DM Contract
 
-*Estimated time: ~TODO minutes (reading)*
+*Estimated time: ~20 minutes (reading)*
 
-TODO: introduce the single idea that ties the session together, concept
-before formula.
+::: {.callout-important}
+### The one thing to remember
 
-## Example 1: TODO
+**DM is the contract: one row per subject that fixes who they are,
+when their study clock starts, and what they were assigned — and every
+other dataset inherits those answers.**
+:::
 
-TODO: worked example on GLPX-001 data. Show the code, then the output,
-then explain it.
+### One row per person
 
+Demographics (DM) is a special-purpose domain — one record per subject
+— and the implementation guide calls it "the parent domain for all
+other observations for human clinical subjects" (SDTMIG v3.4, §5.2).
+*Parent* is meant structurally: every AE record, every lab result,
+every dosing record in the study will carry a `USUBJID` that must
+correspond to exactly one DM row. If DM is wrong, everything downstream
+inherits the error.
+
+The one-row rule has real teeth. The guide addresses our duplicated
+subject directly: subjects occasionally change sites during a trial,
+sponsors must decide how to populate `USUBJID`, `SUBJID` and `SITEID`
+in that situation — "but only 1 DM record should be submitted for each
+subject", with the Supplemental Qualifiers dataset available for
+additional detail (SDTMIG v3.4, §5.2, assumption 2). Note what the rule
+is really saying: **the DM row represents the person, not the enrolment
+event.** A subject who moves sites is still one subject; the move is a
+fact *about* them, not a second them.
+
+### The identifier block
+
+Four identifiers open the dataset, all Required (SDTMIG v3.4, §5.2):
+`STUDYID`, `DOMAIN` (the constant `"DM"`), `USUBJID`, and `SUBJID`.
+Two details are easy to miss:
+
+- **`SUBJID` is DM's topic variable** (SDTMIG v3.4, §5.2) — the thing
+  each row is *about* is the subject, as identified on the CRF. It must
+  be unique within the study.
+- **`USUBJID` has no mandated format.** The guide offers
+  STUDYID-SITEID-SUBJID as one possibility, not a rule (SDTMIG v3.4,
+  §5.2; §4.2.3). What *is* mandated is uniqueness across every study in
+  the submission. Format is therefore a sponsor decision — and subject
+  `101-012` is about to show why it has consequences.
+
+### The subject's clock
+
+DM carries a set of reference dates, and one of them matters more than
+all the others. `RFSTDTC`, the subject reference start date, is
+"usually equivalent to date/time when subject was first exposed to
+study treatment" and is the anchor from which every study-day variable
+in every domain is calculated (SDTMIG v3.4, §5.2, assumption 9). It is
+null for subjects who were never treated — screen failures, subjects
+never assigned (SDTMIG v3.4, §5.2, assumption 9) — which GLPX-001 does
+not have, but the principle stands: the clock starts at first exposure,
+so a subject with no exposure has no clock.
+
+Around it sit the pairs (SDTMIG v3.4, §5.2): `RFENDTC` (the subject's
+reference end — usually trial end, often last exposure; required for
+all randomised subjects), `RFXSTDTC`/`RFXENDTC` (first and last
+exposure to protocol-specified treatment, defined as the earliest
+`EXSTDTC` and latest `EXENDTC`), `RFICDTC` (informed consent) and
+`RFPENDTC` (end of participation — the last known date of contact).
+
+One modelling subtlety: these look like timing variables, but in DM
+they are classified as Record Qualifiers, because they are not intended
+for use in the general observation classes (SDTMIG v3.4, §5.2,
+assumption 7). The only true Timing variables DM may carry are
+`DMDTC`/`DMDY` and, if needed, `VISITNUM`/`VISIT`/`VISITDY` (SDTMIG
+v3.4, §5.2, assumption 8).
+
+### The demographic facts
+
+The rest of the row is the subject's stable description, each variable
+with its core designation from the specification (SDTMIG v3.4, §5.2):
+
+| Variable | Core | Governed by |
+|---|---|---|
+| `SITEID` | Required | sponsor-defined |
+| `BRTHDTC` | Permissible | ISO 8601 |
+| `AGE`, `AGEU` | Expected | AGEU codelist |
+| `SEX` | **Required** | SEX codelist |
+| `RACE` | Expected | RACE codelist |
+| `ETHNIC` | Permissible | ETHNIC codelist |
+| `COUNTRY` | **Required** | ISO 3166-1 alpha-3 |
+
+Three notes with direct GLPX consequences. `BRTHDTC` is only
+Permissible, with an explicit privacy caution (SDTMIG v3.4, §5.2,
+assumption 3) — and partial birth dates are represented at their true
+precision by right-truncating the ISO 8601 string, never by inventing
+the missing part (SDTMIG v3.4, §4.4.2). `AGE` "may be derived from
+RFSTDTC and BRTHDTC, but BRTHDTC may not be available in all cases"
+(SDTMIG v3.4, §5.2) — so the partial-date subjects will force a
+decision. And `SEX` is Required with controlled terminology: exactly
+one legal value per subject, which is what turns the EDC-versus-lab
+conflict from an awkward observation into something that must be
+resolved. `COUNTRY` is Required and "generally represented using ISO
+3166-1 Alpha-3" (SDTMIG v3.4, §5.2) — an external standard, not an NCI
+codelist, so `sdtm.terminology` cannot check it and this course does
+not pretend otherwise.
+
+### The arms
+
+Finally, treatment assignment: `ARM`/`ARMCD` (planned) and
+`ACTARM`/`ACTARMCD` (actual), all Expected (SDTMIG v3.4, §5.2). The
+codes are sponsor-defined, not controlled terminology: their values
+must come from the Trial Arms (TA) dataset — the trial-design dataset
+where a study declares its arms, which this course notes but does not
+build — with ARM and ARMCD in a strict one-to-one relationship (SDTMIG
+v3.4, §5.2, assumption 4). `ARMCD` is limited to 20 characters and is
+free of the `--TESTCD` character restrictions (SDTMIG v3.4, §4.2.1).
+`ARMNRS` exists for subjects whose arm variables are null — and may
+**not** be populated when both ARMCD and ACTARMCD have values (SDTMIG
+v3.4, §5.2, assumption 4a). In a trial like GLPX-001 where everyone was
+randomised and treated as assigned, `ARMNRS` is a column of nulls —
+present because it is Expected, empty because it has nothing to say.
+
+## Example 1: Building DM from the Raw Files
+
+*Estimated time: ~30 minutes (worked example)*
+
+### One person, one row
+
+Start where [The Trial](the-trial-glpx001.qmd) left off — 401 rows for
+400 subjects:
+
+```{r read-401}
+#| eval: true
+
+dm_raw <- read_csv("data/raw/dm_raw.csv", show_col_types = FALSE,
+                   col_types = cols(.default = col_character()))
+
+nrow(dm_raw)
+
+dm_raw |> filter(SUBJID == "101-012")
+```
+
+Subject `101-012` was enrolled at site 101, moved, and was enrolled
+again at site 108 three weeks later. Both rows record true events; the
+person is nevertheless one person, and the standard is unambiguous:
+one DM record per subject (SDTMIG v3.4, §5.2, assumption 2). We keep
+one row — carrying the original enrolment's site — and note that the
+site change itself is information *about* this subject that belongs in
+a supplemental dataset, not in a second row:
+
+```{r one-row}
+#| eval: true
+
+dm_person <- dm_raw |>
+  arrange(SUBJID, RANDDT) |>
+  distinct(SUBJID, .keep_all = TRUE)   # one row per person; site move -> SUPPDM
+
+c(rows = nrow(dm_person), subjects = n_distinct(dm_person$SUBJID))
+```
+
+::: {.callout-tip}
 ### Run It Yourself
 
-TODO: the exact code block the learner should execute before reading on.
+Run both chunks. You should see 401 collapse to 400, with rows and
+subjects now equal. Before moving on, note what we did *not* do: we
+did not delete a false record. Both raw rows were true. We decided —
+as the standard requires the sponsor to decide — how one person's
+site change is represented, and the answer is "in one row, with the
+detail carried elsewhere."
+:::
 
+### Identifiers, and why USUBJID format matters
+
+```{r identifiers}
+#| eval: true
+
+dm_ids <- dm_person |>
+  mutate(
+    STUDYID = "GLPX001",
+    DOMAIN  = "DM",
+    USUBJID = paste("GLPX001", SUBJID, sep = "-")
+  )
+
+dm_ids |> select(STUDYID, DOMAIN, USUBJID, SUBJID, SITEID) |> head(3)
+```
+
+::: {.callout-note}
 ### Reading the Output Line by Line
 
-TODO: map each line of output to its plain-English meaning.
+| Column | What it is |
+|---|---|
+| `STUDYID` | The study, constant. Sponsor-assigned. |
+| `DOMAIN` | The constant `"DM"` — the two-character code doing one of its four jobs (SDTMIG v3.4, §2.2). |
+| `USUBJID` | `GLPX001-101-012` — built as STUDYID + SUBJID, **deliberately not** from `SITEID`. |
+| `SUBJID` | The subject as recorded on the CRF, unique within the study — DM's topic variable (SDTMIG v3.4, §5.2). |
 
-## Example 2: TODO
+The format decision is the lesson. The guide suggests
+STUDYID-SITEID-SUBJID as one option (SDTMIG v3.4, §5.2) — and subject
+`101-012` shows the trap in it: their site is now 108, and an
+identifier rebuilt from current site would *change*, which is the one
+thing an identifier must never do. We build from `SUBJID` alone. (The
+`101` inside `101-012` is historical — it records where the number was
+issued, like the area code of a phone number that moved. It is never
+recomputed.)
+:::
 
-TODO: a second worked example.
+### The subject's clock, from the dosing records
 
+`RFSTDTC` is usually the first exposure date (SDTMIG v3.4, §5.2,
+assumption 9), and exposure lives in the raw dosing file. The
+reference pairs come from the same place: `RFXSTDTC` is defined as the
+earliest `EXSTDTC` and `RFXENDTC` as the latest `EXENDTC` (SDTMIG
+v3.4, §5.2). GLPX-001 has one dosing record per subject, so earliest
+and latest are simply its two dates:
+
+```{r ref-dates}
+#| eval: true
+
+ex_raw <- read_csv("data/raw/ex_raw.csv", show_col_types = FALSE,
+                   col_types = cols(.default = col_character()))
+
+dm_ref <- dm_ids |>
+  left_join(ex_raw |> select(SUBJID, EXSTDT, EXENDT), by = "SUBJID") |>
+  mutate(
+    RFSTDTC  = EXSTDT,   # clock starts at first exposure
+    RFENDTC  = EXENDT,
+    RFXSTDTC = EXSTDT,   # earliest exposure start
+    RFXENDTC = EXENDT,   # latest exposure end
+    RFICDTC  = NA_character_,   # consent date not collected -> null
+    RFPENDTC = EXENDT    # last known contact in this study's data
+  )
+
+dm_ref |> select(USUBJID, RFSTDTC, RFENDTC, RFXSTDTC, RFXENDTC) |> head(3)
+```
+
+`RFICDTC` deserves a pause: GLPX-001's raw data never collected consent
+dates, so the column is present and entirely null. That is the
+Expected discipline from [SDTM Concepts](sdtm-concepts.qmd) in the
+flesh — the column must exist (with the absence explained in the
+Define-XML), but no value is invented (SDTMIG v3.4, §4.1.5).
+
+### Birth dates at their true precision
+
+Now defect D1. Four subjects' birth dates arrived incomplete, and the
+standard's instruction is to represent reduced precision by
+right-truncating the ISO 8601 string — not to fill in the missing part
+(SDTMIG v3.4, §4.4.2):
+
+```{r brthdtc}
+#| eval: true
+
+dm_birth <- dm_ref |> mutate(BRTHDTC = na_if(BIRTHDT, ""))
+
+dm_birth |>
+  filter(SUBJID %in% c("102-005", "110-023", "111-057", "103-141")) |>
+  select(SUBJID, BIRTHDT, BRTHDTC)
+```
+
+::: {.callout-note}
+### Reading the Output Line by Line
+
+`1967-04` stays `1967-04` — a real ISO 8601 value meaning "April 1967,
+day unknown." `1969` stays `1969`. The empty string becomes a true
+null, the representation for a completely missing date (SDTMIG v3.4,
+§4.4.2). Nothing was guessed. If an analysis later needs a complete
+date, imputing one is an *analysis* decision that happens in the ADaM
+layer with documented rules — [ADSL](adsl.qmd) picks this up. SDTM's
+job is to preserve exactly what is known, no more.
+:::
+
+### AGE: derived where honesty allows
+
+`AGE` is Expected, expressed in `AGEU`, and "may be derived from
+RFSTDTC and BRTHDTC" (SDTMIG v3.4, §5.2). *May*, when the birth date
+supports it. For the four D1 subjects it does not — deriving an age
+from "1969" means inventing a birthday — so their AGE is honestly
+null:
+
+```{r age}
+#| eval: true
+
+dm_age <- dm_birth |>
+  mutate(
+    age_derivable = !is.na(BRTHDTC) & nchar(BRTHDTC) == 10,
+    AGE  = if_else(age_derivable,
+                   floor(as.numeric(as.Date(RFSTDTC) - as.Date(BRTHDTC)) / 365.25),
+                   NA_real_),
+    AGEU = if_else(age_derivable, "YEARS", NA_character_)
+  )
+
+dm_age |> count(age_derivable)
+
+dm_age |> filter(!age_derivable) |> select(SUBJID, BRTHDTC, AGE, AGEU)
+```
+
+::: {.callout-tip}
 ### Run It Yourself
 
-TODO.
+Run the chunk. 396 subjects get a derived age; the four D1 subjects
+get `NA` in both AGE and AGEU. Ask yourself which you would rather
+defend to a reviewer: four honest nulls, or four ages computed from
+invented birthdays. (In a real study, ages for such subjects are often
+*collected* on the CRF precisely because the birth date is withheld —
+GLPX-001's CRF did not, so nulls it is.)
+:::
+
+### SEX: one subject, one value
+
+Defect D3 has been waiting since [Why Standards](why-standards.qmd).
+`SEX` is Required with controlled terminology (SDTMIG v3.4, §5.2) —
+one legal value per subject — and we have a subject with two:
+
+```{r sex-check}
+#| eval: true
+
+lb_raw <- read_csv("data/raw/lb_raw.csv", show_col_types = FALSE,
+                   col_types = cols(.default = col_character()))
+
+dm_age |>
+  select(SUBJID, edc_sex = SEX) |>
+  inner_join(lb_raw |> distinct(subjid, lab_sex = sex),
+             by = join_by(SUBJID == subjid)) |>
+  filter(edc_sex != lab_sex)
+```
+
+The data cannot arbitrate this; a rule about sources can. The EDC
+value is what the site — the people with the subject and the source
+documents in front of them — entered; the lab file's copy is
+downstream demographic data supplied *to* the vendor along with the
+samples. For a stable demographic fact, the site-entered record is the
+authoritative source, so DM takes the EDC value, and the disagreement
+is logged as a data query to the lab rather than silently absorbed:
+
+```{r sex-resolve}
+#| eval: true
+
+dm_queries <- tribble(
+  ~USUBJID,          ~variable, ~issue,
+  "GLPX001-111-003", "SEX",     "EDC records F; central-lab file records M"
+) |>
+  mutate(resolution = paste(
+    "SEX taken from the EDC (site-entered source);",
+    "discrepancy sent to the lab as a data query"
+  ))
+
+dm_queries |> select(USUBJID, issue, resolution)
+
+dm_age |> count(SEX)
+```
+
+The DM column itself needed no edit — the EDC value was already `F` —
+but do not mistake that for nothing having happened. A decision was
+made, by rule, and recorded. The alternative (quietly preferring
+whichever file was loaded last) produces datasets whose values nobody
+can later explain.
+
+### The remaining demographics, checked not trusted
+
+`RACE`, `ETHNIC` and `AGEU` are controlled terminology; `SEX` we have
+just resolved. Check every value the dataset actually contains against
+the published codelists — the habit from [SDTM
+Concepts](sdtm-concepts.qmd), now at dataset scale:
+
+```{r ct-demog}
+#| eval: true
+
+ct_checks <- tibble(
+  variable = c("SEX", "RACE", "ETHNIC", "AGEU"),
+  codelist = c("C66731", "C74457", "C66790", "C66781"),
+  values   = list(unique(dm_age$SEX), unique(dm_age$RACE),
+                  unique(dm_age$ETHNIC), unique(na.omit(dm_age$AGEU)))
+) |>
+  mutate(all_valid = map2_lgl(values, codelist,
+                              \(v, cl) all(map_lgl(v, \(x) is_term(x, clst_code = cl)))))
+
+ct_checks |> mutate(values = map_chr(values, paste, collapse = ", "))
+```
+
+::: {.callout-note}
+### Reading the Output Line by Line
+
+All four rows come back `TRUE` — including RACE's `OTHER`, which is a
+genuine member of the RACE codelist (`C74457`). GLPX-001's EDC was
+configured with codelist values, so the checks pass; in a study whose
+CRF allowed free text they would not, and this one table would be
+where you found out. Passing is not the point. *Having checked* is
+the point — the alternative is stating codelist contents from memory,
+which is how plausible-but-wrong values enter submissions.
+
+`COUNTRY` (`DNK`, `DEU`, `GBR`, `ESP`, `POL`) is governed by ISO
+3166-1 alpha-3 (SDTMIG v3.4, §5.2), an external standard the
+terminology package does not carry — so it is *not* in this table,
+and its check is a different one (against the ISO list) rather than
+pretending `is_term()` covers it.
+:::
+
+### Arms
+
+The raw file carries the randomised arm's name; the codes are ours to
+define — sponsor-defined values that must come from the Trial Arms
+dataset with ARM and ARMCD one-to-one (SDTMIG v3.4, §5.2, assumption
+4), ARMCD within 20 characters (SDTMIG v3.4, §4.2.1). Every GLPX
+subject was treated as randomised, so actual mirrors planned, and
+`ARMNRS` — which may not be populated when both code variables have
+values (SDTMIG v3.4, §5.2, assumption 4a) — stays null:
+
+```{r arms}
+#| eval: true
+
+dm_arms <- dm_age |>
+  mutate(
+    ARMCD    = case_when(ARM == "GLPX 10 mg" ~ "GLPX10",
+                         ARM == "Placebo"    ~ "PBO"),
+    ACTARM   = ARM,
+    ACTARMCD = ARMCD,
+    ARMNRS   = NA_character_,
+    ACTARMUD = NA_character_,
+    DTHDTC   = NA_character_,   # no deaths in GLPX-001
+    DTHFL    = NA_character_
+  )
+
+dm_arms |> count(ARMCD, ARM, ACTARMCD, ACTARM)
+```
+
+### Assemble and check
+
+Put the columns in the specification's order and let the dataset prove
+itself — one row per subject, Required variables never null, CT values
+legal:
+
+```{r assemble}
+#| eval: true
+
+dm <- dm_arms |>
+  select(STUDYID, DOMAIN, USUBJID, SUBJID,
+         RFSTDTC, RFENDTC, RFXSTDTC, RFXENDTC, RFICDTC, RFPENDTC,
+         DTHDTC, DTHFL, SITEID, BRTHDTC, AGE, AGEU, SEX, RACE, ETHNIC,
+         ARMCD, ARM, ACTARMCD, ACTARM, ARMNRS, ACTARMUD, COUNTRY)
+
+required_vars <- c("STUDYID", "DOMAIN", "USUBJID", "SUBJID",
+                   "SITEID", "SEX", "COUNTRY")
+
+c(
+  one_row_per_subject  = nrow(dm) == n_distinct(dm$USUBJID),
+  required_never_null  = all(map_lgl(required_vars, \(v) !any(is.na(dm[[v]])))),
+  domain_code_valid_ct = is_term("DM", clst_code = "C66734"),
+  expected_cols_present = all(c("ARMNRS", "RFICDTC", "DTHFL") %in% names(dm))
+)
+```
+
+::: {.callout-tip}
+### Run It Yourself
+
+Run the two chunks: four checks, four `TRUE`s, and `dm` is a 400-row,
+26-column DM dataset. Notice which columns you built by *copying*
+(SITEID, RACE), which by *deciding* (the one-row rule, USUBJID's
+format, SEX's source, AGE's nulls), and which by *deriving* (the
+reference dates). The copying was trivial. The dataset's value is
+entirely in the deciding — which is why those decisions were made
+explicitly and, in a real study, live in the study's documentation.
+
+Also absent, deliberately: the Permissible variables the study never
+collected (`INVID`, `INVNAM`, `DMDTC`, `DMDY`) are left out entirely
+— included-if-collected is exactly what Permissible means (SDTMIG
+v3.4, §4.1.5) — while the Expected-but-empty columns (`RFICDTC`,
+`DTHFL`, `ARMNRS`) are present and null. The difference between those
+two fates is the difference between Permissible and Expected.
+:::
+
+## Example 2: RFSTDTC and the Study-Day Rule
+
+*Estimated time: ~15 minutes (worked example)*
+
+DM now gives every subject a clock. [The
+Trial](the-trial-glpx001.qmd) promised the precise rule for reading
+it, and here it is, verbatim from the guide (SDTMIG v3.4, §4.4.4): the
+reference start date is study day 1; the study day increments by 1 for
+each date after it; dates before it count down from **−1**; **there is
+no study day 0**. As formulas:
+
+- on or after the reference date:
+  `--DY = (date portion of --DTC) − (date portion of RFSTDTC) + 1`
+- before the reference date:
+  `--DY = (date portion of --DTC) − (date portion of RFSTDTC)`
+
+Watch what that does across the boundary, for subject `101-026`
+(RFSTDTC = 2024-05-06):
+
+```{r jump-demo}
+#| eval: true
+
+ref <- dm |> filter(SUBJID == "101-026") |> pull(RFSTDTC) |> as.Date()
+
+study_day <- function(date, ref) {
+  d <- as.integer(date - ref)
+  if_else(date >= ref, d + 1L, d)
+}
+
+tibble(date = ref + (-2:2)) |>
+  mutate(diff_in_days = as.integer(date - ref),
+         DY           = study_day(date, ref))
+```
+
+::: {.callout-note}
+### Reading the Output Line by Line
+
+| Date | Difference | Study day |
+|---|---|---|
+| two days before | −2 | **−2** |
+| one day before | −1 | **−1** |
+| the reference date | 0 | **1** |
+| one day after | +1 | **2** |
+
+The day sequence runs −2, −1, 1, 2 — the calendar difference of 0
+never appears as a study day. This mirrors how people naturally count
+("day 1 of treatment" is the first day, not day 0), and it has a hard
+consequence the guide states itself: study days are unusable for
+duration arithmetic, precisely because the scale has a missing number.
+Durations are computed from the raw dates, never from `--DY` (SDTMIG
+v3.4, §4.4.4).
+:::
+
+Now the same function against real data — the subject's HbA1c
+collection dates from the raw lab file:
+
+```{r real-days}
+#| eval: true
+
+lb_raw |>
+  filter(subjid == "101-026", test == "HBA1C") |>
+  mutate(colldt = as.Date(colldt),
+         LBDY   = study_day(colldt, ref)) |>
+  select(visit, colldt, LBDY)
+```
+
+::: {.callout-tip}
+### Run It Yourself
+
+Run both chunks. The screening draw lands on study day **−15** —
+before the clock started, so negative, with no zero crossed on the way
+— and the baseline draw on day **2**, because the sample was taken the
+day after first dose. Nominal week 26 lands on day 184. All three are
+the reality behind the tidy visit labels: `--DY` records when things
+*actually* happened on the subject's own clock. When you build full
+findings domains in [Events and Findings](sdtm-events-findings.qmd),
+this function is applied to every dated record in the study.
+:::
 
 ## What Can Go Wrong
 
-TODO: failure modes and misuse patterns.
+*Estimated time: ~10 minutes (reading)*
 
+**Keeping both rows for a re-enrolled subject "to be safe"**
+
+Safety is exactly what it isn't. Two DM rows for one person breaks the
+parent-domain contract — joins duplicate, counts inflate, and every
+downstream domain inherits the ambiguity. The standard's rule is one
+record per subject with the detail carried supplementally (SDTMIG
+v3.4, §5.2, assumption 2). Keeping both rows is not caution; it is
+deferring a decision to everyone who uses the data after you.
+
+**Imputing partial birth dates in SDTM**
+
+Turning `1969` into `1969-07-01` feels helpful and destroys
+information: the dataset now asserts a birthday nobody stated, and no
+reader can tell it apart from a real one. SDTM represents reduced
+precision honestly by truncation (SDTMIG v3.4, §4.4.2); imputation for
+analysis is done, with documented rules, in the analysis datasets.
+
+**Resolving a source conflict by tidiness**
+
+The lab file is machine-formatted and consistent; the temptation is to
+trust it. The resolution rule must come from *provenance*, not
+formatting: for a stable demographic, the site-entered source record
+outranks a downstream copy. Whatever the rule, it is applied
+consistently and the conflict is logged as a query — a dataset whose
+values cannot be traced to a decision is unreviewable.
+
+**Building USUBJID from mutable facts**
+
+Any identifier constructed from a value that can change — site, arm,
+name fragments — will eventually change, and an identifier that
+changes is not an identifier. Subject `101-012` is the standing
+counterexample to STUDYID-SITEID-SUBJID in this study.
+
+**Study-day arithmetic with a day 0**
+
+`as.integer(date - ref)` alone is off by one for every on-study
+record, and `+ 1` everywhere is off by one for every pre-study record.
+The rule is two-branched because the scale skips zero (SDTMIG v3.4,
+§4.4.4) — and the same section is why `--DY` must never be used to
+compute durations.
+
+**Dropping the empty Expected columns**
+
+`ARMNRS`, `RFICDTC` and `DTHFL` are all null in GLPX-001's DM, and a
+tidy instinct says remove them. Expected means the column stays, with
+the study-level absence explained in the metadata (SDTMIG v3.4,
+§4.1.5). Only Permissible variables disappear when uncollected.
+
+::: {.callout-warning}
 ### Common misinterpretations
 
-TODO.
+**"DM holds whatever was on the demographics CRF page"**
+DM holds the standard's set of subject-level variables, several of
+which (the reference dates) come from *other* raw sources entirely —
+GLPX's clock came from the dosing file. The CRF page and the domain
+are different units of organisation.
+
+**"USUBJID and SUBJID are basically the same thing"**
+`SUBJID` is the subject as the study knew them, unique within the
+study. `USUBJID` is the person across every study of the product,
+unique across the whole submission (SDTMIG v3.4, §5.2; §4.2.3). The
+same person in a later GLPX trial would get a new SUBJID and must get
+the same USUBJID.
+
+**"AGE missing for four subjects is a data quality problem"**
+It is the honest representation of what is known. The quality problem
+would be four plausible ages derived from invented birthdays. Null,
+here, is the *correct value*.
+
+**"The subject's study day 0 is their randomisation day"**
+There is no study day 0 (SDTMIG v3.4, §4.4.4) — the reference date is
+day 1, and GLPX-001's reference date is first *exposure*, which for
+some subjects is not the randomisation day at all.
+:::
 
 ## Exercises
 
-TODO: link the exercise file(s) for this session, or state that this
-session has no exercise.
+The DM exercise set is in [Exercise 1 — SDTM: The DM
+Domain](../exercises/sdtm-dm.qmd): finishing the build for a column
+subset, defending the AGE nulls, and writing the decision log for the
+two resolved conflicts. Solutions are in the paid tier.
 
 ## Comprehension Check
 
-TODO: three to five short self-test questions.
+*Estimated time: ~10 minutes*
+
+1. Subject `101-012` has two genuine enrolment records. Why does DM get
+   exactly one row, and where does the site-change information belong?
+2. This course built `USUBJID` as `GLPX001-<SUBJID>` rather than the
+   guide's STUDYID-SITEID-SUBJID example. Justify the choice.
+3. `RFICDTC`, `DTHFL` and `ARMNRS` are all completely null in the
+   finished dataset, while `INVNAM` and `DMDTC` are absent entirely.
+   Explain both fates.
+4. A colleague fills subject `111-057`'s birth date (`1969`) in as
+   `1969-06-15` so that AGE can be computed. What has gone wrong, and
+   where would completing a date be legitimate?
+5. A lab sample was collected the day before a subject's first dose,
+   and another on the day of first dose. What are the two study days,
+   and what rule produced them?
 
 ::: {.callout-note collapse="true"}
 ### Answers
 
-TODO: answers, collapsed.
+1. The DM row represents the person, not the enrolment event, and the
+   guide requires exactly one DM record per subject even when sites
+   change (SDTMIG v3.4, §5.2, assumption 2). Both raw rows are true;
+   the representation decision is the sponsor's, with the site change
+   carried in the Supplemental Qualifiers dataset rather than a second
+   row.
+
+2. An identifier must never change, and site can (subject `101-012`
+   moved from 101 to 108). Building from study + within-study subject
+   number uses only immutable facts. The guide mandates uniqueness
+   across the submission, not a format (SDTMIG v3.4, §5.2; §4.2.3), so
+   this is a legitimate sponsor decision — made and documented once.
+
+3. The null trio are **Expected** variables: the column must be present
+   even when the study has nothing to put in it, with the absence
+   explained in the metadata. The missing pair are **Permissible**
+   variables the study did not collect, and uncollected Permissible
+   variables are omitted entirely (SDTMIG v3.4, §4.1.5). Same emptiness,
+   opposite obligations.
+
+4. The dataset now asserts a birthday that was never stated, and
+   nothing distinguishes it from a real one — traceability to source is
+   broken. SDTM represents partial dates at their true precision by
+   truncation (SDTMIG v3.4, §4.4.2). Completing a date is legitimate as
+   a documented *imputation* in the analysis layer (ADaM), where the
+   rule is stated and the imputed value is flagged as such.
+
+5. Day **−1** and day **1**. The reference date (first dose, RFSTDTC)
+   is study day 1 and the day before it is −1, because there is no
+   study day 0 (SDTMIG v3.4, §4.4.4): before the reference date the
+   study day is the plain date difference; on or after it, the
+   difference plus one.
 :::

@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -323,24 +358,39 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="goal" class="level2" data-number="14.1">
 <h2 data-number="14.1" class="anchored" data-anchor-id="goal"><span class="header-section-number">14.1</span> Goal</h2>
-<p>TODO: one sentence.</p>
+<p>Rebuild the core of the GLPX-001 DM dataset yourself — including the three decisions that make it more than a rename — and defend the result.</p>
 </section>
 <section id="setup" class="level2" data-number="14.2">
 <h2 data-number="14.2" class="anchored" data-anchor-id="setup"><span class="header-section-number">14.2</span> Setup</h2>
-<p>TODO: starting code.</p>
+<p>Work from the project root, with the session’s packages loaded:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sdtm.terminology)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>dm_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/raw/dm_raw.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>()))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>ex_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/raw/ex_raw.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Do the tasks in order — each builds on the last. <a href="../sessions/sdtm-dm.html">The DM Domain session</a> is the reference; try each task before looking back at how the session did the equivalent step.</p>
 </section>
 <section id="task" class="level2" data-number="14.3">
 <h2 data-number="14.3" class="anchored" data-anchor-id="task"><span class="header-section-number">14.3</span> Task</h2>
 <ol type="1">
-<li>TODO</li>
-<li>TODO</li>
+<li><strong>(Guided) The identifier block.</strong> Reduce <code>dm_raw</code> to one row per subject, then build <code>STUDYID</code>, <code>DOMAIN</code>, <code>USUBJID</code> and <code>SUBJID</code>. Confirm — with code, not by inspection — that <code>USUBJID</code> is unique and that no identifier would change if a subject moved sites.</li>
+<li><strong>(Guided) The clock.</strong> Derive <code>RFSTDTC</code>, <code>RFENDTC</code>, <code>RFXSTDTC</code> and <code>RFXENDTC</code> from the dosing file. Then compute the study day of <code>2024-03-05</code> and <code>2024-03-06</code> for subject <code>101-012</code> (first dose 2024-03-06) and check you get −1 and 1.</li>
+<li><strong>(Semi-guided) Defend the nulls.</strong> Identify every subject whose <code>AGE</code> must be null, and write one sentence per subject saying <em>why</em> — naming the precision of the birth date you refused to extend. Then name two columns that must be present-but-null and two that must be absent, and say which core designation produces each fate.</li>
+<li><strong>(Open-ended) The decision log.</strong> Write the two decision-log entries a reviewer would want for this dataset: the one-row resolution for <code>101-012</code> and the SEX resolution for <code>111-003</code>. Each entry: what conflicted, what rule was applied, why that rule, and what was queried. Aim for the register of study documentation, not a chat message.</li>
 </ol>
 </section>
 <section id="acceptance-criteria" class="level2" data-number="14.4">
 <h2 data-number="14.4" class="anchored" data-anchor-id="acceptance-criteria"><span class="header-section-number">14.4</span> Acceptance criteria</h2>
 <ul class="task-list">
-<li><label><input type="checkbox">TODO</label></li>
-<li><label><input type="checkbox">TODO</label></li>
+<li><label><input type="checkbox">400 rows, <code>USUBJID</code> unique, identifiers built only from immutable facts</label></li>
+<li><label><input type="checkbox">Reference dates populated for all subjects; study-day check returns −1 and 1 (no zero)</label></li>
+<li><label><input type="checkbox">Four AGE nulls, each with a stated reason; Expected-vs-Permissible fates correctly assigned</label></li>
+<li><label><input type="checkbox">Both decision-log entries name the rule, not just the outcome</label></li>
+<li><label><input type="checkbox">Every CT-governed column you touched was checked with <code>is_term()</code>, not asserted from memory</label></li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -354,7 +404,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>TODO: hint.</p>
+<p>Task 2’s check is the two-branch rule from the session: before the reference date, the study day is the plain date difference; on or after it, the difference <strong>plus one</strong>. If you got 0 for 2024-03-05, you used one branch for both dates.</p>
+<p>Task 4’s entries need three ingredients each: the conflict, the rule (one row per person; site-entered source outranks a downstream copy), and the action taken (SUPPDM note; query to the lab).</p>
 </div>
 </div>
 </div>

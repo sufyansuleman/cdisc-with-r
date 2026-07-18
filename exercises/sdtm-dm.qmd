@@ -4,26 +4,74 @@ title: "Exercise 1 — SDTM: The DM Domain"
 
 ## Goal
 
-TODO: one sentence.
+Rebuild the core of the GLPX-001 DM dataset yourself — including the
+three decisions that make it more than a rename — and defend the
+result.
 
 ## Setup
 
-TODO: starting code.
+Work from the project root, with the session's packages loaded:
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(sdtm.terminology)
+
+dm_raw <- read_csv("data/raw/dm_raw.csv", show_col_types = FALSE,
+                   col_types = cols(.default = col_character()))
+ex_raw <- read_csv("data/raw/ex_raw.csv", show_col_types = FALSE,
+                   col_types = cols(.default = col_character()))
+```
+
+Do the tasks in order — each builds on the last. [The DM Domain
+session](../sessions/sdtm-dm.qmd) is the reference; try each task
+before looking back at how the session did the equivalent step.
 
 ## Task
 
-1. TODO
-2. TODO
+1. **(Guided) The identifier block.** Reduce `dm_raw` to one row per
+   subject, then build `STUDYID`, `DOMAIN`, `USUBJID` and `SUBJID`.
+   Confirm — with code, not by inspection — that `USUBJID` is unique
+   and that no identifier would change if a subject moved sites.
+2. **(Guided) The clock.** Derive `RFSTDTC`, `RFENDTC`, `RFXSTDTC` and
+   `RFXENDTC` from the dosing file. Then compute the study day of
+   `2024-03-05` and `2024-03-06` for subject `101-012` (first dose
+   2024-03-06) and check you get −1 and 1.
+3. **(Semi-guided) Defend the nulls.** Identify every subject whose
+   `AGE` must be null, and write one sentence per subject saying *why*
+   — naming the precision of the birth date you refused to extend.
+   Then name two columns that must be present-but-null and two that
+   must be absent, and say which core designation produces each fate.
+4. **(Open-ended) The decision log.** Write the two decision-log
+   entries a reviewer would want for this dataset: the one-row
+   resolution for `101-012` and the SEX resolution for `111-003`. Each
+   entry: what conflicted, what rule was applied, why that rule, and
+   what was queried. Aim for the register of study documentation, not
+   a chat message.
 
 ## Acceptance criteria
 
-- [ ] TODO
-- [ ] TODO
+- [ ] 400 rows, `USUBJID` unique, identifiers built only from
+      immutable facts
+- [ ] Reference dates populated for all subjects; study-day check
+      returns −1 and 1 (no zero)
+- [ ] Four AGE nulls, each with a stated reason; Expected-vs-Permissible
+      fates correctly assigned
+- [ ] Both decision-log entries name the rule, not just the outcome
+- [ ] Every CT-governed column you touched was checked with
+      `is_term()`, not asserted from memory
 
 ::: {.callout-tip collapse="true"}
 ## Hint
 
-TODO: hint.
+Task 2's check is the two-branch rule from the session: before the
+reference date, the study day is the plain date difference; on or
+after it, the difference **plus one**. If you got 0 for 2024-03-05,
+you used one branch for both dates.
+
+Task 4's entries need three ingredients each: the conflict, the rule
+(one row per person; site-entered source outranks a downstream copy),
+and the action taken (SUPPDM note; query to the lab).
 :::
 
 > Solutions are in the paid tier.
