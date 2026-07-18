@@ -38,3 +38,8 @@ Providing-Regulatory-Submissions-In-Electronic-Format.pdf
 Study-Data-Technical-Conformance.pdf
 TRC-Worksheet Instructions_v4.0.pdf
 fda-dscv11.0.xlsx
+
+# CDISC SDTMIG — members-only material, copyright CDISC. NEVER commit or
+# push to a public repo. Local reference only; cited by section, never quoted.
+SDTMIG v3.4-FINAL_2022-07-21.pdf
+*.pdf

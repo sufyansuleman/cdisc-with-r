@@ -20,7 +20,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -292,23 +347,24 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#when-do-you-use-this" id="toc-when-do-you-use-this" class="nav-link active" data-scroll-target="#when-do-you-use-this"><span class="header-section-number">4.1</span> When Do You Use This?</a></li>
+  <li><a href="#sec-sdtm-concepts" id="toc-sec-sdtm-concepts" class="nav-link active" data-scroll-target="#sec-sdtm-concepts"><span class="header-section-number">4.1</span> When Do You Use This?</a></li>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives"><span class="header-section-number">4.2</span> Learning Objectives</a></li>
-  <li><a href="#background-todo-the-one-core-idea" id="toc-background-todo-the-one-core-idea" class="nav-link" data-scroll-target="#background-todo-the-one-core-idea"><span class="header-section-number">4.3</span> Background: TODO (the one core idea)</a></li>
-  <li><a href="#example-1-todo" id="toc-example-1-todo" class="nav-link" data-scroll-target="#example-1-todo"><span class="header-section-number">4.4</span> Example 1: TODO</a>
+  <li><a href="#background-the-model-behind-the-datasets" id="toc-background-the-model-behind-the-datasets" class="nav-link" data-scroll-target="#background-the-model-behind-the-datasets"><span class="header-section-number">4.3</span> Background: The Model Behind the Datasets</a>
   <ul class="collapse">
-  <li><a href="#run-it-yourself" id="toc-run-it-yourself" class="nav-link" data-scroll-target="#run-it-yourself"><span class="header-section-number">4.4.1</span> Run It Yourself</a></li>
-  <li><a href="#reading-the-output-line-by-line" id="toc-reading-the-output-line-by-line" class="nav-link" data-scroll-target="#reading-the-output-line-by-line"><span class="header-section-number">4.4.2</span> Reading the Output Line by Line</a></li>
+  <li><a href="#the-model-and-the-guide" id="toc-the-model-and-the-guide" class="nav-link" data-scroll-target="#the-model-and-the-guide"><span class="header-section-number">4.3.1</span> The model and the guide</a></li>
+  <li><a href="#the-three-general-observation-classes" id="toc-the-three-general-observation-classes" class="nav-link" data-scroll-target="#the-three-general-observation-classes"><span class="header-section-number">4.3.2</span> The three general observation classes</a></li>
+  <li><a href="#domains-and-the-two-character-code" id="toc-domains-and-the-two-character-code" class="nav-link" data-scroll-target="#domains-and-the-two-character-code"><span class="header-section-number">4.3.3</span> Domains, and the two-character code</a></li>
+  <li><a href="#identifiers-the-spine-of-every-record" id="toc-identifiers-the-spine-of-every-record" class="nav-link" data-scroll-target="#identifiers-the-spine-of-every-record"><span class="header-section-number">4.3.4</span> Identifiers: the spine of every record</a></li>
+  <li><a href="#variable-roles-and-the-topic-of-a-dataset" id="toc-variable-roles-and-the-topic-of-a-dataset" class="nav-link" data-scroll-target="#variable-roles-and-the-topic-of-a-dataset"><span class="header-section-number">4.3.5</span> Variable roles, and the topic of a dataset</a></li>
+  <li><a href="#core-which-variables-you-must-include" id="toc-core-which-variables-you-must-include" class="nav-link" data-scroll-target="#core-which-variables-you-must-include"><span class="header-section-number">4.3.6</span> Core: which variables you must include</a></li>
   </ul></li>
-  <li><a href="#example-2-todo" id="toc-example-2-todo" class="nav-link" data-scroll-target="#example-2-todo"><span class="header-section-number">4.5</span> Example 2: TODO</a>
+  <li><a href="#example-1-anatomy-of-a-domain" id="toc-example-1-anatomy-of-a-domain" class="nav-link" data-scroll-target="#example-1-anatomy-of-a-domain"><span class="header-section-number">4.4</span> Example 1: Anatomy of a Domain</a></li>
+  <li><a href="#example-2-original-result-vs-standardised-result" id="toc-example-2-original-result-vs-standardised-result" class="nav-link" data-scroll-target="#example-2-original-result-vs-standardised-result"><span class="header-section-number">4.5</span> Example 2: Original Result vs Standardised Result</a></li>
+  <li><a href="#what-can-go-wrong" id="toc-what-can-go-wrong" class="nav-link" data-scroll-target="#what-can-go-wrong"><span class="header-section-number">4.6</span> What Can Go Wrong</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">4.7</span> Exercises</a>
   <ul class="collapse">
-  <li><a href="#run-it-yourself-1" id="toc-run-it-yourself-1" class="nav-link" data-scroll-target="#run-it-yourself-1"><span class="header-section-number">4.5.1</span> Run It Yourself</a></li>
+  <li><a href="#exercise-1-guided-classify-two-more-domains" id="toc-exercise-1-guided-classify-two-more-domains" class="nav-link" data-scroll-target="#exercise-1-guided-classify-two-more-domains"><span class="header-section-number">4.7.1</span> Exercise 1 (Guided): Classify Two More Domains</a></li>
   </ul></li>
-  <li><a href="#what-can-go-wrong" id="toc-what-can-go-wrong" class="nav-link" data-scroll-target="#what-can-go-wrong"><span class="header-section-number">4.6</span> What Can Go Wrong</a>
-  <ul class="collapse">
-  <li><a href="#common-misinterpretations" id="toc-common-misinterpretations" class="nav-link" data-scroll-target="#common-misinterpretations"><span class="header-section-number">4.6.1</span> Common misinterpretations</a></li>
-  </ul></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">4.7</span> Exercises</a></li>
   <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">4.8</span> Comprehension Check</a></li>
   </ul>
 </nav>
@@ -345,8 +401,13 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Total core time: about TODO minutes.</strong></p>
+<p><strong>Total core time: about 90 minutes.</strong></p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Section</th>
@@ -357,42 +418,37 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>When Do You Use This? + Learning Objectives</td>
-<td>TODO</td>
+<td>5 min</td>
 <td>Reading</td>
 </tr>
 <tr class="even">
-<td>Background</td>
-<td>TODO</td>
+<td>Background: the model</td>
+<td>25 min</td>
 <td>Reading</td>
 </tr>
 <tr class="odd">
-<td>Example 1</td>
-<td>TODO</td>
+<td>Example 1: Anatomy of a domain</td>
+<td>20 min</td>
 <td>Worked example</td>
 </tr>
 <tr class="even">
-<td>Example 2</td>
-<td>TODO</td>
+<td>Example 2: Original result vs standardised result</td>
+<td>20 min</td>
 <td>Worked example</td>
 </tr>
 <tr class="odd">
 <td>What Can Go Wrong</td>
-<td>TODO</td>
+<td>10 min</td>
 <td>Reading</td>
 </tr>
 <tr class="even">
-<td>Exercises</td>
-<td>TODO</td>
-<td>Practice</td>
-</tr>
-<tr class="odd">
-<td>Comprehension Check</td>
-<td>TODO</td>
-<td>Self-test</td>
+<td>Exercises + Comprehension Check</td>
+<td>10 min</td>
+<td>Practice / Self-test</td>
 </tr>
 </tbody>
 </table>
-<p>TODO: how the session splits across sittings for self-paced study.</p>
+<p>This is the first session of Part 2 and the first that is dense with standard-specific detail. For self-paced study, take the Background in one sitting and the two worked examples in another. It underpins every domain you build afterwards.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -405,11 +461,12 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Every code chunk below is written so you can copy it into your R console (or an R script) and run it yourself, in the order shown. Where you see a “Run It Yourself” box, stop and run the code above it before reading the explanation that follows.</p>
+<p>Every code chunk below is written so you can copy it into your R console (or an R script) and run it yourself, in the order shown. Where you see a “Run It Yourself” box, stop and run the code above it before reading the explanation that follows. Run R from the project root, as in earlier sessions.</p>
+<p>This session also uses the <strong><code>sdtm.terminology</code></strong> package to check controlled-terminology values programmatically, rather than trusting anyone’s memory of what a codelist contains. If <code>renv::restore()</code> has not already provided it, install it once with <code>install.packages("sdtm.terminology")</code>.</p>
 </div>
 </div>
-<section id="when-do-you-use-this" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="when-do-you-use-this"><span class="header-section-number">4.1</span> When Do You Use This?</h2>
+<section id="sec-sdtm-concepts" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sec-sdtm-concepts"><span class="header-section-number">4.1</span> When Do You Use This?</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -420,7 +477,9 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>TODO: two or three concrete scenarios that this session answers, ending with the single question it addresses in bold. Cross-link the session(s) this one builds on.</p>
+<p>You have the five raw GLPX-001 files and you have been told to “map them to SDTM.” Before you rename a single column you hit the questions this session answers: how many datasets should there be, and which raw file becomes which? What is a single row supposed to represent in each? Which columns are mandatory, which are optional, and who decides? And when the lab sends a result in one form but the standard expects another, where does each version live?</p>
+<p>Every one of those is a <strong>modelling question, not a coding question.</strong> This session is the vocabulary and the mental model you need before <a href="../sessions/sdtm-dm.html">The DM Domain</a> and <a href="../sessions/sdtm-events-findings.html">Events and Findings</a>, where you build real domains from the raw data.</p>
+<p>It builds on <a href="../sessions/why-standards.html">Why Standards</a> (why a shared structure exists) and <a href="../sessions/the-trial-glpx001.html">The Trial: GLPX-001</a> (the raw data you will now reshape).</p>
 </div>
 </div>
 </section>
@@ -428,53 +487,401 @@ Tip
 <h2 data-number="4.2" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">4.2</span> Learning Objectives</h2>
 <p>After completing this session you will be able to:</p>
 <ul>
-<li>TODO</li>
-<li>TODO</li>
-<li>TODO</li>
+<li>Explain what SDTM standardises and how the implementation guide relates to the general model</li>
+<li>Classify a dataset into its observation class from what one row represents</li>
+<li>Identify the role a variable plays in a record — who it identifies, what it is about, when it happened, and how it qualifies the result</li>
+<li>Read a variable’s core designation and say what obligation it imposes</li>
+<li>Distinguish a result as originally collected from its standardised form, and say why both are kept</li>
+<li>Check a value against CDISC Controlled Terminology programmatically with <code>sdtm.terminology</code>, instead of recalling codelist contents</li>
 </ul>
 </section>
-<section id="background-todo-the-one-core-idea" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="background-todo-the-one-core-idea"><span class="header-section-number">4.3</span> Background: TODO (the one core idea)</h2>
-<p><em>Estimated time: ~TODO minutes (reading)</em></p>
-<p>TODO: introduce the single idea that ties the session together, concept before formula.</p>
+<section id="background-the-model-behind-the-datasets" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="background-the-model-behind-the-datasets"><span class="header-section-number">4.3</span> Background: The Model Behind the Datasets</h2>
+<p><em>Estimated time: ~25 minutes (reading)</em></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>The one thing to remember
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>SDTM doesn’t tell you new facts about the trial — it puts the facts you already have into fixed boxes, so that what one row means, what each column’s job is, and what may go in it are the same in every study.</strong></p>
+</div>
+</div>
+<section id="the-model-and-the-guide" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="the-model-and-the-guide"><span class="header-section-number">4.3.1</span> The model and the guide</h3>
+<p>Two documents govern this work, and they are not the same thing. The <strong>SDTM</strong> (Study Data Tabulation Model) is the general framework: it defines the kinds of boxes that exist. The <strong>SDTMIG</strong> (the implementation guide for human clinical trials) is what turns that framework into concrete datasets with named variables you can actually build. The guide is <em>based on</em> the model (SDTMIG v3.4, §2.1); this course uses <strong>SDTMIG v3.4</strong>, which is meant to be used together with <strong>SDTM v2.0</strong> (SDTMIG v3.4, §1.1).</p>
+<p>Which version is not a matter of taste. The applicable SDTMIG version for a study is fixed by the study’s start date against the FDA Data Standards Catalog <span class="citation" data-cites="fdadsc11">(<a href="#ref-fdadsc11" role="doc-biblioref">U.S. Food and Drug Administration 2025</a>)</span>. Reading that catalogue for clinical study datasets:</p>
+<ul>
+<li><strong>SDTMIG v3.2</strong> — FDA support <strong>ended</strong> 2023-12-13.</li>
+<li><strong>SDTMIG v3.3</strong> — supported since 2020-07-07; <strong>required</strong> for studies starting on or after 2022-03-15.</li>
+<li><strong>SDTMIG v3.4</strong> — supported since 2023-12-13; <strong>required</strong> for studies starting on or after 2025-03-15; pairs with SDTM v2.0.</li>
+</ul>
+<p>GLPX-001 starts in 2024, so its version is settled by that start date falling in the v3.4 support window — not by preference. This is why “SDTM is required” is too loose to be useful: what is required is a <em>specific implementation-guide version over a specific window of study start dates</em>, and the catalogue’s “date support begins / date support ends / date requirement begins” columns are the whole point. (The study’s start date itself travels in the submission in a small dataset called <code>ts.xpt</code>; you will meet it in <a href="../sessions/adrg-and-submission.html">ADRG and Submission</a>.)</p>
 </section>
-<section id="example-1-todo" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="example-1-todo"><span class="header-section-number">4.4</span> Example 1: TODO</h2>
-<p>TODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.</p>
-<section id="run-it-yourself" class="level3" data-number="4.4.1">
-<h3 data-number="4.4.1" class="anchored" data-anchor-id="run-it-yourself"><span class="header-section-number">4.4.1</span> Run It Yourself</h3>
-<p>TODO: the exact code block the learner should execute before reading on.</p>
+<section id="the-three-general-observation-classes" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="the-three-general-observation-classes"><span class="header-section-number">4.3.2</span> The three general observation classes</h3>
+<p>Here is the first big idea. Most of what a trial collects about its subjects fits into one of <strong>three general observation classes</strong>, and which one a dataset belongs to is decided by what one row <em>is</em> (SDTMIG v3.4, §2.3):</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Class</th>
+<th>One row captures…</th>
+<th>GLPX example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Interventions</strong></td>
+<td>something done to or taken by the subject</td>
+<td>study drug exposure (EX)</td>
+</tr>
+<tr class="even">
+<td><strong>Events</strong></td>
+<td>something that happened to the subject</td>
+<td>an adverse event (AE)</td>
+</tr>
+<tr class="odd">
+<td><strong>Findings</strong></td>
+<td>the result of an observation or measurement</td>
+<td>a lab test (LB), a vital sign (VS)</td>
+</tr>
+</tbody>
+</table>
+<p>The distinction is not cosmetic — it determines which variables a dataset is even allowed to have. A findings dataset is built around a <em>result</em>; an events dataset is built around a <em>thing that occurred</em>; an interventions dataset around a <em>treatment</em>. Most trial data, being measurements and responses, lands in Findings (SDTMIG v3.4, §2.3).</p>
+<p>Not everything fits the three classes. SDTM also defines <strong>special-purpose</strong> domains, trial-design datasets, relationship datasets, and study-reference datasets (SDTMIG v3.4, §2.4). <strong>Demographics (DM)</strong> is the one that matters most here: it is a special-purpose domain — one record per subject (SDTMIG v3.4, §5.2) — not a member of any general observation class.</p>
 </section>
-<section id="reading-the-output-line-by-line" class="level3" data-number="4.4.2">
-<h3 data-number="4.4.2" class="anchored" data-anchor-id="reading-the-output-line-by-line"><span class="header-section-number">4.4.2</span> Reading the Output Line by Line</h3>
-<p>TODO: map each line of output to its plain-English meaning.</p>
+<section id="domains-and-the-two-character-code" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="domains-and-the-two-character-code"><span class="header-section-number">4.3.3</span> Domains, and the two-character code</h3>
+<p>A <strong>domain</strong> is a collection of logically related observations with a common topic, and each domain is one dataset (SDTMIG v3.4, §2.2). Every domain has a unique <strong>two-character code</strong> — and that code does four jobs at once: it is the dataset name, the value of the <code>DOMAIN</code> variable on every row, the prefix on most of the domain’s variable names, and the domain’s reference in relationship datasets (SDTMIG v3.4, §2.2).</p>
+<p>That third job is the one to internalise. The implementation guide writes variable names generically with a <code>--</code> placeholder — <code>--TESTCD</code>, <code>--ORRES</code> — and you replace the <code>--</code> with the domain code to get the real name: <code>LBTESTCD</code> in LB, <code>VSTESTCD</code> in VS (SDTMIG v3.4, §2.2, §4.2.2). So <code>--ORRES</code> is not itself a variable; it is a <em>pattern</em>. When this course writes <code>--STRESC</code>, read it as “the STRESC variable of whichever domain we’re in.”</p>
+<p>The two-character codes are themselves controlled terminology — they come from a published codelist, not from your imagination. Example 1 checks GLPX’s codes against it.</p>
+</section>
+<section id="identifiers-the-spine-of-every-record" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="identifiers-the-spine-of-every-record"><span class="header-section-number">4.3.4</span> Identifiers: the spine of every record</h3>
+<p>Four <strong>identifier</strong> variables are required in every domain built on a general observation class: <code>STUDYID</code>, <code>DOMAIN</code>, <code>USUBJID</code>, and <code>--SEQ</code> (SDTMIG v3.4, §2.5). Two of them carry rules worth stating precisely, because they are exactly the rules that the raw-data problems from earlier sessions violate:</p>
+<ul>
+<li><strong><code>USUBJID</code></strong> — the unique subject identifier — must be unique for each subject across <em>all trials in the submission</em>, not merely within one study (SDTMIG v3.4, §4.2.3). This is the rule that the duplicate-enrolment subject from <a href="../sessions/sdtm-dm.html">The DM Domain</a> has to be reconciled against.</li>
+<li><strong><code>--SEQ</code></strong> — the sequence number — must be unique within a <code>USUBJID</code> within the domain, so that every record has a stable identity even when a subject has many (SDTMIG v3.4, §4.1.7).</li>
+</ul>
+</section>
+<section id="variable-roles-and-the-topic-of-a-dataset" class="level3" data-number="4.3.5">
+<h3 data-number="4.3.5" class="anchored" data-anchor-id="variable-roles-and-the-topic-of-a-dataset"><span class="header-section-number">4.3.5</span> Variable roles, and the topic of a dataset</h3>
+<p>Every SDTM variable plays a <strong>role</strong>. The model defines five: Identifier, Topic, Timing, Qualifier, and Rule — and Qualifiers subdivide further into Grouping, Result, Synonym, Variable, and Record qualifiers (SDTMIG v3.4, §2.1). The Rule role belongs to the trial-design datasets and need not concern you while building subject data; the other four are the working vocabulary of every domain:</p>
+<ul>
+<li><strong>Identifier</strong> — who and which record (<code>USUBJID</code>, <code>--SEQ</code>).</li>
+<li><strong>Topic</strong> — what the observation is <em>about</em>.</li>
+<li><strong>Timing</strong> — when it happened (<code>--DTC</code>, <code>VISIT</code>).</li>
+<li><strong>Qualifier</strong> — everything that describes or completes the result (units, severity, the result itself).</li>
+</ul>
+<p>The <strong>topic</strong> variable is the heart of a dataset, and it differs by class (SDTMIG v3.4, §2.1, §2.6): in Findings it is <code>--TESTCD</code> (the thing measured), in Events it is <code>--TERM</code> (the verbatim event, with <code>--DECOD</code> its dictionary-coded companion), and in Interventions it is <code>--TRT</code> (the treatment). Identify the topic and you have identified what the dataset is fundamentally a list of.</p>
+</section>
+<section id="core-which-variables-you-must-include" class="level3" data-number="4.3.6">
+<h3 data-number="4.3.6" class="anchored" data-anchor-id="core-which-variables-you-must-include"><span class="header-section-number">4.3.6</span> Core: which variables you must include</h3>
+<p>Finally, every variable in a domain model carries a <strong>core designation</strong> that says how obligatory it is (SDTMIG v3.4, §4.1.5):</p>
+<ul>
+<li><strong>Required</strong> — must be in the dataset and must never be null on any record. These are the identifying and topic variables that make a record meaningful.</li>
+<li><strong>Expected</strong> — must be in the dataset, but a value may be null on some records. If the study did not collect the item at all, the column is still included (empty) with an explanation in the Define-XML.</li>
+<li><strong>Permissible</strong> — include it when the study collected the relevant data, and leave it out entirely when it did not.</li>
+</ul>
+<p>“Required” and “Expected” both mean the column is always present; the difference is whether a value is mandatory on every row. Confusing the two is one of the most common conformance findings, and Example 2 depends on the distinction.</p>
 </section>
 </section>
-<section id="example-2-todo" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="example-2-todo"><span class="header-section-number">4.5</span> Example 2: TODO</h2>
-<p>TODO: a second worked example.</p>
-<section id="run-it-yourself-1" class="level3" data-number="4.5.1">
-<h3 data-number="4.5.1" class="anchored" data-anchor-id="run-it-yourself-1"><span class="header-section-number">4.5.1</span> Run It Yourself</h3>
-<p>TODO.</p>
+<section id="example-1-anatomy-of-a-domain" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="example-1-anatomy-of-a-domain"><span class="header-section-number">4.4</span> Example 1: Anatomy of a Domain</h2>
+<p><em>Estimated time: ~20 minutes (worked example)</em></p>
+<p>Take the five raw GLPX files and, using nothing but the ideas above, answer three questions about each: which SDTM domain does it become, which observation class is that domain in, and what is its topic variable? This is the first thing a programmer does with a new study, and it is done on paper before any code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>glpx_map <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>raw_file,    <span class="sc">~</span>domain, <span class="sc">~</span>observation_class, <span class="sc">~</span>topic_variable,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"dm_raw.csv"</span>, <span class="st">"DM"</span>,    <span class="st">"Special-Purpose"</span>,  <span class="st">"(none — one row per subject)"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ex_raw.csv"</span>, <span class="st">"EX"</span>,    <span class="st">"Interventions"</span>,    <span class="st">"EXTRT"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ae_raw.csv"</span>, <span class="st">"AE"</span>,    <span class="st">"Events"</span>,           <span class="st">"AETERM"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"lb_raw.csv"</span>, <span class="st">"LB"</span>,    <span class="st">"Findings"</span>,         <span class="st">"LBTESTCD"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"vs_raw.csv"</span>, <span class="st">"VS"</span>,    <span class="st">"Findings"</span>,         <span class="st">"VSTESTCD"</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>glpx_map</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+  raw_file   domain observation_class topic_variable              
+  &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;             &lt;chr&gt;                       
+1 dm_raw.csv DM     Special-Purpose   (none — one row per subject)
+2 ex_raw.csv EX     Interventions     EXTRT                       
+3 ae_raw.csv AE     Events            AETERM                      
+4 lb_raw.csv LB     Findings          LBTESTCD                    
+5 vs_raw.csv VS     Findings          VSTESTCD                    </code></pre>
+</div>
+</div>
+<p>Every domain code in that table is a claim about controlled terminology, so check it rather than trust it. The SDTM Domain Abbreviation codelist is <code>C66734</code>; ask the terminology package whether each code is a real member:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>glpx_map <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">valid_domain_code =</span> <span class="fu">map_lgl</span>(domain, \(d) <span class="fu">is_term</span>(d, <span class="at">clst_code =</span> <span class="st">"C66734"</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(raw_file, domain, valid_domain_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+  raw_file   domain valid_domain_code
+  &lt;chr&gt;      &lt;chr&gt;  &lt;lgl&gt;            
+1 dm_raw.csv DM     TRUE             
+2 ex_raw.csv EX     TRUE             
+3 ae_raw.csv AE     TRUE             
+4 lb_raw.csv LB     TRUE             
+5 vs_raw.csv VS     TRUE             </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Run It Yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Run both chunks. Every row of the second should read <code>TRUE</code>: <code>DM</code>, <code>EX</code>, <code>AE</code>, <code>LB</code>, <code>VS</code> are all valid domain codes. Now change one code to something plausible-but-wrong — <code>"LBS"</code>, say, or <code>"VITALS"</code> — and re-run. Watch it come back <code>FALSE</code>. That is the whole discipline of this course in one line: <strong>you did not have to know the codelist, you had to check it.</strong></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reading the Output Line by Line
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>What it tells you</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>domain</code></td>
+<td>The two-character code each file becomes. It will be the dataset name, the <code>DOMAIN</code> value on every row, and the prefix on the domain’s variables.</td>
+</tr>
+<tr class="even">
+<td><code>observation_class</code></td>
+<td>Decided purely by what one row is. LB and VS are both Findings because each row is a measurement result; AE is Events because each row is something that happened; EX is Interventions because each row is a treatment given.</td>
+</tr>
+<tr class="odd">
+<td><code>topic_variable</code></td>
+<td>What the dataset is a list <em>of</em>. Notice the topic follows the class: <code>--TESTCD</code> for the two Findings domains, <code>--TERM</code> for the Events domain, <code>--TRT</code> for the Interventions domain.</td>
+</tr>
+<tr class="even">
+<td><code>DM</code> row</td>
+<td>Special-purpose, so it has no observation-class topic variable; its structure is simply one record per subject. You build it in <a href="../sessions/sdtm-dm.html">The DM Domain</a>.</td>
+</tr>
+</tbody>
+</table>
+<p>Whatever the domain, four identifier variables form its spine — <code>STUDYID</code>, <code>DOMAIN</code>, <code>USUBJID</code>, <code>--SEQ</code> — before a single domain-specific column is added.</p>
+</div>
+</div>
 </section>
+<section id="example-2-original-result-vs-standardised-result" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="example-2-original-result-vs-standardised-result"><span class="header-section-number">4.5</span> Example 2: Original Result vs Standardised Result</h2>
+<p><em>Estimated time: ~20 minutes (worked example)</em></p>
+<p>This is where Findings pay off the modelling. A findings result is not one value in one column; it is kept twice — as collected, and standardised — and both are preserved. Take one subject’s glucose across visits from the raw lab file:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>lb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/raw/lb_raw.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>()))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>gluc <span class="ot">&lt;-</span> lb <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(subjid <span class="sc">==</span> <span class="st">"101-037"</span>, test <span class="sc">==</span> <span class="st">"GLUC"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(subjid, visit, test, result, unit)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>gluc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 5
+  subjid  visit     test  result unit  
+  &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; 
+1 101-037 SCREENING GLUC  9.3    mmol/L
+2 101-037 BASELINE  GLUC  10.7   mmol/L
+3 101-037 WEEK 4    GLUC  9.9    mmol/L
+4 101-037 WEEK 8    GLUC  9.6    &lt;NA&gt;  
+5 101-037 WEEK 12   GLUC  11.2   mmol/L
+6 101-037 WEEK 16   GLUC  7.7    mmol/L
+7 101-037 WEEK 20   GLUC  9.3    mmol/L
+8 101-037 WEEK 26   GLUC  9.7    mmol/L</code></pre>
+</div>
+</div>
+<p>Now map those raw columns onto the SDTM findings result variables. The result as collected goes to <code>LBORRES</code>, with its unit in <code>LBORRESU</code> (SDTMIG v3.4, §4.5.1.1). The standardised character result goes to <code>LBSTRESC</code>; where that value is numeric it is also written, as a true number, to <code>LBSTRESN</code> (SDTMIG v3.4, §4.5.1.1). Glucose here is already in the standard unit, so standardising is a copy — but the <em>structure</em> is the lesson, not the arithmetic:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mapped <span class="ot">&lt;-</span> gluc <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">USUBJID  =</span> subjid,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBTESTCD =</span> test,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBORRES  =</span> result,              <span class="co"># result as originally collected</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBORRESU =</span> unit,                <span class="co"># original unit</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBSTRESC =</span> result,              <span class="co"># standardised, character</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBSTRESN =</span> <span class="fu">as.numeric</span>(result),  <span class="co"># standardised, numeric</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBSTRESU =</span> unit                 <span class="co"># standard unit</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>mapped</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 7
+  USUBJID LBTESTCD LBORRES LBORRESU LBSTRESC LBSTRESN LBSTRESU
+  &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;   
+1 101-037 GLUC     9.3     mmol/L   9.3           9.3 mmol/L  
+2 101-037 GLUC     10.7    mmol/L   10.7         10.7 mmol/L  
+3 101-037 GLUC     9.9     mmol/L   9.9           9.9 mmol/L  
+4 101-037 GLUC     9.6     &lt;NA&gt;     9.6           9.6 &lt;NA&gt;    
+5 101-037 GLUC     11.2    mmol/L   11.2         11.2 mmol/L  
+6 101-037 GLUC     7.7     mmol/L   7.7           7.7 mmol/L  
+7 101-037 GLUC     9.3     mmol/L   9.3           9.3 mmol/L  
+8 101-037 GLUC     9.7     mmol/L   9.7           9.7 mmol/L  </code></pre>
+</div>
+</div>
+<p>Both the test code and the unit are controlled terminology, so confirm them against the published codelists — <code>C65047</code> for the lab test code, <code>C71620</code> for units — instead of assuming:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">gluc_is_valid_testcd =</span> <span class="fu">is_term</span>(<span class="st">"GLUC"</span>,   <span class="at">clst_code =</span> <span class="st">"C65047"</span>),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mmolL_is_valid_unit  =</span> <span class="fu">is_term</span>(<span class="st">"mmol/L"</span>, <span class="at">clst_code =</span> <span class="st">"C71620"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>gluc_is_valid_testcd  mmolL_is_valid_unit 
+                TRUE                 TRUE </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Run It Yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Run the three chunks. Both CT checks return <code>TRUE</code> — the vendor’s <code>GLUC</code> and <code>mmol/L</code> happen to be legal SDTM values. But look carefully at the mapped table’s week-8 row before reading on. Something is missing, and it is not the result.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reading the Output Line by Line
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Value at week 8</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>LBORRES</code></td>
+<td><code>9.6</code></td>
+<td>The result as collected. It is present.</td>
+</tr>
+<tr class="even">
+<td><code>LBORRESU</code></td>
+<td><em>(blank)</em></td>
+<td>The <strong>unit is missing</strong> — this is defect D7 from the trial simulator, a genuinely blank unit on one transferred record.</td>
+</tr>
+<tr class="odd">
+<td><code>LBSTRESC</code> / <code>LBSTRESN</code></td>
+<td><code>9.6</code> / <code>9.6</code></td>
+<td>The result standardises fine; the <em>number</em> was never the problem.</td>
+</tr>
+<tr class="even">
+<td><code>LBSTRESU</code></td>
+<td><em>(blank)</em></td>
+<td>The missing unit propagates, because you cannot standardise a unit you do not have.</td>
+</tr>
+</tbody>
+</table>
+<p><code>LBORRES</code> is an <strong>Expected</strong> variable — always present, occasionally null (SDTMIG v3.4, §4.5.1.1). The unit’s blankness is not a model violation; it is a data problem the model makes <em>visible</em>. And crucially, a blank is not a valid unit value:</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is_term</span>(<span class="st">""</span>, <span class="at">clst_code =</span> <span class="st">"C71620"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<p>The check returns <code>FALSE</code>: an empty string is not a member of the UNIT codelist. So the week-8 glucose cannot be silently accepted — its unit has to be recovered from the lab’s documentation or queried, a piece of work you do in <a href="../sessions/sdtm-events-findings.html">Events and Findings</a>. The point for now: <strong>the standard did not fix the data, it located the problem</strong> — and it located it in a specific variable with a specific rule, not in a vague sense that “something looks off.”</p>
 </section>
 <section id="what-can-go-wrong" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">4.6</span> What Can Go Wrong</h2>
-<p>TODO: failure modes and misuse patterns.</p>
-<section id="common-misinterpretations" class="level3" data-number="4.6.1">
-<h3 data-number="4.6.1" class="anchored" data-anchor-id="common-misinterpretations"><span class="header-section-number">4.6.1</span> Common misinterpretations</h3>
-<p>TODO.</p>
-</section>
+<p><em>Estimated time: ~10 minutes (reading)</em></p>
+<p><strong>Treating SDTM as “rename the columns”</strong></p>
+<p>The recurring error from <a href="../sessions/why-standards.html">Why Standards</a>, now with a name. Renaming is a fraction of the work; classifying each dataset into its observation class, giving each record the right identifier spine, and constraining values to controlled terminology are the substance. If your mental model is a lookup table of old name → new name, the DM and findings sessions will not make sense.</p>
+<p><strong>Overwriting the original result with the standardised one</strong></p>
+<p><code>--ORRES</code> and <code>--STRESC</code> are different variables on purpose (SDTMIG v3.4, §4.5.1.1). The original is kept even when standardising changes nothing, so that a reviewer can always see what was collected. Collapse them into one column and you have destroyed traceability, which is one of the things the whole tabulation layer exists to preserve.</p>
+<p><strong>Inventing a test code or a unit</strong></p>
+<p>Every <code>--TESTCD</code> and every unit is drawn from a published codelist. The temptation to write <code>"HGBA1C"</code> or <code>"mmol/l"</code> because it looks right is exactly the failure this course is built to prevent — check with <code>is_term()</code> and let the package be right so you don’t have to remember.</p>
+<p><strong>Computing study day with a day zero</strong></p>
+<p>Timing has its own trap, addressed in the next section’s cross-links: there is no study day 0 (SDTMIG v3.4, §4.4.4). More on this in <a href="../sessions/sdtm-dm.html">The DM Domain</a>, where <code>RFSTDTC</code> is set.</p>
+<p><strong>Assuming one subject means one row, everywhere</strong></p>
+<p>True only in DM, the special-purpose domain (SDTMIG v3.4, §5.2). In a findings domain a subject has one row per test per visit; in an events domain, one row per event. “How many rows should this subject have?” is answered by the domain’s observation class, never by a habit.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common misinterpretations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>“SDTM is a database schema”</strong> It is a <em>submission</em> format: flat, one dataset per domain, built to be read and archived by a regulator, not to be queried efficiently. Its shape follows that purpose, not database-normalisation instincts.</p>
+<p><strong>“Required and Expected are the same — both are mandatory”</strong> Both mean the column is always present. Only Required forbids a null value on every row; an Expected variable may be null where the datum is genuinely absent (SDTMIG v3.4, §4.1.5). The week-8 missing unit in Example 2 is legal precisely because <code>LBORRESU</code> is not Required.</p>
+<p><strong>“The <code>--</code> is part of the variable name”</strong> It is a placeholder the guide uses for the domain prefix. The real variable is <code>LBTESTCD</code> or <code>VSTESTCD</code>; <code>--TESTCD</code> names the pattern across domains (SDTMIG v3.4, §2.2).</p>
+<p><strong>“If a value passes <code>is_term()</code>, the record is correct”</strong> It means the <em>value</em> is legal controlled terminology, nothing more. A legal <code>LBTESTCD</code> on the wrong row, or a valid unit that is simply the wrong unit, both pass. Conformance is necessary, not sufficient — the lesson that closes <a href="../sessions/why-standards.html">Why Standards</a>.</p>
+</div>
+</div>
 </section>
 <section id="exercises" class="level2" data-number="4.7">
 <h2 data-number="4.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">4.7</span> Exercises</h2>
-<p>TODO: link the exercise file(s) for this session, or state that this session has no exercise.</p>
+<section id="exercise-1-guided-classify-two-more-domains" class="level3" data-number="4.7.1">
+<h3 data-number="4.7.1" class="anchored" data-anchor-id="exercise-1-guided-classify-two-more-domains"><span class="header-section-number">4.7.1</span> Exercise 1 (Guided): Classify Two More Domains</h3>
+<p><em>Estimated time: ~10 minutes</em></p>
+<p>A later GLPX analysis will need two datasets this course has not built: concomitant medications (what other drugs subjects were taking) and disposition (how and when each subject left the study).</p>
+<ol type="1">
+<li>For each, name the general observation class you would put it in, and justify the choice from what <em>one row</em> represents.</li>
+<li>Name the topic variable each would use (as a <code>--</code> pattern), based on its class.</li>
+<li>Propose a plausible two-character domain code for each, then — this is the point — describe how you would check whether your proposed code is real, without stating from memory whether it is.</li>
+</ol>
+<p>Worked solutions are in the paid tier; the habit the exercise builds (class first, then topic, then <em>check</em> the code) is the whole method.</p>
+</section>
 </section>
 <section id="comprehension-check" class="level2" data-number="4.8">
 <h2 data-number="4.8" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">4.8</span> Comprehension Check</h2>
-<p>TODO: three to five short self-test questions.</p>
+<p><em>Estimated time: ~10 minutes</em></p>
+<ol type="1">
+<li>What is the difference between the SDTM and the SDTMIG, and why does this course use v3.4 specifically?</li>
+<li>A dataset has one row per subject per test per visit. Which observation class is it, and what is its topic variable?</li>
+<li><code>--STRESC</code> and <code>--STRESN</code> are both standardised results. Why are there two, and when is <code>--STRESN</code> null?</li>
+<li>A variable is marked <strong>Expected</strong>. The study never collected that item. What must appear in the submitted dataset, and what must not?</li>
+<li>You need the SDTM unit value for “beats per minute.” A colleague says it is <code>"bpm"</code>. How do you settle it without trusting either of your memories?</li>
+</ol>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -483,14 +890,25 @@ Tip
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>TODO: answers, collapsed.</p>
+<ol type="1">
+<li><p>The SDTM is the general model (the kinds of boxes that exist); the SDTMIG is the implementation guide that turns it into named datasets and variables (SDTMIG v3.4, §2.1). The version is not a preference: the FDA Data Standards Catalog ties the required SDTMIG version to the study’s start date, and GLPX-001’s 2024 start falls in the v3.4 support window <span class="citation" data-cites="fdadsc11">(<a href="#ref-fdadsc11" role="doc-biblioref">U.S. Food and Drug Administration 2025</a>)</span>.</p></li>
+<li><p>Findings — one row is the result of a measurement (SDTMIG v3.4, §2.3). Its topic variable is <code>--TESTCD</code> (SDTMIG v3.4, §2.1), i.e. <code>LBTESTCD</code> or <code>VSTESTCD</code> once the domain prefix is applied.</p></li>
+<li><p><code>--STRESC</code> holds the standardised result in character form, so it can carry any result at all; <code>--STRESN</code> holds it as a true number for the results that are numeric (SDTMIG v3.4, §4.5.1.1). <code>--STRESN</code> is null whenever the standardised result is not numeric (a category, a <code>&gt;10,000</code>, a blank), which is why the character version exists.</p></li>
+<li><p>The column must still be present, empty, with a comment in the Define-XML stating the study did not collect the item; a value is not required on any row (SDTMIG v3.4, §4.1.5). What must <em>not</em> happen is dropping the column — that is the difference between Expected and Permissible.</p></li>
+<li><p>Check it against the UNIT codelist with the terminology package rather than debating: <code>is_term("bpm", clst_code = "C71620")</code> versus <code>is_term("beats/min", clst_code = "C71620")</code>. One is a member and one is not, and the package settles it in a line — the same move Example 2 used for the glucose unit.</p></li>
+</ol>
 </div>
 </div>
 </div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-fdadsc11" class="csl-entry" role="listitem">
+U.S. Food and Drug Administration. 2025. <span>“<span>FDA</span> Data Standards Catalog, Version 11.0.”</span> U.S. Food; Drug Administration. <a href="https://www.fda.gov/industry/fda-resources-data-standards/study-data-standards-resources">https://www.fda.gov/industry/fda-resources-data-standards/study-data-standards-resources</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
