@@ -6,6 +6,7 @@ title: "The Trial: GLPX-001"
 #| include: false
 #| eval: true
 library(tidyverse)
+source("R/palette.R")   # course colours (Okabe-Ito); see R/palette.R
 ```
 
 ::: {.callout-note}
@@ -388,8 +389,7 @@ hba1c_means |>
   ggplot(aes(x = week, y = mean_hba1c, colour = ARM, shape = ARM)) +
   geom_line(linewidth = 0.8) +
   geom_point(size = 2.5) +
-  scale_colour_manual(values = c("GLPX 10 mg" = "steelblue",
-                                 "Placebo"    = "tomato")) +
+  scale_colour_manual(values = arm_colours) +
   scale_x_continuous(breaks = c(-2, 0, 4, 8, 12, 16, 20, 26)) +
   labs(
     title  = "Mean HbA1c by visit and arm (raw central-lab data)",
