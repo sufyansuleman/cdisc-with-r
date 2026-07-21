@@ -131,7 +131,7 @@ course is hard.
 |---|---|---|
 | **Variable naming** | What is this column called, in every trial? | [SDTM Concepts](sdtm-concepts.qmd) |
 | **Dataset structure** | What is one row, and which datasets exist? | [SDTM Concepts](sdtm-concepts.qmd), [The DM Domain](sdtm-dm.qmd) |
-| **Controlled vocabulary** | Which values is this column allowed to hold? | [SDTM Concepts](sdtm-concepts.qmd), [Events and Findings](sdtm-events-findings.qmd) |
+| **Controlled vocabulary** | Which values is this column allowed to hold? | [SDTM Concepts](sdtm-concepts.qmd), [Events](sdtm-events.qmd) |
 
 Example 1 below demonstrates the first two problems in the GLPX-001
 raw data. Example 2 demonstrates the third. Neither example needs you
@@ -188,12 +188,15 @@ chain behind it is short and worth knowing. Four documents do the work:
   including the data definition file (`define.xml`) that describes
   every submitted dataset's metadata. You will build one in
   [define.xml](define-xml.qmd).
-- **The Technical Rejection Criteria** [@fdatrc] make part of this
-  automatic. Validation rules run on receipt; among them: every study
-  must include a trial summary dataset (`ts.xpt`), SDTM data must
-  include a DM dataset and its `define.xml`, and ADaM data must include
-  ADSL and its `define.xml`. Fail these and the submission can be
-  rejected before a human reviewer ever sees it.
+- **The Technical Rejection Criteria (TRC)** make part of this
+  automatic. The Conformance Guide defines validation on receipt and
+  names the eCTD Technical Rejection Criteria as the rules applied at
+  that gate (TCG §8.1–8.2) [@fdatcg]. FDA's self-check worksheet
+  enumerates them: every study must include a trial summary dataset
+  (`ts.xpt`); SDTM data must include a DM dataset and its `define.xml`;
+  ADaM data must include ADSL and its `define.xml` (validation rules
+  1734–1736) [@fdatrc]. Fail these and the submission can be rejected
+  before a human reviewer ever sees it.
 
 Two cautions. The dates above attach to *study start*, not submission
 date. And the Catalog is a living document — versions of SDTM, ADaM and
