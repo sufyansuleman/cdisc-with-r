@@ -298,7 +298,7 @@ has exactly **12,788**.
 So after accounting for dropout, `vs_raw` reconciles to the row and
 `lb_raw` carries **exactly one surplus record**. You do not yet know
 which record it is or why it is there — that is a job for [Events and
-Findings](sdtm-events-findings.qmd) — but you know it exists, you
+Findings](sdtm-findings.qmd) — but you know it exists, you
 found it with arithmetic rather than by staring at 12,000 rows, and
 you know the vendor file is the one carrying it.
 

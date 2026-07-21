@@ -1,0 +1,145 @@
+---
+title: "SDTM: Findings (Labs & Vital Signs)"
+---
+
+<!--
+========================================================================
+SKELETON + VERIFY LIST — prose NOT yet written. DO NOT COMMIT as final.
+
+This is the Findings half of the split (Events -> sessions/sdtm-events.qmd,
+already drafted). The F-list below was approved with the combined
+events-findings VERIFY list; it is reproduced here as the working list
+for this session's own drafting turn.
+
+All [IG] claims PRE-VERIFIED against local SDTMIG v3.4; [CT] confirmed
+live via sdtm.terminology at prose time.
+
+This session INTRODUCES R/build_sdtm.R and data/sdtm/ (the persisted,
+committed SDTM datasets), and ADDS lb + vs to build_sdtm.R (currently
+it builds dm + ae only).
+
+Registry defects for this session (distinct subjects):
+  D5 out-of-range HbA1c, REAL  -> 101-052 (13.9% at SCREENING)
+  D6 byte-perfect duplicate lb -> 101-010 (SCREENING HbA1c 8.2)
+  D7 missing unit              -> 101-037 (GLUC WEEK 8; met in sdtm-concepts)
+
+PROPOSED CENTRAL INTUITION (for approval, split from the combined one):
+  "A Findings row records what a measurement was — its test and its
+   result, kept twice as collected and standardised — and the domain's
+   natural key is what makes a duplicate detectable and a real outlier
+   keepable."
+
+OPEN ITEM TO RAISE AT DRAFTING: GLPX raw lb_raw.csv carries NO reference
+ranges (cols: subjid, sex, visit, colldt, test, result, unit). LBNRIND /
+LBORNRLO / LBORNRHI (F4, needed for D5) require a reference range per
+test. Decide the source: (a) add ref_lo/ref_hi to simulate_trial.R's lab
+vendor file (realistic — vendors supply ranges), or (b) a documented
+reference-range lookup in build_sdtm.R. Recommend (a). Author to decide
+before F4/D5 can be built with real values.
+
+========================================================================
+VERIFY LIST (Findings) — every SDTM specific this session will assert.
+
+F1 [IG §6.3.5.6 spec header] LB is Findings-class; ONE RECORD PER LAB
+   TEST PER TIME POINT PER VISIT PER SUBJECT. -> D6 duplicate violates
+   this natural key.
+
+F2 [IG §6.3.5.6 spec; §4.5.1.1] Result quartet, all Expected: LBORRES,
+   LBORRESU (UNIT), LBSTRESC, LBSTRESN, LBSTRESU (UNIT). Original
+   preserved beside standardised.
+
+F3 [IG §6.3.5.6 assumption 7] LBORRESU/LBSTRESU take the UNIT codelist;
+   submit the CDISC Submission Value; unmapped -> synonym or Define-XML
+   extension + new-term request. -> D7: 101-037 blank GLUC unit resolved
+   to mmol/L from the vendor's documented panel, logged as a query (no
+   fabricated confirmation — as approved).
+
+F4 [IG §6.3.5.6 spec; assumption 3; §4.5.5] Reference-range vars, all
+   Expected: LBORNRLO/HI, LBSTNRLO/HI, LBNRIND (codelist NRIND). LBNRIND
+   is NOT clinical significance. -> D5: 101-052 SCREENING HbA1c 13.9%
+   flagged HIGH and KEPT (real value, poorly controlled patient).
+   BLOCKED on the reference-range source decision above.
+
+F5 [IG §6.3.5.6 assumption 6; §4.1.8.1] Central-lab value is COLLECTED,
+   not derived; LBDRVFL null. (Why D6 is a transmission artefact.)
+
+F6 [IG §6.3.5.6 spec] Timing: LBDTC (Exp), LBDY (Perm), VISITNUM (Exp),
+   VISIT (Perm). Study day via the DM RFSTDTC rule (§4.4.4).
+
+F7 [IG §4.5.9; §6.3.5.6] Baseline: LBBLFL (Perm, backward-compat) vs
+   LBLOBXFL (Exp) = "last non-missing value prior to RFXSTDTC".
+   Authoritative analysis baseline is ADaM (forward-link to adsl).
+
+F8 [IG §6.3.5.6 spec] LBSEQ: Required, unique within subject/domain.
+
+V1 [IG §6.3.13 spec header] VS is Findings-class, ONE RECORD PER VITAL
+   SIGN MEASUREMENT PER TIME POINT PER VISIT PER SUBJECT — structurally
+   like LB. VSORRESU uses codelist VSRESU (NOT the generic UNIT). Mainly
+   in the exercise; LB carries the worked example.
+
+X2 [IG §6.3.5.6 header + natural key] De-duplication restores the
+   one-record-per-key structure (D6).
+X3 [IG §4.4.4] Study day reuses the DM study_day() rule.
+
+[CT] to confirm live: NRIND (id + NORMAL/ABNORMAL/HIGH/LOW); VSRESU
+(id + members); UNIT/mmol/L (confirmed); LBTESTCD (confirmed).
+
+Build/infra for this session:
+  - Add build_lb() and build_vs() to R/build_sdtm.R; regenerate and
+    commit data/sdtm/{lb,vs}.csv.
+  - Introduce data/sdtm/ and the traceability chain (raw -> build -> sdtm)
+    pedagogically here, since after this session the SDTM set is complete.
+========================================================================
+-->
+
+```{r setup}
+#| include: false
+#| eval: true
+library(tidyverse)
+library(sdtm.terminology)
+```
+
+::: {.callout-note}
+### Session at a Glance
+
+TODO: time budget once written. Sibling of
+[Events](sdtm-events.qmd); resolves defects D5, D6 and D7 and
+introduces the persisted SDTM datasets in `data/sdtm/`.
+:::
+
+## When Do You Use This? {#sec-sdtm-findings}
+
+TODO (prose pass, after the reference-range decision): scenarios — a lab
+transfer with a byte-perfect duplicate and a real out-of-range value; a
+blank unit; and the moment you need a finished SDTM you can hand to the
+analysis team. Builds on [SDTM Concepts](sdtm-concepts.qmd),
+[The DM Domain](sdtm-dm.qmd) and [Events](sdtm-events.qmd).
+
+## Learning Objectives
+
+TODO after approval.
+
+## Background: TODO — What a Findings Row Is
+
+TODO after the reference-range source is decided.
+
+## Example 1: TODO — Building LB (the result quartet, de-dup, units)
+
+TODO.
+
+## Example 2: TODO — Reference ranges, the real outlier, and baseline
+
+TODO — blocked on reference-range source.
+
+## What Can Go Wrong
+
+TODO.
+
+## Exercises
+
+TODO — planned: build the VS slice (VSRESU units) in
+[exercises/sdtm-findings.qmd](../exercises/sdtm-findings.qmd).
+
+## Comprehension Check
+
+TODO.

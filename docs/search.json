@@ -127,7 +127,7 @@
     "href": "sessions/why-standards.html#background-data-that-can-only-be-read-by-its-author",
     "title": "2  Why Standards",
     "section": "2.3 Background: Data That Can Only Be Read by Its Author",
-    "text": "2.3 Background: Data That Can Only Be Read by Its Author\nEstimated time: ~15 minutes (reading)\nHere is the single idea that ties this session together, and arguably the whole course:\n\n\n\n\n\n\nImportantThe one thing to remember\n\n\n\nRaw trial data can only be read by someone who already knows the trial. A standard is what lets it be read by someone who doesn’t.\n\n\nEvery dataset carries two kinds of information. There is the data itself: the numbers, the dates, the terms. And there is the knowledge required to interpret it: that colldt means the date the sample was collected, that a blank AEENDT means the event was still ongoing rather than that someone forgot, that subject 101-012 appears twice for a reason.\nIn a normal research project, that second kind of information lives in someone’s head, and that is survivable. You wrote the data; you can read the data. If a colleague needs it, you explain it to them over coffee.\nClinical trials break this arrangement in three ways at once.\nScale. A regulator receives study data from many sponsors, for many trials, in many therapeutic areas, every year. Nobody at the agency can have coffee with every study team. If each sponsor invents its own layout, then reviewing \\(n\\) trials requires understanding \\(n\\) different conventions, and no tool built for one submission works on the next.\nTime. A trial’s data outlives the people who made it. Regulators may return to a submission years later; a safety signal may surface long after the study team has moved on. “Ask the programmer who built it” stops being an available answer.\nConsequence. If a reviewer misreads your adverse event data, the result is not an awkward correction in a journal. It is a wrong conclusion about whether a drug harms people.\nSo the industry did the only thing that scales: it agreed, in advance, on what the columns are called, how the datasets are shaped, and which words are allowed in them. That agreement is what CDISC publishes.\n\n2.3.1 A standard fixes three separate things\nIt is worth separating these now, because learners routinely collapse them into “renaming columns,” and then wonder why the rest of the course is hard.\n\n\n\nWhat is fixed\nThe question it answers\nWhere this course covers it\n\n\n\n\nVariable naming\nWhat is this column called, in every trial?\nSDTM Concepts\n\n\nDataset structure\nWhat is one row, and which datasets exist?\nSDTM Concepts, The DM Domain\n\n\nControlled vocabulary\nWhich values is this column allowed to hold?\nSDTM Concepts, Events and Findings\n\n\n\nExample 1 below demonstrates the first two problems in the GLPX-001 raw data. Example 2 demonstrates the third. Neither example needs you to know any CDISC yet — that is the point. You should feel the problem before you are handed the solution.\n\n\n2.3.2 The shape of what is coming\nThe rest of this course is one pipeline, and it is worth seeing the whole shape before you meet any of its parts:\n\nRaw data — what the study team receives: an EDC export, a lab vendor’s file, each with its own conventions. This is where you are now.\nSDTM — the raw data, reorganised and renamed to the standard, with the original values preserved. It answers: what happened in this trial? (Part 2)\nADaM — analysis-ready datasets derived from SDTM, carrying the variables a statistician needs to run the analysis and a reviewer needs to reproduce it. It answers: what does the trial show? (Part 3)\nTLFs — the tables, listings and figures that go in the study report. (Part 4)\n\nEach stage has a different job, and a great deal of confusion in clinical programming comes from asking one stage to do another’s work. SDTM Concepts and ADaM Concepts draw that line properly.\n\n\n\n\n\n\nNoteWhere the requirement actually comes from\n\n\n\n\n\nThe argument in this session stands on its own, but the US regulatory chain behind it is short and worth knowing. Four documents do the work:\n\nThe statute and the guidance. Under section 745A(a) of the FD&C Act, once FDA specifies an electronic format in final guidance, that format is required. The specifying document is Providing Regulatory Submissions in Electronic Format — Standardized Study Data (U.S. Food and Drug Administration 2021). It applies to NDAs, ANDAs, certain BLAs and certain commercial INDs, and — unusually for FDA guidance — has binding effect. FDA may refuse to file (NDAs, BLAs) or refuse to receive (ANDAs) a submission whose study data does not conform to the required standards in the Catalog.\nThe Data Standards Catalog (U.S. Food and Drug Administration 2025) is the list the guidance points to: which standards FDA can process, review and archive, and from when. It lists CDISC SDTM and ADaM (exchanged as XPT files) and Define-XML among the required standards. The requirement applies based on study start date: after 17 December 2016 for NDAs, ANDAs and BLAs; after 17 December 2017 for the applicable INDs.\nThe Study Data Technical Conformance Guide (U.S. Food and Drug Administration 2018) is the technical companion: how to organise, name and document the datasets, including the data definition file (define.xml) that describes every submitted dataset’s metadata. You will build one in define.xml.\nThe Technical Rejection Criteria (U.S. Food and Drug Administration 2023) make part of this automatic. Validation rules run on receipt; among them: every study must include a trial summary dataset (ts.xpt), SDTM data must include a DM dataset and its define.xml, and ADaM data must include ADSL and its define.xml. Fail these and the submission can be rejected before a human reviewer ever sees it.\n\nTwo cautions. The dates above attach to study start, not submission date. And the Catalog is a living document — versions of SDTM, ADaM and Define-XML move in and out of the required set over time, so the version to consult is always the current one, at the FDA Study Data Standards Resources page.\n\n\n\n\n\n\n\n\n\nNoteWhy not just write good documentation instead?\n\n\n\n\n\nA reasonable objection: if the problem is that knowledge lives in someone’s head, why not write it down? A thorough data dictionary per trial would solve it, wouldn’t it?\nIt solves the comprehension problem and not the automation one. A reviewer who can read your dictionary still cannot run last year’s program against your data, because your column is called colldt and last year’s was called SAMPDT. Documentation lets a human understand \\(n\\) conventions one at a time. A standard lets one program read all \\(n\\). The difference compounds: every validation rule, every review tool, and every analysis macro is written once against the standard rather than once per trial.\nThis is also why the standard is not negotiable per-study. A standard that each sponsor adapts to taste is a dictionary with extra steps.",
+    "text": "2.3 Background: Data That Can Only Be Read by Its Author\nEstimated time: ~15 minutes (reading)\nHere is the single idea that ties this session together, and arguably the whole course:\n\n\n\n\n\n\nImportantThe one thing to remember\n\n\n\nRaw trial data can only be read by someone who already knows the trial. A standard is what lets it be read by someone who doesn’t.\n\n\nEvery dataset carries two kinds of information. There is the data itself: the numbers, the dates, the terms. And there is the knowledge required to interpret it: that colldt means the date the sample was collected, that a blank AEENDT means the event was still ongoing rather than that someone forgot, that subject 101-012 appears twice for a reason.\nIn a normal research project, that second kind of information lives in someone’s head, and that is survivable. You wrote the data; you can read the data. If a colleague needs it, you explain it to them over coffee.\nClinical trials break this arrangement in three ways at once.\nScale. A regulator receives study data from many sponsors, for many trials, in many therapeutic areas, every year. Nobody at the agency can have coffee with every study team. If each sponsor invents its own layout, then reviewing \\(n\\) trials requires understanding \\(n\\) different conventions, and no tool built for one submission works on the next.\nTime. A trial’s data outlives the people who made it. Regulators may return to a submission years later; a safety signal may surface long after the study team has moved on. “Ask the programmer who built it” stops being an available answer.\nConsequence. If a reviewer misreads your adverse event data, the result is not an awkward correction in a journal. It is a wrong conclusion about whether a drug harms people.\nSo the industry did the only thing that scales: it agreed, in advance, on what the columns are called, how the datasets are shaped, and which words are allowed in them. That agreement is what CDISC publishes.\n\n2.3.1 A standard fixes three separate things\nIt is worth separating these now, because learners routinely collapse them into “renaming columns,” and then wonder why the rest of the course is hard.\n\n\n\nWhat is fixed\nThe question it answers\nWhere this course covers it\n\n\n\n\nVariable naming\nWhat is this column called, in every trial?\nSDTM Concepts\n\n\nDataset structure\nWhat is one row, and which datasets exist?\nSDTM Concepts, The DM Domain\n\n\nControlled vocabulary\nWhich values is this column allowed to hold?\nSDTM Concepts, Events\n\n\n\nExample 1 below demonstrates the first two problems in the GLPX-001 raw data. Example 2 demonstrates the third. Neither example needs you to know any CDISC yet — that is the point. You should feel the problem before you are handed the solution.\n\n\n2.3.2 The shape of what is coming\nThe rest of this course is one pipeline, and it is worth seeing the whole shape before you meet any of its parts:\n\nRaw data — what the study team receives: an EDC export, a lab vendor’s file, each with its own conventions. This is where you are now.\nSDTM — the raw data, reorganised and renamed to the standard, with the original values preserved. It answers: what happened in this trial? (Part 2)\nADaM — analysis-ready datasets derived from SDTM, carrying the variables a statistician needs to run the analysis and a reviewer needs to reproduce it. It answers: what does the trial show? (Part 3)\nTLFs — the tables, listings and figures that go in the study report. (Part 4)\n\nEach stage has a different job, and a great deal of confusion in clinical programming comes from asking one stage to do another’s work. SDTM Concepts and ADaM Concepts draw that line properly.\n\n\n\n\n\n\nNoteWhere the requirement actually comes from\n\n\n\n\n\nThe argument in this session stands on its own, but the US regulatory chain behind it is short and worth knowing. Four documents do the work:\n\nThe statute and the guidance. Under section 745A(a) of the FD&C Act, once FDA specifies an electronic format in final guidance, that format is required. The specifying document is Providing Regulatory Submissions in Electronic Format — Standardized Study Data (U.S. Food and Drug Administration 2021). It applies to NDAs, ANDAs, certain BLAs and certain commercial INDs, and — unusually for FDA guidance — has binding effect. FDA may refuse to file (NDAs, BLAs) or refuse to receive (ANDAs) a submission whose study data does not conform to the required standards in the Catalog.\nThe Data Standards Catalog (U.S. Food and Drug Administration 2025) is the list the guidance points to: which standards FDA can process, review and archive, and from when. It lists CDISC SDTM and ADaM (exchanged as XPT files) and Define-XML among the required standards. The requirement applies based on study start date: after 17 December 2016 for NDAs, ANDAs and BLAs; after 17 December 2017 for the applicable INDs.\nThe Study Data Technical Conformance Guide (U.S. Food and Drug Administration 2018) is the technical companion: how to organise, name and document the datasets, including the data definition file (define.xml) that describes every submitted dataset’s metadata. You will build one in define.xml.\nThe Technical Rejection Criteria (TRC) make part of this automatic. The Conformance Guide defines validation on receipt and names the eCTD Technical Rejection Criteria as the rules applied at that gate (TCG §8.1–8.2) (U.S. Food and Drug Administration 2018). FDA’s self-check worksheet enumerates them: every study must include a trial summary dataset (ts.xpt); SDTM data must include a DM dataset and its define.xml; ADaM data must include ADSL and its define.xml (validation rules 1734–1736) (U.S. Food and Drug Administration 2023). Fail these and the submission can be rejected before a human reviewer ever sees it.\n\nTwo cautions. The dates above attach to study start, not submission date. And the Catalog is a living document — versions of SDTM, ADaM and Define-XML move in and out of the required set over time, so the version to consult is always the current one, at the FDA Study Data Standards Resources page.\n\n\n\n\n\n\n\n\n\nNoteWhy not just write good documentation instead?\n\n\n\n\n\nA reasonable objection: if the problem is that knowledge lives in someone’s head, why not write it down? A thorough data dictionary per trial would solve it, wouldn’t it?\nIt solves the comprehension problem and not the automation one. A reviewer who can read your dictionary still cannot run last year’s program against your data, because your column is called colldt and last year’s was called SAMPDT. Documentation lets a human understand \\(n\\) conventions one at a time. A standard lets one program read all \\(n\\). The difference compounds: every validation rule, every review tool, and every analysis macro is written once against the standard rather than once per trial.\nThis is also why the standard is not negotiable per-study. A standard that each sponsor adapts to taste is a dictionary with extra steps.",
     "crumbs": [
       "Part 1: Foundations",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Why Standards</span>"
@@ -182,7 +182,7 @@
     "href": "sessions/why-standards.html#comprehension-check",
     "title": "2  Why Standards",
     "section": "2.8 Comprehension Check",
-    "text": "2.8 Comprehension Check\nEstimated time: ~10 minutes\n\nIn your own words, why can’t a thorough data dictionary for each trial replace a standard?\ndm_raw.csv has 401 rows and 400 subjects. Why is this not a data error, and what does the standard contribute?\nThree defensible R rules gave 61, 65 and 66 subjects with nausea. Which is correct, and what does your answer tell you about where the fix has to happen?\nA colleague says: “The lab file is machine-generated, so where the EDC and the lab disagree, trust the lab.” What is wrong with this reasoning?\nName the three distinct things a standard fixes, and give an example of each from the GLPX-001 raw data.\n\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\n\nA dictionary solves comprehension, not automation. A reviewer can read your dictionary and understand your data, but they still cannot run an existing program against it, because your columns have your names. Documentation scales linearly with the number of trials (read each one); a standard is written against once and applies to all of them. Every validation rule and review tool in the industry depends on that second property.\nSubject 101-012 was screened at one site and enrolled again at another after moving, producing two genuine, correctly recorded rows. The raw data has no rule saying one row per subject, so nothing prevented it. The standard contributes the rule itself — stated in advance, applying to every trial, and checkable by a machine rather than by someone noticing.\nNone of them is correct as a code problem, which is the point. 61 is wrong (it drops case variants). 65 and 66 differ only in how they treat nausea and vomitting, and neither handles it properly, because that record describes two events and no filter can split it. The fix cannot happen in the analysis; it has to happen upstream, by constraining the column to a controlled vocabulary and coding the verbatim terms. If your rule choice changes the answer, the answer is not in the data yet.\nIt confuses consistency with accuracy. The lab file is machine-generated in its formatting, but the sex value in it originated from a human at some point, exactly like the EDC value. Neither file is more likely to be right a priori, and the disagreement is evidence that at least one human-entered value is wrong. Resolving it requires going back to the source, not picking the tidier file. (Note also that the lab file is where the duplicate record and the missing unit live.)\nVariable naming: SUBJID in four files and subjid in the lab file — the same concept, two names, so no join can be written generically. Dataset structure: ae_raw.csv has one row per event (389 rows, fewer than the 400 subjects), while lb_raw.csv has one row per subject per visit per test (12,389 rows) — “one row” means something different in each. Controlled vocabulary: AETERM holds 25 distinct strings for 10 clinical concepts, including Diarrea and nausea and vomitting.\n\n\n\n\n\n\n\n\nU.S. Food and Drug Administration. 2018. “Study Data Technical Conformance Guide.” U.S. Food; Drug Administration. https://www.fda.gov/industry/fda-resources-data-standards/study-data-standards-resources.\n\n\n———. 2021. “Providing Regulatory Submissions in Electronic Format — Standardized Study Data: Guidance for Industry.” U.S. Department of Health; Human Services, Food; Drug Administration, CDER, CBER, OCE. https://www.fda.gov/regulatory-information/search-fda-guidance-documents/providing-regulatory-submissions-electronic-format-standardized-study-data.\n\n\n———. 2023. “Technical Rejection Criteria for Study Data: Self-Check Worksheet Instructions, Version 4.0.” U.S. Food; Drug Administration. https://www.fda.gov/industry/fda-resources-data-standards/study-data-standards-resources.\n\n\n———. 2025. “FDA Data Standards Catalog, Version 11.0.” U.S. Food; Drug Administration. https://www.fda.gov/industry/fda-resources-data-standards/study-data-standards-resources.",
+    "text": "2.8 Comprehension Check\nEstimated time: ~10 minutes\n\nIn your own words, why can’t a thorough data dictionary for each trial replace a standard?\ndm_raw.csv has 401 rows and 400 subjects. Why is this not a data error, and what does the standard contribute?\nThree defensible R rules gave 61, 65 and 66 subjects with nausea. Which is correct, and what does your answer tell you about where the fix has to happen?\nA colleague says: “The lab file is machine-generated, so where the EDC and the lab disagree, trust the lab.” What is wrong with this reasoning?\nName the three distinct things a standard fixes, and give an example of each from the GLPX-001 raw data.\n\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\n\nA dictionary solves comprehension, not automation. A reviewer can read your dictionary and understand your data, but they still cannot run an existing program against it, because your columns have your names. Documentation scales linearly with the number of trials (read each one); a standard is written against once and applies to all of them. Every validation rule and review tool in the industry depends on that second property.\nSubject 101-012 was screened at one site and enrolled again at another after moving, producing two genuine, correctly recorded rows. The raw data has no rule saying one row per subject, so nothing prevented it. The standard contributes the rule itself — stated in advance, applying to every trial, and checkable by a machine rather than by someone noticing.\nNone of them is correct as a code problem, which is the point. 61 is wrong (it drops case variants). 65 and 66 differ only in how they treat nausea and vomitting, and neither handles it properly, because that record describes two events and no filter can split it. The fix cannot happen in the analysis; it has to happen upstream, by constraining the column to a controlled vocabulary and coding the verbatim terms. If your rule choice changes the answer, the answer is not in the data yet.\nIt confuses consistency with accuracy. The lab file is machine-generated in its formatting, but the sex value in it originated from a human at some point, exactly like the EDC value. Neither file is more likely to be right a priori, and the disagreement is evidence that at least one human-entered value is wrong. Resolving it requires going back to the source, not picking the tidier file. (Note also that the lab file is where the duplicate record and the missing unit live.)\nVariable naming: SUBJID in four files and subjid in the lab file — the same concept, two names, so no join can be written generically. Dataset structure: ae_raw.csv has one row per event (389 rows, fewer than the 400 subjects), while lb_raw.csv has one row per subject per visit per test (12,389 rows) — “one row” means something different in each. Controlled vocabulary: AETERM holds 25 distinct strings for 10 clinical concepts, including Diarrea and nausea and vomitting.\n\n\n\n\n\n\n\n\nU.S. Food and Drug Administration. 2018. “Study Data Technical Conformance Guide.” U.S. Food; Drug Administration. https://www.fda.gov/industry/fda-resources-data-standards/study-data-standards-resources.\n\n\n———. 2021. “Providing Regulatory Submissions in Electronic Format — Standardized Study Data: Guidance for Industry.” U.S. Department of Health; Human Services, Food; Drug Administration, CDER, CBER, OCE. https://www.fda.gov/regulatory-information/search-fda-guidance-documents/providing-regulatory-submissions-electronic-format-standardized-study-data.\n\n\n———. 2023. “Instructions to Self-Check Worksheet for Study Data Preparation.” U.S. Food; Drug Administration. https://www.fda.gov/industry/fda-resources-data-standards/study-data-standards-resources.\n\n\n———. 2025. “FDA Data Standards Catalog, Version 11.0.” U.S. Food; Drug Administration. https://www.fda.gov/industry/fda-resources-data-standards/study-data-standards-resources.",
     "crumbs": [
       "Part 1: Foundations",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Why Standards</span>"
@@ -303,7 +303,7 @@
     "href": "sessions/sdtm-concepts.html#sec-sdtm-concepts",
     "title": "4  SDTM Concepts",
     "section": "",
-    "text": "Tip\n\n\n\nYou have the five raw GLPX-001 files and you have been told to “map them to SDTM.” Before you rename a single column you hit the questions this session answers: how many datasets should there be, and which raw file becomes which? What is a single row supposed to represent in each? Which columns are mandatory, which are optional, and who decides? And when the lab sends a result in one form but the standard expects another, where does each version live?\nEvery one of those is a modelling question, not a coding question. This session is the vocabulary and the mental model you need before The DM Domain and Events and Findings, where you build real domains from the raw data.\nIt builds on Why Standards (why a shared structure exists) and The Trial: GLPX-001 (the raw data you will now reshape).",
+    "text": "Tip\n\n\n\nYou have the five raw GLPX-001 files and you have been told to “map them to SDTM.” Before you rename a single column you hit the questions this session answers: how many datasets should there be, and which raw file becomes which? What is a single row supposed to represent in each? Which columns are mandatory, which are optional, and who decides? And when the lab sends a result in one form but the standard expects another, where does each version live?\nEvery one of those is a modelling question, not a coding question. This session is the vocabulary and the mental model you need before The DM Domain, Events and Findings, where you build real domains from the raw data.\nIt builds on Why Standards (why a shared structure exists) and The Trial: GLPX-001 (the raw data you will now reshape).",
     "crumbs": [
       "Part 2: SDTM",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>SDTM Concepts</span>"
@@ -347,7 +347,7 @@
     "href": "sessions/sdtm-concepts.html#example-2-original-result-vs-standardised-result",
     "title": "4  SDTM Concepts",
     "section": "4.5 Example 2: Original Result vs Standardised Result",
-    "text": "4.5 Example 2: Original Result vs Standardised Result\nEstimated time: ~20 minutes (worked example)\nThis is where Findings pay off the modelling. A findings result is not one value in one column; it is kept twice — as collected, and standardised — and both are preserved. Take one subject’s glucose across visits from the raw lab file:\n\nlb &lt;- read_csv(\"data/raw/lb_raw.csv\", show_col_types = FALSE,\n               col_types = cols(.default = col_character()))\n\ngluc &lt;- lb |&gt;\n  filter(subjid == \"101-037\", test == \"GLUC\") |&gt;\n  select(subjid, visit, test, result, unit)\n\ngluc\n\n# A tibble: 8 × 5\n  subjid  visit     test  result unit  \n  &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; \n1 101-037 SCREENING GLUC  9.3    mmol/L\n2 101-037 BASELINE  GLUC  10.7   mmol/L\n3 101-037 WEEK 4    GLUC  9.9    mmol/L\n4 101-037 WEEK 8    GLUC  9.6    &lt;NA&gt;  \n5 101-037 WEEK 12   GLUC  11.2   mmol/L\n6 101-037 WEEK 16   GLUC  7.7    mmol/L\n7 101-037 WEEK 20   GLUC  9.3    mmol/L\n8 101-037 WEEK 26   GLUC  9.7    mmol/L\n\n\nNow map those raw columns onto the SDTM findings result variables. The result as collected goes to LBORRES, with its unit in LBORRESU (SDTMIG v3.4, §4.5.1.1). The standardised character result goes to LBSTRESC; where that value is numeric it is also written, as a true number, to LBSTRESN (SDTMIG v3.4, §4.5.1.1). Glucose here is already in the standard unit, so standardising is a copy — but the structure is the lesson, not the arithmetic:\n\nmapped &lt;- gluc |&gt;\n  transmute(\n    USUBJID  = subjid,\n    LBTESTCD = test,\n    LBORRES  = result,              # result as originally collected\n    LBORRESU = unit,                # original unit\n    LBSTRESC = result,              # standardised, character\n    LBSTRESN = as.numeric(result),  # standardised, numeric\n    LBSTRESU = unit                 # standard unit\n  )\n\nmapped\n\n# A tibble: 8 × 7\n  USUBJID LBTESTCD LBORRES LBORRESU LBSTRESC LBSTRESN LBSTRESU\n  &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;   \n1 101-037 GLUC     9.3     mmol/L   9.3           9.3 mmol/L  \n2 101-037 GLUC     10.7    mmol/L   10.7         10.7 mmol/L  \n3 101-037 GLUC     9.9     mmol/L   9.9           9.9 mmol/L  \n4 101-037 GLUC     9.6     &lt;NA&gt;     9.6           9.6 &lt;NA&gt;    \n5 101-037 GLUC     11.2    mmol/L   11.2         11.2 mmol/L  \n6 101-037 GLUC     7.7     mmol/L   7.7           7.7 mmol/L  \n7 101-037 GLUC     9.3     mmol/L   9.3           9.3 mmol/L  \n8 101-037 GLUC     9.7     mmol/L   9.7           9.7 mmol/L  \n\n\nBoth the test code and the unit are controlled terminology, so confirm them against the published codelists — C65047 for the lab test code, C71620 for units — instead of assuming:\n\nc(\n  gluc_is_valid_testcd = is_term(\"GLUC\",   clst_code = \"C65047\"),\n  mmolL_is_valid_unit  = is_term(\"mmol/L\", clst_code = \"C71620\")\n)\n\ngluc_is_valid_testcd  mmolL_is_valid_unit \n                TRUE                 TRUE \n\n\n\n\n\n\n\n\nTipRun It Yourself\n\n\n\nRun the three chunks. Both CT checks return TRUE — the vendor’s GLUC and mmol/L happen to be legal SDTM values. But look carefully at the mapped table’s week-8 row before reading on. Something is missing, and it is not the result.\n\n\n\n\n\n\n\n\nNoteReading the Output Line by Line\n\n\n\n\n\n\n\n\n\n\n\nVariable\nValue at week 8\nWhat it means\n\n\n\n\nLBORRES\n9.6\nThe result as collected. It is present.\n\n\nLBORRESU\n(blank)\nThe unit is missing — this is defect D7 from the trial simulator, a genuinely blank unit on one transferred record.\n\n\nLBSTRESC / LBSTRESN\n9.6 / 9.6\nThe result standardises fine; the number was never the problem.\n\n\nLBSTRESU\n(blank)\nThe missing unit propagates, because you cannot standardise a unit you do not have.\n\n\n\nLBORRES is an Expected variable — always present, occasionally null (SDTMIG v3.4, §4.5.1.1). The unit’s blankness is not a model violation; it is a data problem the model makes visible. And crucially, a blank is not a valid unit value:\n\n\n\nis_term(\"\", clst_code = \"C71620\")\n\n[1] FALSE\n\n\nThe check returns FALSE: an empty string is not a member of the UNIT codelist. So the week-8 glucose cannot be silently accepted — its unit has to be recovered from the lab’s documentation or queried, a piece of work you do in Events and Findings. The point for now: the standard did not fix the data, it located the problem — and it located it in a specific variable with a specific rule, not in a vague sense that “something looks off.”",
+    "text": "4.5 Example 2: Original Result vs Standardised Result\nEstimated time: ~20 minutes (worked example)\nThis is where Findings pay off the modelling. A findings result is not one value in one column; it is kept twice — as collected, and standardised — and both are preserved. Take one subject’s glucose across visits from the raw lab file:\n\nlb &lt;- read_csv(\"data/raw/lb_raw.csv\", show_col_types = FALSE,\n               col_types = cols(.default = col_character()))\n\ngluc &lt;- lb |&gt;\n  filter(subjid == \"101-037\", test == \"GLUC\") |&gt;\n  select(subjid, visit, test, result, unit)\n\ngluc\n\n# A tibble: 8 × 5\n  subjid  visit     test  result unit  \n  &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; \n1 101-037 SCREENING GLUC  9.3    mmol/L\n2 101-037 BASELINE  GLUC  10.7   mmol/L\n3 101-037 WEEK 4    GLUC  9.9    mmol/L\n4 101-037 WEEK 8    GLUC  9.6    &lt;NA&gt;  \n5 101-037 WEEK 12   GLUC  11.2   mmol/L\n6 101-037 WEEK 16   GLUC  7.7    mmol/L\n7 101-037 WEEK 20   GLUC  9.3    mmol/L\n8 101-037 WEEK 26   GLUC  9.7    mmol/L\n\n\nNow map those raw columns onto the SDTM findings result variables. The result as collected goes to LBORRES, with its unit in LBORRESU (SDTMIG v3.4, §4.5.1.1). The standardised character result goes to LBSTRESC; where that value is numeric it is also written, as a true number, to LBSTRESN (SDTMIG v3.4, §4.5.1.1). Glucose here is already in the standard unit, so standardising is a copy — but the structure is the lesson, not the arithmetic:\n\nmapped &lt;- gluc |&gt;\n  transmute(\n    USUBJID  = subjid,\n    LBTESTCD = test,\n    LBORRES  = result,              # result as originally collected\n    LBORRESU = unit,                # original unit\n    LBSTRESC = result,              # standardised, character\n    LBSTRESN = as.numeric(result),  # standardised, numeric\n    LBSTRESU = unit                 # standard unit\n  )\n\nmapped\n\n# A tibble: 8 × 7\n  USUBJID LBTESTCD LBORRES LBORRESU LBSTRESC LBSTRESN LBSTRESU\n  &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;   \n1 101-037 GLUC     9.3     mmol/L   9.3           9.3 mmol/L  \n2 101-037 GLUC     10.7    mmol/L   10.7         10.7 mmol/L  \n3 101-037 GLUC     9.9     mmol/L   9.9           9.9 mmol/L  \n4 101-037 GLUC     9.6     &lt;NA&gt;     9.6           9.6 &lt;NA&gt;    \n5 101-037 GLUC     11.2    mmol/L   11.2         11.2 mmol/L  \n6 101-037 GLUC     7.7     mmol/L   7.7           7.7 mmol/L  \n7 101-037 GLUC     9.3     mmol/L   9.3           9.3 mmol/L  \n8 101-037 GLUC     9.7     mmol/L   9.7           9.7 mmol/L  \n\n\nBoth the test code and the unit are controlled terminology, so confirm them against the published codelists — C65047 for the lab test code, C71620 for units — instead of assuming:\n\nc(\n  gluc_is_valid_testcd = is_term(\"GLUC\",   clst_code = \"C65047\"),\n  mmolL_is_valid_unit  = is_term(\"mmol/L\", clst_code = \"C71620\")\n)\n\ngluc_is_valid_testcd  mmolL_is_valid_unit \n                TRUE                 TRUE \n\n\n\n\n\n\n\n\nTipRun It Yourself\n\n\n\nRun the three chunks. Both CT checks return TRUE — the vendor’s GLUC and mmol/L happen to be legal SDTM values. But look carefully at the mapped table’s week-8 row before reading on. Something is missing, and it is not the result.\n\n\n\n\n\n\n\n\nNoteReading the Output Line by Line\n\n\n\n\n\n\n\n\n\n\n\nVariable\nValue at week 8\nWhat it means\n\n\n\n\nLBORRES\n9.6\nThe result as collected. It is present.\n\n\nLBORRESU\n(blank)\nThe unit is missing — this is defect D7 from the trial simulator, a genuinely blank unit on one transferred record.\n\n\nLBSTRESC / LBSTRESN\n9.6 / 9.6\nThe result standardises fine; the number was never the problem.\n\n\nLBSTRESU\n(blank)\nThe missing unit propagates, because you cannot standardise a unit you do not have.\n\n\n\nLBORRES is an Expected variable — always present, occasionally null (SDTMIG v3.4, §4.5.1.1). The unit’s blankness is not a model violation; it is a data problem the model makes visible. And crucially, a blank is not a valid unit value:\n\n\n\nis_term(\"\", clst_code = \"C71620\")\n\n[1] FALSE\n\n\nThe check returns FALSE: an empty string is not a member of the UNIT codelist. So the week-8 glucose cannot be silently accepted — its unit has to be recovered from the lab’s documentation or queried, a piece of work you do in Findings. The point for now: the standard did not fix the data, it located the problem — and it located it in a specific variable with a specific rule, not in a vague sense that “something looks off.”",
     "crumbs": [
       "Part 2: SDTM",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>SDTM Concepts</span>"
@@ -446,7 +446,7 @@
     "href": "sessions/sdtm-dm.html#example-2-rfstdtc-and-the-study-day-rule",
     "title": "5  SDTM: The DM Domain",
     "section": "5.5 Example 2: RFSTDTC and the Study-Day Rule",
-    "text": "5.5 Example 2: RFSTDTC and the Study-Day Rule\nEstimated time: ~15 minutes (worked example)\nDM now gives every subject a clock. The Trial promised the precise rule for reading it, and here it is, verbatim from the guide (SDTMIG v3.4, §4.4.4): the reference start date is study day 1; the study day increments by 1 for each date after it; dates before it count down from −1; there is no study day 0. As formulas:\n\non or after the reference date: --DY = (date portion of --DTC) − (date portion of RFSTDTC) + 1\nbefore the reference date: --DY = (date portion of --DTC) − (date portion of RFSTDTC)\n\nWatch what that does across the boundary, for subject 101-026 (RFSTDTC = 2024-05-06):\n\nref &lt;- dm |&gt; filter(SUBJID == \"101-026\") |&gt; pull(RFSTDTC) |&gt; as.Date()\n\nstudy_day &lt;- function(date, ref) {\n  d &lt;- as.integer(date - ref)\n  if_else(date &gt;= ref, d + 1L, d)\n}\n\ntibble(date = ref + (-2:2)) |&gt;\n  mutate(diff_in_days = as.integer(date - ref),\n         DY           = study_day(date, ref))\n\n# A tibble: 5 × 3\n  date       diff_in_days    DY\n  &lt;date&gt;            &lt;int&gt; &lt;int&gt;\n1 2024-05-04           -2    -2\n2 2024-05-05           -1    -1\n3 2024-05-06            0     1\n4 2024-05-07            1     2\n5 2024-05-08            2     3\n\n\n\n\n\n\n\n\nNoteReading the Output Line by Line\n\n\n\n\n\n\nDate\nDifference\nStudy day\n\n\n\n\ntwo days before\n−2\n−2\n\n\none day before\n−1\n−1\n\n\nthe reference date\n0\n1\n\n\none day after\n+1\n2\n\n\n\nThe day sequence runs −2, −1, 1, 2 — the calendar difference of 0 never appears as a study day. This mirrors how people naturally count (“day 1 of treatment” is the first day, not day 0), and it has a hard consequence the guide states itself: study days are unusable for duration arithmetic, precisely because the scale has a missing number. Durations are computed from the raw dates, never from --DY (SDTMIG v3.4, §4.4.4).\n\n\nNow the same function against real data — the subject’s HbA1c collection dates from the raw lab file:\n\nlb_raw |&gt;\n  filter(subjid == \"101-026\", test == \"HBA1C\") |&gt;\n  mutate(colldt = as.Date(colldt),\n         LBDY   = study_day(colldt, ref)) |&gt;\n  select(visit, colldt, LBDY)\n\n# A tibble: 8 × 3\n  visit     colldt      LBDY\n  &lt;chr&gt;     &lt;date&gt;     &lt;int&gt;\n1 SCREENING 2024-04-21   -15\n2 BASELINE  2024-05-07     2\n3 WEEK 4    2024-06-02    28\n4 WEEK 8    2024-07-03    59\n5 WEEK 12   2024-07-30    86\n6 WEEK 16   2024-08-25   112\n7 WEEK 20   2024-09-22   140\n8 WEEK 26   2024-11-05   184\n\n\n\n\n\n\n\n\nTipRun It Yourself\n\n\n\nRun both chunks. The screening draw lands on study day −15 — before the clock started, so negative, with no zero crossed on the way — and the baseline draw on day 2, because the sample was taken the day after first dose. Nominal week 26 lands on day 184. All three are the reality behind the tidy visit labels: --DY records when things actually happened on the subject’s own clock. When you build full findings domains in Events and Findings, this function is applied to every dated record in the study.",
+    "text": "5.5 Example 2: RFSTDTC and the Study-Day Rule\nEstimated time: ~15 minutes (worked example)\nDM now gives every subject a clock. The Trial promised the precise rule for reading it, and here it is, verbatim from the guide (SDTMIG v3.4, §4.4.4): the reference start date is study day 1; the study day increments by 1 for each date after it; dates before it count down from −1; there is no study day 0. As formulas:\n\non or after the reference date: --DY = (date portion of --DTC) − (date portion of RFSTDTC) + 1\nbefore the reference date: --DY = (date portion of --DTC) − (date portion of RFSTDTC)\n\nWatch what that does across the boundary, for subject 101-026 (RFSTDTC = 2024-05-06):\n\nref &lt;- dm |&gt; filter(SUBJID == \"101-026\") |&gt; pull(RFSTDTC) |&gt; as.Date()\n\nstudy_day &lt;- function(date, ref) {\n  d &lt;- as.integer(date - ref)\n  if_else(date &gt;= ref, d + 1L, d)\n}\n\ntibble(date = ref + (-2:2)) |&gt;\n  mutate(diff_in_days = as.integer(date - ref),\n         DY           = study_day(date, ref))\n\n# A tibble: 5 × 3\n  date       diff_in_days    DY\n  &lt;date&gt;            &lt;int&gt; &lt;int&gt;\n1 2024-05-04           -2    -2\n2 2024-05-05           -1    -1\n3 2024-05-06            0     1\n4 2024-05-07            1     2\n5 2024-05-08            2     3\n\n\n\n\n\n\n\n\nNoteReading the Output Line by Line\n\n\n\n\n\n\nDate\nDifference\nStudy day\n\n\n\n\ntwo days before\n−2\n−2\n\n\none day before\n−1\n−1\n\n\nthe reference date\n0\n1\n\n\none day after\n+1\n2\n\n\n\nThe day sequence runs −2, −1, 1, 2 — the calendar difference of 0 never appears as a study day. This mirrors how people naturally count (“day 1 of treatment” is the first day, not day 0), and it has a hard consequence the guide states itself: study days are unusable for duration arithmetic, precisely because the scale has a missing number. Durations are computed from the raw dates, never from --DY (SDTMIG v3.4, §4.4.4).\n\n\nNow the same function against real data — the subject’s HbA1c collection dates from the raw lab file:\n\nlb_raw |&gt;\n  filter(subjid == \"101-026\", test == \"HBA1C\") |&gt;\n  mutate(colldt = as.Date(colldt),\n         LBDY   = study_day(colldt, ref)) |&gt;\n  select(visit, colldt, LBDY)\n\n# A tibble: 8 × 3\n  visit     colldt      LBDY\n  &lt;chr&gt;     &lt;date&gt;     &lt;int&gt;\n1 SCREENING 2024-04-21   -15\n2 BASELINE  2024-05-07     2\n3 WEEK 4    2024-06-02    28\n4 WEEK 8    2024-07-03    59\n5 WEEK 12   2024-07-30    86\n6 WEEK 16   2024-08-25   112\n7 WEEK 20   2024-09-22   140\n8 WEEK 26   2024-11-05   184\n\n\n\n\n\n\n\n\nTipRun It Yourself\n\n\n\nRun both chunks. The screening draw lands on study day −15 — before the clock started, so negative, with no zero crossed on the way — and the baseline draw on day 2, because the sample was taken the day after first dose. Nominal week 26 lands on day 184. All three are the reality behind the tidy visit labels: --DY records when things actually happened on the subject’s own clock. When you build full findings domains in Findings, this function is applied to every dated record in the study.",
     "crumbs": [
       "Part 2: SDTM",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>SDTM: The DM Domain</span>"
@@ -486,1015 +486,1147 @@
     ]
   },
   {
-    "objectID": "sessions/sdtm-events-findings.html",
-    "href": "sessions/sdtm-events-findings.html",
-    "title": "6  SDTM: Events and Findings",
+    "objectID": "sessions/sdtm-events.html",
+    "href": "sessions/sdtm-events.html",
+    "title": "6  SDTM: Events (Adverse Events)",
     "section": "",
     "text": "6.1 When Do You Use This?",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events and Findings</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events (Adverse Events)</span>"
     ]
   },
   {
-    "objectID": "sessions/sdtm-events-findings.html#when-do-you-use-this",
-    "href": "sessions/sdtm-events-findings.html#when-do-you-use-this",
-    "title": "6  SDTM: Events and Findings",
+    "objectID": "sessions/sdtm-events.html#sec-sdtm-events",
+    "href": "sessions/sdtm-events.html#sec-sdtm-events",
+    "title": "6  SDTM: Events (Adverse Events)",
     "section": "",
-    "text": "Tip\n\n\n\nTODO: two or three concrete scenarios that this session answers, ending with the single question it addresses in bold. Cross-link the session(s) this one builds on.",
+    "text": "Tip\n\n\n\nA safety reviewer asks “how many serious adverse events were there?” and you need to know that seriousness is a regulatory category, not a measure of how bad the event felt. A site reports an event by phone and never sends a start date. A subject reports no adverse events at all — and you have to know that “none” is represented by no row, not a row that says none.\nAll three are the same underlying task: representing things that happened to subjects. This session asks: once you know a dataset is about occurrences rather than measurements, how do you build it?\nBuilds on SDTM Concepts (the three observation classes; controlled terminology) and The DM Domain (RFSTDTC and the study-day rule, both reused here). Its sibling is Findings.",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events and Findings</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events (Adverse Events)</span>"
     ]
   },
   {
-    "objectID": "sessions/sdtm-events-findings.html#learning-objectives",
-    "href": "sessions/sdtm-events-findings.html#learning-objectives",
-    "title": "6  SDTM: Events and Findings",
+    "objectID": "sessions/sdtm-events.html#learning-objectives",
+    "href": "sessions/sdtm-events.html#learning-objectives",
+    "title": "6  SDTM: Events (Adverse Events)",
     "section": "6.2 Learning Objectives",
-    "text": "6.2 Learning Objectives\nAfter completing this session you will be able to:\n\nTODO\nTODO\nTODO",
+    "text": "6.2 Learning Objectives\nAfter completing this session you will be able to:\n\nRecognise an Events-class domain from what one row represents, and predict its key variables\nBuild an AE dataset from raw events, keeping the verbatim term and naming (not faking) the dictionary-coding step\nDistinguish seriousness from severity and represent each correctly\nMap raw outcome text to controlled terminology, and check it\nHandle an adverse event with no start date the way the standard intends\nDerive event study days from the subject’s reference date",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events and Findings</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events (Adverse Events)</span>"
     ]
   },
   {
-    "objectID": "sessions/sdtm-events-findings.html#background-todo-the-one-core-idea",
-    "href": "sessions/sdtm-events-findings.html#background-todo-the-one-core-idea",
-    "title": "6  SDTM: Events and Findings",
-    "section": "6.3 Background: TODO (the one core idea)",
-    "text": "6.3 Background: TODO (the one core idea)\nEstimated time: ~TODO minutes (reading)\nTODO: introduce the single idea that ties the session together, concept before formula.",
+    "objectID": "sessions/sdtm-events.html#background-what-an-events-row-is",
+    "href": "sessions/sdtm-events.html#background-what-an-events-row-is",
+    "title": "6  SDTM: Events (Adverse Events)",
+    "section": "6.3 Background: What an Events Row Is",
+    "text": "6.3 Background: What an Events Row Is\nEstimated time: ~15 minutes (reading)\n\n\n\n\n\n\nImportantThe one thing to remember\n\n\n\nAn Events row records that something happened — carried by a verbatim term and a timing. Everything else in the row qualifies that occurrence; it never turns the row into a measurement.\n\n\nAdverse Events (AE) is an Events-class domain, and its structure is one record per adverse event per subject (SDTMIG v3.4, §6.2.1). The sponsor defines what counts as one event, but the unit is the event: a subject with three events has three rows, a subject with none has no rows at all.\nThe topic variable — the thing each row is about — is AETERM, the Required, verbatim name of the event exactly as it was reported (SDTMIG v3.4, §6.2.1, assumption 2a). “Verbatim” is doing real work: AETERM holds what the site actually wrote, messiness and all, and it is never cleaned in place. The cleaned, standardised version lives in a separate variable, AEDECOD — the dictionary-derived preferred term, also Required, produced by coding each verbatim term against a medical dictionary, normally MedDRA (SDTMIG v3.4, §6.2.1, assumption 2c).\n\n\n\n\n\n\nWarningThis course stops at the verbatim term\n\n\n\nCoding AETERM into AEDECOD requires MedDRA, a licensed external dictionary that is not part of CDISC Controlled Terminology and not available in the sdtm.terminology package. This course therefore builds AETERM honestly and leaves AEDECOD empty, naming the coding step rather than performing it. It will never invent a preferred term, because a plausible-looking MedDRA code that is wrong is exactly the kind of silent error the whole course is built to avoid. In a real study, coding is done by trained coders (or a supervised process) and the dictionary name and version are recorded in the Define-XML.\n\n\nAround the topic sit qualifiers — and two of them are constantly confused. AESEV is the event’s severity (its intensity: MILD, MODERATE, SEVERE). AESER is whether the event is serious — a regulatory category with a Y/N answer, defined by criteria like death, hospitalisation, or life-threatening risk. They are independent: a severe headache may not be serious, and a “mild” event can be serious. Getting these two straight is the single most important idea in AE data, and Example 2 shows the trap directly.\nFinally, timing. AESTDTC and AEENDTC are the ISO 8601 start and end of the event — and both are Expected, meaning the column is always present but a value may be missing (SDTMIG v3.4, §6.2.1). That core designation is not a technicality: it is exactly what lets the standard represent an event whose start date was never captured. Study-day versions (AESTDY, AEENDY) are derived from the DM reference date using the rule from The DM Domain.",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events and Findings</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events (Adverse Events)</span>"
     ]
   },
   {
-    "objectID": "sessions/sdtm-events-findings.html#example-1-todo",
-    "href": "sessions/sdtm-events-findings.html#example-1-todo",
-    "title": "6  SDTM: Events and Findings",
-    "section": "6.4 Example 1: TODO",
-    "text": "6.4 Example 1: TODO\nTODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.\n\n6.4.1 Run It Yourself\nTODO: the exact code block the learner should execute before reading on.\n\n\n6.4.2 Reading the Output Line by Line\nTODO: map each line of output to its plain-English meaning.",
+    "objectID": "sessions/sdtm-events.html#example-1-from-raw-events-to-ae-rows",
+    "href": "sessions/sdtm-events.html#example-1-from-raw-events-to-ae-rows",
+    "title": "6  SDTM: Events (Adverse Events)",
+    "section": "6.4 Example 1: From Raw Events to AE Rows",
+    "text": "6.4 Example 1: From Raw Events to AE Rows\nEstimated time: ~20 minutes (worked example)\nStart with the raw adverse-event file and the DM dataset you built and saved in the previous session:\n\nae_raw &lt;- read_csv(\"data/raw/ae_raw.csv\", show_col_types = FALSE,\n                   col_types = cols(.default = col_character()))\n\n# DM, built in the previous session and saved to data/sdtm/ (the build\n# script that produces it is covered in the Findings session)\ndm &lt;- read_csv(\"data/sdtm/dm.csv\", show_col_types = FALSE,\n               col_types = cols(.default = col_character()))\n\nc(ae_rows = nrow(ae_raw),\n  subjects_with_events = n_distinct(ae_raw$SUBJID),\n  subjects_total = nrow(dm))\n\n             ae_rows subjects_with_events       subjects_total \n                 389                  262                  400 \n\n\n\n\n\n\n\n\nNoteReading the Output Line by Line\n\n\n\n389 event rows across 262 subjects, out of 400 enrolled. The gap — 138 subjects — is the point: those subjects have no AE rows, and that is the correct representation of “no adverse events.” A dataset never carries a row that says a subject had none; absence is the record (SDTMIG v3.4, §6.2.1, assumption 4d). If you counted rows expecting 400, this is where you would learn that Events data is one-row-per- occurrence, not one-row-per-subject.\n\n\nNow build the identifier spine and the topic. USUBJID comes from DM — the AE file only knows the study’s SUBJID, so DM is where the across-submission identifier is joined in. AESEQ numbers each subject’s events. AETERM is copied verbatim; AEDECOD is created and left empty for the coding step:\n\nae &lt;- ae_raw |&gt;\n  left_join(dm |&gt; select(SUBJID, USUBJID, RFSTDTC), by = \"SUBJID\") |&gt;\n  arrange(USUBJID, AESTDT, AETERM) |&gt;\n  group_by(USUBJID) |&gt;\n  mutate(AESEQ = row_number()) |&gt;\n  ungroup() |&gt;\n  mutate(STUDYID = \"GLPX001\", DOMAIN = \"AE\",\n         AEDECOD = NA_character_)   # MedDRA preferred term — coding step, not done here\n\nae |&gt;\n  filter(USUBJID == \"GLPX001-101-037\") |&gt;\n  select(USUBJID, AESEQ, AETERM, AEDECOD)\n\n# A tibble: 2 × 4\n  USUBJID         AESEQ AETERM          AEDECOD\n  &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;  \n1 GLPX001-101-037     1 Diarrhoea       &lt;NA&gt;   \n2 GLPX001-101-037     2 Nasopharyngitis &lt;NA&gt;   \n\n\n\n\n\n\n\n\nTipRun It Yourself\n\n\n\nRun both chunks. Subject 101-037 should come back with two events, AESEQ 1 and 2, each with a verbatim AETERM and an empty AEDECOD. Look back at Why Standards: the raw AETERM column is where Nausea, NAUSEA, Diarrea and nausea and vomitting all live. Every one of those is preserved here exactly as written — because AETERM is verbatim, and fixing the spelling is the coder’s job, recorded in AEDECOD, not ours to guess.",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events and Findings</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events (Adverse Events)</span>"
     ]
   },
   {
-    "objectID": "sessions/sdtm-events-findings.html#example-2-todo",
-    "href": "sessions/sdtm-events-findings.html#example-2-todo",
-    "title": "6  SDTM: Events and Findings",
-    "section": "6.5 Example 2: TODO",
-    "text": "6.5 Example 2: TODO\nTODO: a second worked example.\n\n6.5.1 Run It Yourself\nTODO.",
+    "objectID": "sessions/sdtm-events.html#example-2-qualifying-and-timing-the-event",
+    "href": "sessions/sdtm-events.html#example-2-qualifying-and-timing-the-event",
+    "title": "6  SDTM: Events (Adverse Events)",
+    "section": "6.5 Example 2: Qualifying and Timing the Event",
+    "text": "6.5 Example 2: Qualifying and Timing the Event\nEstimated time: ~20 minutes (worked example)\n\n6.5.1 Severity is not seriousness\nThe raw file carries both the intensity of each event and whether it was serious. Map them straight across — AESEV for severity, AESER for the serious flag — then look at what they say together:\n\nae &lt;- ae |&gt;\n  mutate(AESEV = AESEV,    # MILD / MODERATE / SEVERE (intensity)\n         AESER = AESER)    # Y / N (regulatory seriousness)\n\nae |&gt; count(AESEV, AESER)\n\n# A tibble: 4 × 3\n  AESEV    AESER     n\n  &lt;chr&gt;    &lt;chr&gt; &lt;int&gt;\n1 MILD     N       243\n2 MODERATE N       124\n3 SEVERE   N        21\n4 SEVERE   Y         1\n\n\n\n\n\n\n\n\nNoteReading the Output Line by Line\n\n\n\nRead the cross-tabulation carefully. There are SEVERE events that are not serious (AESER = \"N\"), and exactly one event that is serious (AESER = \"Y\"). Severity and seriousness are different axes: severity is how intense the event was; seriousness is whether it met a regulatory criterion (here, a hypoglycaemia that required hospitalisation). Most severe events are not serious, and — though GLPX-001 has no such case — a mild event could be serious. Confusing the two is how a safety table ends up with the wrong SAE count.\n\n\nLook at the one serious event directly, and confirm both qualifier columns hold only legal controlled-terminology values:\n\nae |&gt; filter(AESER == \"Y\") |&gt; select(USUBJID, AETERM, AESEV, AESER)\n\n# A tibble: 1 × 4\n  USUBJID         AETERM        AESEV  AESER\n  &lt;chr&gt;           &lt;chr&gt;         &lt;chr&gt;  &lt;chr&gt;\n1 GLPX001-110-004 Hypoglycaemia SEVERE Y    \n\n# AESEV -&gt; codelist C66769; AESER -&gt; the NY (No/Yes) codelist C66742\nc(\n  aesev_valid = all(map_lgl(unique(ae$AESEV), \\(x) is_term(x, clst_code = \"C66769\"))),\n  aeser_valid = all(map_lgl(unique(ae$AESER), \\(x) is_term(x, clst_code = \"C66742\")))\n)\n\naesev_valid aeser_valid \n       TRUE        TRUE \n\n\n\n\n6.5.2 Outcome: a term that needs mapping\nThe raw outcome column reads RECOVERED, but that is not a legal value of the AE outcome codelist — the published term is RECOVERED/RESOLVED. This is the controlled-terminology discipline from SDTM Concepts in miniature: a raw string that looks right is not automatically a codelist member, so it is mapped and the mapping is checked:\n\nae &lt;- ae |&gt;\n  mutate(AEOUT = case_when(\n    AEOUT == \"RECOVERED\"     ~ \"RECOVERED/RESOLVED\",\n    AEOUT == \"NOT RECOVERED\" ~ \"NOT RECOVERED/NOT RESOLVED\"\n  ))\n\nc(\n  raw_recovered_valid = is_term(\"RECOVERED\", clst_code = \"C66768\"),\n  mapped_valid        = is_term(\"RECOVERED/RESOLVED\", clst_code = \"C66768\")\n)\n\nraw_recovered_valid        mapped_valid \n              FALSE                TRUE \n\n\n\n\n\n\n\n\nTipRun It Yourself\n\n\n\nRun the chunk. The raw RECOVERED returns FALSE — it is not in the outcome codelist — while the mapped RECOVERED/RESOLVED returns TRUE. Every GLPX-001 event resolved, so after mapping, AEOUT is a single value across the file; there are no ongoing events to represent. (Had there been, an event still ongoing at last contact would carry a null AEENDTC; the relative-timing variable AEENRF exists for expressing “ongoing” against the study reference period, per SDTMIG v3.4, §4.4.7, but this trial gives us no occasion to use it.)\n\n\n\n\n6.5.3 Timing, and the event with no start date\nNow the dates — and defect D4. Map AESTDTC/AEENDTC from the raw start and end, turning blanks into true nulls, and derive the study day from each subject’s RFSTDTC with the same rule as The DM Domain:\n\nstudy_day &lt;- function(date, ref) {\n  date &lt;- as.Date(date); ref &lt;- as.Date(ref)\n  d &lt;- as.integer(date - ref)\n  if_else(is.na(date) | is.na(ref), NA_integer_,\n          if_else(date &gt;= ref, d + 1L, d))\n}\n\nae &lt;- ae |&gt;\n  mutate(\n    AESTDTC = na_if(AESTDT, \"\"),\n    AEENDTC = na_if(AEENDT, \"\"),\n    AESTDY  = study_day(AESTDTC, RFSTDTC),\n    AEENDY  = study_day(AEENDTC, RFSTDTC)\n  )\n\nae |&gt;\n  filter(is.na(AESTDTC)) |&gt;\n  select(USUBJID, AETERM, AESTDTC, AEENDTC, AESTDY, AEENDY)\n\n# A tibble: 1 × 6\n  USUBJID         AETERM       AESTDTC AEENDTC    AESTDY AEENDY\n  &lt;chr&gt;           &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;       &lt;int&gt;  &lt;int&gt;\n1 GLPX001-103-199 Constipation &lt;NA&gt;    2024-08-28     NA     56\n\n\n\n\n\n\n\n\nNoteReading the Output Line by Line\n\n\n\nOne event comes back — subject 103-199’s constipation — with a null AESTDTC. It was reported by phone and the start date was never obtained (defect D4). The standard handles this without complaint, because AESTDTC is Expected, not Required: the column is present, and this one value is legitimately null (SDTMIG v3.4, §6.2.1). The study day AESTDY is null too — you cannot compute days-from-reference without a date — while AEENDTC is present, so AEENDY is not. Note what the standard did not make you do: it did not force you to invent a start date to fill the column, and it did not make you drop the event. The missing value is carried honestly, exactly as with the partial birth dates in DM.",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events and Findings</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events (Adverse Events)</span>"
     ]
   },
   {
-    "objectID": "sessions/sdtm-events-findings.html#what-can-go-wrong",
-    "href": "sessions/sdtm-events-findings.html#what-can-go-wrong",
-    "title": "6  SDTM: Events and Findings",
+    "objectID": "sessions/sdtm-events.html#what-can-go-wrong",
+    "href": "sessions/sdtm-events.html#what-can-go-wrong",
+    "title": "6  SDTM: Events (Adverse Events)",
     "section": "6.6 What Can Go Wrong",
-    "text": "6.6 What Can Go Wrong\nTODO: failure modes and misuse patterns.\n\n6.6.1 Common misinterpretations\nTODO.",
+    "text": "6.6 What Can Go Wrong\nEstimated time: ~10 minutes (reading)\nConflating seriousness and severity\nThe most consequential AE error there is. A count of AESEV = \"SEVERE\" is not a count of serious adverse events; the SAE count comes from AESER = \"Y\". In GLPX-001 the two numbers are wildly different — many severe events, one serious one — and reporting the wrong column misstates the trial’s safety profile.\nInventing preferred terms\nFilling AEDECOD by guessing what a verbatim term “should” code to, rather than leaving it for the dictionary step, plants exactly the kind of authoritative-looking error a reviewer cannot catch. If you do not have MedDRA and a coding process, AEDECOD stays empty — and the Define-XML says so.\nA row that says “no events”\nIf a subject had no adverse events, they get no AE rows. A row created to state “none” is not just unnecessary; it is wrong, and it will inflate every event count and every join (SDTMIG v3.4, §6.2.1, assumption 4d).\nCleaning AETERM in place\nCorrecting Diarrea to Diarrhoea in AETERM destroys the verbatim record. The verbatim term is a source value; the corrected concept belongs in AEDECOD, produced by coding. Keep both.\nCopying raw outcome text without checking it\nRECOVERED is not a codelist value. Carrying raw text straight into a CT-governed variable produces data that fails conformance — the map to RECOVERED/RESOLVED is not optional.\n\n\n\n\n\n\nWarningCommon misinterpretations\n\n\n\n“389 adverse events means the drug caused 389 problems” It means 389 were recorded, across both arms, most unrelated to treatment. Counts describe what was captured, not what the drug did — causality is a separate variable (AEREL) and a separate analysis.\n“A missing start date is a data-quality failure to fix” It is a fact about collection, carried honestly in an Expected variable. The failure would be inventing a date to make the column look complete.\n“Severe and serious are synonyms” Severity (AESEV) is intensity; seriousness (AESER) is a regulatory category. They vary independently, and the SAE count depends only on AESER.\n“AETERM should be tidied so the counts come out right” Tidying belongs in AEDECOD via coding, which maps Nausea, NAUSEA and nausea and vomitting to their preferred terms while preserving the verbatim originals. Editing AETERM throws away the source.",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events and Findings</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events (Adverse Events)</span>"
     ]
   },
   {
-    "objectID": "sessions/sdtm-events-findings.html#exercises",
-    "href": "sessions/sdtm-events-findings.html#exercises",
-    "title": "6  SDTM: Events and Findings",
+    "objectID": "sessions/sdtm-events.html#exercises",
+    "href": "sessions/sdtm-events.html#exercises",
+    "title": "6  SDTM: Events (Adverse Events)",
     "section": "6.7 Exercises",
-    "text": "6.7 Exercises\nTODO: link the exercise file(s) for this session, or state that this session has no exercise.",
+    "text": "6.7 Exercises\nThe AE exercise set is in Exercise — SDTM: Events: completing the domain slice, deriving the study days, and articulating the severity/seriousness distinction on real rows. Solutions are in the paid tier.",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events and Findings</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events (Adverse Events)</span>"
     ]
   },
   {
-    "objectID": "sessions/sdtm-events-findings.html#comprehension-check",
-    "href": "sessions/sdtm-events-findings.html#comprehension-check",
-    "title": "6  SDTM: Events and Findings",
+    "objectID": "sessions/sdtm-events.html#comprehension-check",
+    "href": "sessions/sdtm-events.html#comprehension-check",
+    "title": "6  SDTM: Events (Adverse Events)",
     "section": "6.8 Comprehension Check",
-    "text": "6.8 Comprehension Check\nTODO: three to five short self-test questions.\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\nTODO: answers, collapsed.",
+    "text": "6.8 Comprehension Check\nEstimated time: ~10 minutes\n\nA subject had no adverse events. How many AE rows do they have, and why?\nAETERM for one event reads nausea and vomitting. What do you put in AETERM, what in AEDECOD, and why does this course leave the second empty?\nGLPX-001 has many SEVERE events and one AESER = \"Y\" event. Explain, to a colleague who thinks they are the same thing, how both can be true.\nSubject 103-199’s constipation has a null AESTDTC. Why is the dataset still conformant, and what must you not do to “fix” it?\nThe raw outcome value is RECOVERED. Why can it not go straight into AEOUT, and how do you find the value that can?\n\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\n\nZero rows. Adverse-event data is one record per event per subject, and “no events” is represented by the absence of records, never by a row asserting none (SDTMIG v3.4, §6.2.1, assumption 4d). Creating a “none” row would inflate counts and joins.\nAETERM holds the verbatim string nausea and vomitting exactly as reported — it is a Required, verbatim topic variable (SDTMIG v3.4, §6.2.1, assumption 2a). AEDECOD would hold the dictionary-derived preferred term(s) from coding (SDTMIG v3.4, §6.2.1, assumption 2c). This course leaves AEDECOD empty because coding needs MedDRA, a licensed dictionary it does not use — and guessing a preferred term would risk a confident, invisible error.\nSeverity (AESEV) measures how intense the event was; seriousness (AESER) is a yes/no regulatory category based on criteria such as hospitalisation or life-threatening risk. They are independent axes, so a study can have many intense-but-not-serious events and very few serious ones. The SAE count comes only from AESER = \"Y\".\nAESTDTC is an Expected variable: the column must be present, but a value may be null (SDTMIG v3.4, §6.2.1). The start date was never collected, so null is the honest value, and AESTDY is null in consequence. You must not invent a start date to fill the column, and you must not drop the event — both would misrepresent what was recorded.\nRECOVERED is not a member of the AE outcome codelist; the published value is RECOVERED/RESOLVED, confirmed with is_term(\"RECOVERED/RESOLVED\", clst_code = \"C66768\"). Controlled- terminology variables take only published values, so the raw string is mapped to the codelist term, and the mapping is checked with the package rather than assumed.",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events and Findings</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SDTM: Events (Adverse Events)</span>"
+    ]
+  },
+  {
+    "objectID": "sessions/sdtm-findings.html",
+    "href": "sessions/sdtm-findings.html",
+    "title": "7  SDTM: Findings (Labs & Vital Signs)",
+    "section": "",
+    "text": "7.1 When Do You Use This?\nTODO (prose pass, after the reference-range decision): scenarios — a lab transfer with a byte-perfect duplicate and a real out-of-range value; a blank unit; and the moment you need a finished SDTM you can hand to the analysis team. Builds on SDTM Concepts, The DM Domain and Events.",
+    "crumbs": [
+      "Part 2: SDTM",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>SDTM: Findings (Labs & Vital Signs)</span>"
+    ]
+  },
+  {
+    "objectID": "sessions/sdtm-findings.html#learning-objectives",
+    "href": "sessions/sdtm-findings.html#learning-objectives",
+    "title": "7  SDTM: Findings (Labs & Vital Signs)",
+    "section": "7.2 Learning Objectives",
+    "text": "7.2 Learning Objectives\nTODO after approval.",
+    "crumbs": [
+      "Part 2: SDTM",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>SDTM: Findings (Labs & Vital Signs)</span>"
+    ]
+  },
+  {
+    "objectID": "sessions/sdtm-findings.html#background-todo-what-a-findings-row-is",
+    "href": "sessions/sdtm-findings.html#background-todo-what-a-findings-row-is",
+    "title": "7  SDTM: Findings (Labs & Vital Signs)",
+    "section": "7.3 Background: TODO — What a Findings Row Is",
+    "text": "7.3 Background: TODO — What a Findings Row Is\nTODO after the reference-range source is decided.",
+    "crumbs": [
+      "Part 2: SDTM",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>SDTM: Findings (Labs & Vital Signs)</span>"
+    ]
+  },
+  {
+    "objectID": "sessions/sdtm-findings.html#example-1-todo-building-lb-the-result-quartet-de-dup-units",
+    "href": "sessions/sdtm-findings.html#example-1-todo-building-lb-the-result-quartet-de-dup-units",
+    "title": "7  SDTM: Findings (Labs & Vital Signs)",
+    "section": "7.4 Example 1: TODO — Building LB (the result quartet, de-dup, units)",
+    "text": "7.4 Example 1: TODO — Building LB (the result quartet, de-dup, units)\nTODO.",
+    "crumbs": [
+      "Part 2: SDTM",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>SDTM: Findings (Labs & Vital Signs)</span>"
+    ]
+  },
+  {
+    "objectID": "sessions/sdtm-findings.html#example-2-todo-reference-ranges-the-real-outlier-and-baseline",
+    "href": "sessions/sdtm-findings.html#example-2-todo-reference-ranges-the-real-outlier-and-baseline",
+    "title": "7  SDTM: Findings (Labs & Vital Signs)",
+    "section": "7.5 Example 2: TODO — Reference ranges, the real outlier, and baseline",
+    "text": "7.5 Example 2: TODO — Reference ranges, the real outlier, and baseline\nTODO — blocked on reference-range source.",
+    "crumbs": [
+      "Part 2: SDTM",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>SDTM: Findings (Labs & Vital Signs)</span>"
+    ]
+  },
+  {
+    "objectID": "sessions/sdtm-findings.html#what-can-go-wrong",
+    "href": "sessions/sdtm-findings.html#what-can-go-wrong",
+    "title": "7  SDTM: Findings (Labs & Vital Signs)",
+    "section": "7.6 What Can Go Wrong",
+    "text": "7.6 What Can Go Wrong\nTODO.",
+    "crumbs": [
+      "Part 2: SDTM",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>SDTM: Findings (Labs & Vital Signs)</span>"
+    ]
+  },
+  {
+    "objectID": "sessions/sdtm-findings.html#exercises",
+    "href": "sessions/sdtm-findings.html#exercises",
+    "title": "7  SDTM: Findings (Labs & Vital Signs)",
+    "section": "7.7 Exercises",
+    "text": "7.7 Exercises\nTODO — planned: build the VS slice (VSRESU units) in exercises/sdtm-findings.qmd.",
+    "crumbs": [
+      "Part 2: SDTM",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>SDTM: Findings (Labs & Vital Signs)</span>"
+    ]
+  },
+  {
+    "objectID": "sessions/sdtm-findings.html#comprehension-check",
+    "href": "sessions/sdtm-findings.html#comprehension-check",
+    "title": "7  SDTM: Findings (Labs & Vital Signs)",
+    "section": "7.8 Comprehension Check",
+    "text": "7.8 Comprehension Check\nTODO.",
+    "crumbs": [
+      "Part 2: SDTM",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>SDTM: Findings (Labs & Vital Signs)</span>"
     ]
   },
   {
     "objectID": "sessions/define-xml.html",
     "href": "sessions/define-xml.html",
-    "title": "7  Define-XML",
+    "title": "8  Define-XML",
     "section": "",
-    "text": "7.1 When Do You Use This?",
+    "text": "8.1 When Do You Use This?",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Define-XML</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Define-XML</span>"
     ]
   },
   {
     "objectID": "sessions/define-xml.html#when-do-you-use-this",
     "href": "sessions/define-xml.html#when-do-you-use-this",
-    "title": "7  Define-XML",
+    "title": "8  Define-XML",
     "section": "",
     "text": "Tip\n\n\n\nTODO: two or three concrete scenarios that this session answers, ending with the single question it addresses in bold. Cross-link the session(s) this one builds on.",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Define-XML</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Define-XML</span>"
     ]
   },
   {
     "objectID": "sessions/define-xml.html#learning-objectives",
     "href": "sessions/define-xml.html#learning-objectives",
-    "title": "7  Define-XML",
-    "section": "7.2 Learning Objectives",
-    "text": "7.2 Learning Objectives\nAfter completing this session you will be able to:\n\nTODO\nTODO\nTODO",
+    "title": "8  Define-XML",
+    "section": "8.2 Learning Objectives",
+    "text": "8.2 Learning Objectives\nAfter completing this session you will be able to:\n\nTODO\nTODO\nTODO",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Define-XML</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Define-XML</span>"
     ]
   },
   {
     "objectID": "sessions/define-xml.html#background-todo-the-one-core-idea",
     "href": "sessions/define-xml.html#background-todo-the-one-core-idea",
-    "title": "7  Define-XML",
-    "section": "7.3 Background: TODO (the one core idea)",
-    "text": "7.3 Background: TODO (the one core idea)\nEstimated time: ~TODO minutes (reading)\nTODO: introduce the single idea that ties the session together, concept before formula.",
+    "title": "8  Define-XML",
+    "section": "8.3 Background: TODO (the one core idea)",
+    "text": "8.3 Background: TODO (the one core idea)\nEstimated time: ~TODO minutes (reading)\nTODO: introduce the single idea that ties the session together, concept before formula.",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Define-XML</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Define-XML</span>"
     ]
   },
   {
     "objectID": "sessions/define-xml.html#example-1-todo",
     "href": "sessions/define-xml.html#example-1-todo",
-    "title": "7  Define-XML",
-    "section": "7.4 Example 1: TODO",
-    "text": "7.4 Example 1: TODO\nTODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.\n\n7.4.1 Run It Yourself\nTODO: the exact code block the learner should execute before reading on.\n\n\n7.4.2 Reading the Output Line by Line\nTODO: map each line of output to its plain-English meaning.",
+    "title": "8  Define-XML",
+    "section": "8.4 Example 1: TODO",
+    "text": "8.4 Example 1: TODO\nTODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.\n\n8.4.1 Run It Yourself\nTODO: the exact code block the learner should execute before reading on.\n\n\n8.4.2 Reading the Output Line by Line\nTODO: map each line of output to its plain-English meaning.",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Define-XML</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Define-XML</span>"
     ]
   },
   {
     "objectID": "sessions/define-xml.html#example-2-todo",
     "href": "sessions/define-xml.html#example-2-todo",
-    "title": "7  Define-XML",
-    "section": "7.5 Example 2: TODO",
-    "text": "7.5 Example 2: TODO\nTODO: a second worked example.\n\n7.5.1 Run It Yourself\nTODO.",
+    "title": "8  Define-XML",
+    "section": "8.5 Example 2: TODO",
+    "text": "8.5 Example 2: TODO\nTODO: a second worked example.\n\n8.5.1 Run It Yourself\nTODO.",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Define-XML</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Define-XML</span>"
     ]
   },
   {
     "objectID": "sessions/define-xml.html#what-can-go-wrong",
     "href": "sessions/define-xml.html#what-can-go-wrong",
-    "title": "7  Define-XML",
-    "section": "7.6 What Can Go Wrong",
-    "text": "7.6 What Can Go Wrong\nTODO: failure modes and misuse patterns.\n\n7.6.1 Common misinterpretations\nTODO.",
+    "title": "8  Define-XML",
+    "section": "8.6 What Can Go Wrong",
+    "text": "8.6 What Can Go Wrong\nTODO: failure modes and misuse patterns.\n\n8.6.1 Common misinterpretations\nTODO.",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Define-XML</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Define-XML</span>"
     ]
   },
   {
     "objectID": "sessions/define-xml.html#exercises",
     "href": "sessions/define-xml.html#exercises",
-    "title": "7  Define-XML",
-    "section": "7.7 Exercises",
-    "text": "7.7 Exercises\nTODO: link the exercise file(s) for this session, or state that this session has no exercise.",
+    "title": "8  Define-XML",
+    "section": "8.7 Exercises",
+    "text": "8.7 Exercises\nTODO: link the exercise file(s) for this session, or state that this session has no exercise.",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Define-XML</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Define-XML</span>"
     ]
   },
   {
     "objectID": "sessions/define-xml.html#comprehension-check",
     "href": "sessions/define-xml.html#comprehension-check",
-    "title": "7  Define-XML",
-    "section": "7.8 Comprehension Check",
-    "text": "7.8 Comprehension Check\nTODO: three to five short self-test questions.\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\nTODO: answers, collapsed.",
+    "title": "8  Define-XML",
+    "section": "8.8 Comprehension Check",
+    "text": "8.8 Comprehension Check\nTODO: three to five short self-test questions.\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\nTODO: answers, collapsed.",
     "crumbs": [
       "Part 2: SDTM",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Define-XML</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Define-XML</span>"
     ]
   },
   {
     "objectID": "sessions/adam-concepts.html",
     "href": "sessions/adam-concepts.html",
-    "title": "8  ADaM Concepts",
+    "title": "9  ADaM Concepts",
     "section": "",
-    "text": "8.1 When Do You Use This?",
+    "text": "9.1 When Do You Use This?",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>ADaM Concepts</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADaM Concepts</span>"
     ]
   },
   {
     "objectID": "sessions/adam-concepts.html#when-do-you-use-this",
     "href": "sessions/adam-concepts.html#when-do-you-use-this",
-    "title": "8  ADaM Concepts",
+    "title": "9  ADaM Concepts",
     "section": "",
     "text": "Tip\n\n\n\nTODO: two or three concrete scenarios that this session answers, ending with the single question it addresses in bold. Cross-link the session(s) this one builds on.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>ADaM Concepts</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADaM Concepts</span>"
     ]
   },
   {
     "objectID": "sessions/adam-concepts.html#learning-objectives",
     "href": "sessions/adam-concepts.html#learning-objectives",
-    "title": "8  ADaM Concepts",
-    "section": "8.2 Learning Objectives",
-    "text": "8.2 Learning Objectives\nAfter completing this session you will be able to:\n\nTODO\nTODO\nTODO",
+    "title": "9  ADaM Concepts",
+    "section": "9.2 Learning Objectives",
+    "text": "9.2 Learning Objectives\nAfter completing this session you will be able to:\n\nTODO\nTODO\nTODO",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>ADaM Concepts</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADaM Concepts</span>"
     ]
   },
   {
     "objectID": "sessions/adam-concepts.html#background-todo-the-one-core-idea",
     "href": "sessions/adam-concepts.html#background-todo-the-one-core-idea",
-    "title": "8  ADaM Concepts",
-    "section": "8.3 Background: TODO (the one core idea)",
-    "text": "8.3 Background: TODO (the one core idea)\nEstimated time: ~TODO minutes (reading)\nTODO: introduce the single idea that ties the session together, concept before formula.",
+    "title": "9  ADaM Concepts",
+    "section": "9.3 Background: TODO (the one core idea)",
+    "text": "9.3 Background: TODO (the one core idea)\nEstimated time: ~TODO minutes (reading)\nTODO: introduce the single idea that ties the session together, concept before formula.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>ADaM Concepts</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADaM Concepts</span>"
     ]
   },
   {
     "objectID": "sessions/adam-concepts.html#example-1-todo",
     "href": "sessions/adam-concepts.html#example-1-todo",
-    "title": "8  ADaM Concepts",
-    "section": "8.4 Example 1: TODO",
-    "text": "8.4 Example 1: TODO\nTODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.\n\n8.4.1 Run It Yourself\nTODO: the exact code block the learner should execute before reading on.\n\n\n8.4.2 Reading the Output Line by Line\nTODO: map each line of output to its plain-English meaning.",
+    "title": "9  ADaM Concepts",
+    "section": "9.4 Example 1: TODO",
+    "text": "9.4 Example 1: TODO\nTODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.\n\n9.4.1 Run It Yourself\nTODO: the exact code block the learner should execute before reading on.\n\n\n9.4.2 Reading the Output Line by Line\nTODO: map each line of output to its plain-English meaning.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>ADaM Concepts</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADaM Concepts</span>"
     ]
   },
   {
     "objectID": "sessions/adam-concepts.html#example-2-todo",
     "href": "sessions/adam-concepts.html#example-2-todo",
-    "title": "8  ADaM Concepts",
-    "section": "8.5 Example 2: TODO",
-    "text": "8.5 Example 2: TODO\nTODO: a second worked example.\n\n8.5.1 Run It Yourself\nTODO.",
+    "title": "9  ADaM Concepts",
+    "section": "9.5 Example 2: TODO",
+    "text": "9.5 Example 2: TODO\nTODO: a second worked example.\n\n9.5.1 Run It Yourself\nTODO.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>ADaM Concepts</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADaM Concepts</span>"
     ]
   },
   {
     "objectID": "sessions/adam-concepts.html#what-can-go-wrong",
     "href": "sessions/adam-concepts.html#what-can-go-wrong",
-    "title": "8  ADaM Concepts",
-    "section": "8.6 What Can Go Wrong",
-    "text": "8.6 What Can Go Wrong\nTODO: failure modes and misuse patterns.\n\n8.6.1 Common misinterpretations\nTODO.",
+    "title": "9  ADaM Concepts",
+    "section": "9.6 What Can Go Wrong",
+    "text": "9.6 What Can Go Wrong\nTODO: failure modes and misuse patterns.\n\n9.6.1 Common misinterpretations\nTODO.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>ADaM Concepts</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADaM Concepts</span>"
     ]
   },
   {
     "objectID": "sessions/adam-concepts.html#exercises",
     "href": "sessions/adam-concepts.html#exercises",
-    "title": "8  ADaM Concepts",
-    "section": "8.7 Exercises",
-    "text": "8.7 Exercises\nTODO: link the exercise file(s) for this session, or state that this session has no exercise.",
+    "title": "9  ADaM Concepts",
+    "section": "9.7 Exercises",
+    "text": "9.7 Exercises\nTODO: link the exercise file(s) for this session, or state that this session has no exercise.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>ADaM Concepts</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADaM Concepts</span>"
     ]
   },
   {
     "objectID": "sessions/adam-concepts.html#comprehension-check",
     "href": "sessions/adam-concepts.html#comprehension-check",
-    "title": "8  ADaM Concepts",
-    "section": "8.8 Comprehension Check",
-    "text": "8.8 Comprehension Check\nTODO: three to five short self-test questions.\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\nTODO: answers, collapsed.",
+    "title": "9  ADaM Concepts",
+    "section": "9.8 Comprehension Check",
+    "text": "9.8 Comprehension Check\nTODO: three to five short self-test questions.\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\nTODO: answers, collapsed.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>ADaM Concepts</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADaM Concepts</span>"
     ]
   },
   {
     "objectID": "sessions/adsl.html",
     "href": "sessions/adsl.html",
-    "title": "9  ADSL",
+    "title": "10  ADSL",
     "section": "",
-    "text": "9.1 When Do You Use This?",
+    "text": "10.1 When Do You Use This?",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADSL</span>"
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADSL</span>"
     ]
   },
   {
     "objectID": "sessions/adsl.html#when-do-you-use-this",
     "href": "sessions/adsl.html#when-do-you-use-this",
-    "title": "9  ADSL",
+    "title": "10  ADSL",
     "section": "",
     "text": "Tip\n\n\n\nTODO: two or three concrete scenarios that this session answers, ending with the single question it addresses in bold. Cross-link the session(s) this one builds on.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADSL</span>"
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADSL</span>"
     ]
   },
   {
     "objectID": "sessions/adsl.html#learning-objectives",
     "href": "sessions/adsl.html#learning-objectives",
-    "title": "9  ADSL",
-    "section": "9.2 Learning Objectives",
-    "text": "9.2 Learning Objectives\nAfter completing this session you will be able to:\n\nTODO\nTODO\nTODO",
+    "title": "10  ADSL",
+    "section": "10.2 Learning Objectives",
+    "text": "10.2 Learning Objectives\nAfter completing this session you will be able to:\n\nTODO\nTODO\nTODO",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADSL</span>"
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADSL</span>"
     ]
   },
   {
     "objectID": "sessions/adsl.html#background-todo-the-one-core-idea",
     "href": "sessions/adsl.html#background-todo-the-one-core-idea",
-    "title": "9  ADSL",
-    "section": "9.3 Background: TODO (the one core idea)",
-    "text": "9.3 Background: TODO (the one core idea)\nEstimated time: ~TODO minutes (reading)\nTODO: introduce the single idea that ties the session together, concept before formula.",
+    "title": "10  ADSL",
+    "section": "10.3 Background: TODO (the one core idea)",
+    "text": "10.3 Background: TODO (the one core idea)\nEstimated time: ~TODO minutes (reading)\nTODO: introduce the single idea that ties the session together, concept before formula.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADSL</span>"
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADSL</span>"
     ]
   },
   {
     "objectID": "sessions/adsl.html#example-1-todo",
     "href": "sessions/adsl.html#example-1-todo",
-    "title": "9  ADSL",
-    "section": "9.4 Example 1: TODO",
-    "text": "9.4 Example 1: TODO\nTODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.\n\n9.4.1 Run It Yourself\nTODO: the exact code block the learner should execute before reading on.\n\n\n9.4.2 Reading the Output Line by Line\nTODO: map each line of output to its plain-English meaning.",
+    "title": "10  ADSL",
+    "section": "10.4 Example 1: TODO",
+    "text": "10.4 Example 1: TODO\nTODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.\n\n10.4.1 Run It Yourself\nTODO: the exact code block the learner should execute before reading on.\n\n\n10.4.2 Reading the Output Line by Line\nTODO: map each line of output to its plain-English meaning.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADSL</span>"
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADSL</span>"
     ]
   },
   {
     "objectID": "sessions/adsl.html#example-2-todo",
     "href": "sessions/adsl.html#example-2-todo",
-    "title": "9  ADSL",
-    "section": "9.5 Example 2: TODO",
-    "text": "9.5 Example 2: TODO\nTODO: a second worked example.\n\n9.5.1 Run It Yourself\nTODO.",
+    "title": "10  ADSL",
+    "section": "10.5 Example 2: TODO",
+    "text": "10.5 Example 2: TODO\nTODO: a second worked example.\n\n10.5.1 Run It Yourself\nTODO.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADSL</span>"
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADSL</span>"
     ]
   },
   {
     "objectID": "sessions/adsl.html#what-can-go-wrong",
     "href": "sessions/adsl.html#what-can-go-wrong",
-    "title": "9  ADSL",
-    "section": "9.6 What Can Go Wrong",
-    "text": "9.6 What Can Go Wrong\nTODO: failure modes and misuse patterns.\n\n9.6.1 Common misinterpretations\nTODO.",
+    "title": "10  ADSL",
+    "section": "10.6 What Can Go Wrong",
+    "text": "10.6 What Can Go Wrong\nTODO: failure modes and misuse patterns.\n\n10.6.1 Common misinterpretations\nTODO.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADSL</span>"
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADSL</span>"
     ]
   },
   {
     "objectID": "sessions/adsl.html#exercises",
     "href": "sessions/adsl.html#exercises",
-    "title": "9  ADSL",
-    "section": "9.7 Exercises",
-    "text": "9.7 Exercises\nTODO: link the exercise file(s) for this session, or state that this session has no exercise.",
+    "title": "10  ADSL",
+    "section": "10.7 Exercises",
+    "text": "10.7 Exercises\nTODO: link the exercise file(s) for this session, or state that this session has no exercise.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADSL</span>"
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADSL</span>"
     ]
   },
   {
     "objectID": "sessions/adsl.html#comprehension-check",
     "href": "sessions/adsl.html#comprehension-check",
-    "title": "9  ADSL",
-    "section": "9.8 Comprehension Check",
-    "text": "9.8 Comprehension Check\nTODO: three to five short self-test questions.\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\nTODO: answers, collapsed.",
+    "title": "10  ADSL",
+    "section": "10.8 Comprehension Check",
+    "text": "10.8 Comprehension Check\nTODO: three to five short self-test questions.\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\nTODO: answers, collapsed.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ADSL</span>"
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADSL</span>"
     ]
   },
   {
     "objectID": "sessions/adae-adlb.html",
     "href": "sessions/adae-adlb.html",
-    "title": "10  ADAE and ADLB",
+    "title": "11  ADAE and ADLB",
     "section": "",
-    "text": "10.1 When Do You Use This?",
+    "text": "11.1 When Do You Use This?",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADAE and ADLB</span>"
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>ADAE and ADLB</span>"
     ]
   },
   {
     "objectID": "sessions/adae-adlb.html#when-do-you-use-this",
     "href": "sessions/adae-adlb.html#when-do-you-use-this",
-    "title": "10  ADAE and ADLB",
+    "title": "11  ADAE and ADLB",
     "section": "",
     "text": "Tip\n\n\n\nTODO: two or three concrete scenarios that this session answers, ending with the single question it addresses in bold. Cross-link the session(s) this one builds on.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADAE and ADLB</span>"
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>ADAE and ADLB</span>"
     ]
   },
   {
     "objectID": "sessions/adae-adlb.html#learning-objectives",
     "href": "sessions/adae-adlb.html#learning-objectives",
-    "title": "10  ADAE and ADLB",
-    "section": "10.2 Learning Objectives",
-    "text": "10.2 Learning Objectives\nAfter completing this session you will be able to:\n\nTODO\nTODO\nTODO",
+    "title": "11  ADAE and ADLB",
+    "section": "11.2 Learning Objectives",
+    "text": "11.2 Learning Objectives\nAfter completing this session you will be able to:\n\nTODO\nTODO\nTODO",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADAE and ADLB</span>"
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>ADAE and ADLB</span>"
     ]
   },
   {
     "objectID": "sessions/adae-adlb.html#background-todo-the-one-core-idea",
     "href": "sessions/adae-adlb.html#background-todo-the-one-core-idea",
-    "title": "10  ADAE and ADLB",
-    "section": "10.3 Background: TODO (the one core idea)",
-    "text": "10.3 Background: TODO (the one core idea)\nEstimated time: ~TODO minutes (reading)\nTODO: introduce the single idea that ties the session together, concept before formula.",
+    "title": "11  ADAE and ADLB",
+    "section": "11.3 Background: TODO (the one core idea)",
+    "text": "11.3 Background: TODO (the one core idea)\nEstimated time: ~TODO minutes (reading)\nTODO: introduce the single idea that ties the session together, concept before formula.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADAE and ADLB</span>"
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>ADAE and ADLB</span>"
     ]
   },
   {
     "objectID": "sessions/adae-adlb.html#example-1-todo",
     "href": "sessions/adae-adlb.html#example-1-todo",
-    "title": "10  ADAE and ADLB",
-    "section": "10.4 Example 1: TODO",
-    "text": "10.4 Example 1: TODO\nTODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.\n\n10.4.1 Run It Yourself\nTODO: the exact code block the learner should execute before reading on.\n\n\n10.4.2 Reading the Output Line by Line\nTODO: map each line of output to its plain-English meaning.",
+    "title": "11  ADAE and ADLB",
+    "section": "11.4 Example 1: TODO",
+    "text": "11.4 Example 1: TODO\nTODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.\n\n11.4.1 Run It Yourself\nTODO: the exact code block the learner should execute before reading on.\n\n\n11.4.2 Reading the Output Line by Line\nTODO: map each line of output to its plain-English meaning.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADAE and ADLB</span>"
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>ADAE and ADLB</span>"
     ]
   },
   {
     "objectID": "sessions/adae-adlb.html#example-2-todo",
     "href": "sessions/adae-adlb.html#example-2-todo",
-    "title": "10  ADAE and ADLB",
-    "section": "10.5 Example 2: TODO",
-    "text": "10.5 Example 2: TODO\nTODO: a second worked example.\n\n10.5.1 Run It Yourself\nTODO.",
+    "title": "11  ADAE and ADLB",
+    "section": "11.5 Example 2: TODO",
+    "text": "11.5 Example 2: TODO\nTODO: a second worked example.\n\n11.5.1 Run It Yourself\nTODO.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADAE and ADLB</span>"
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>ADAE and ADLB</span>"
     ]
   },
   {
     "objectID": "sessions/adae-adlb.html#what-can-go-wrong",
     "href": "sessions/adae-adlb.html#what-can-go-wrong",
-    "title": "10  ADAE and ADLB",
-    "section": "10.6 What Can Go Wrong",
-    "text": "10.6 What Can Go Wrong\nTODO: failure modes and misuse patterns.\n\n10.6.1 Common misinterpretations\nTODO.",
+    "title": "11  ADAE and ADLB",
+    "section": "11.6 What Can Go Wrong",
+    "text": "11.6 What Can Go Wrong\nTODO: failure modes and misuse patterns.\n\n11.6.1 Common misinterpretations\nTODO.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADAE and ADLB</span>"
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>ADAE and ADLB</span>"
     ]
   },
   {
     "objectID": "sessions/adae-adlb.html#exercises",
     "href": "sessions/adae-adlb.html#exercises",
-    "title": "10  ADAE and ADLB",
-    "section": "10.7 Exercises",
-    "text": "10.7 Exercises\nTODO: link the exercise file(s) for this session, or state that this session has no exercise.",
+    "title": "11  ADAE and ADLB",
+    "section": "11.7 Exercises",
+    "text": "11.7 Exercises\nTODO: link the exercise file(s) for this session, or state that this session has no exercise.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADAE and ADLB</span>"
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>ADAE and ADLB</span>"
     ]
   },
   {
     "objectID": "sessions/adae-adlb.html#comprehension-check",
     "href": "sessions/adae-adlb.html#comprehension-check",
-    "title": "10  ADAE and ADLB",
-    "section": "10.8 Comprehension Check",
-    "text": "10.8 Comprehension Check\nTODO: three to five short self-test questions.\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\nTODO: answers, collapsed.",
+    "title": "11  ADAE and ADLB",
+    "section": "11.8 Comprehension Check",
+    "text": "11.8 Comprehension Check\nTODO: three to five short self-test questions.\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\nTODO: answers, collapsed.",
     "crumbs": [
       "Part 3: ADaM",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>ADAE and ADLB</span>"
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>ADAE and ADLB</span>"
     ]
   },
   {
     "objectID": "sessions/tlf.html",
     "href": "sessions/tlf.html",
-    "title": "11  Tables, Listings and Figures",
+    "title": "12  Tables, Listings and Figures",
     "section": "",
-    "text": "11.1 When Do You Use This?",
+    "text": "12.1 When Do You Use This?",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
     ]
   },
   {
     "objectID": "sessions/tlf.html#when-do-you-use-this",
     "href": "sessions/tlf.html#when-do-you-use-this",
-    "title": "11  Tables, Listings and Figures",
+    "title": "12  Tables, Listings and Figures",
     "section": "",
     "text": "Tip\n\n\n\nTODO: two or three concrete scenarios that this session answers, ending with the single question it addresses in bold. Cross-link the session(s) this one builds on.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
     ]
   },
   {
     "objectID": "sessions/tlf.html#learning-objectives",
     "href": "sessions/tlf.html#learning-objectives",
-    "title": "11  Tables, Listings and Figures",
-    "section": "11.2 Learning Objectives",
-    "text": "11.2 Learning Objectives\nAfter completing this session you will be able to:\n\nTODO\nTODO\nTODO",
+    "title": "12  Tables, Listings and Figures",
+    "section": "12.2 Learning Objectives",
+    "text": "12.2 Learning Objectives\nAfter completing this session you will be able to:\n\nTODO\nTODO\nTODO",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
     ]
   },
   {
     "objectID": "sessions/tlf.html#background-todo-the-one-core-idea",
     "href": "sessions/tlf.html#background-todo-the-one-core-idea",
-    "title": "11  Tables, Listings and Figures",
-    "section": "11.3 Background: TODO (the one core idea)",
-    "text": "11.3 Background: TODO (the one core idea)\nEstimated time: ~TODO minutes (reading)\nTODO: introduce the single idea that ties the session together, concept before formula.",
+    "title": "12  Tables, Listings and Figures",
+    "section": "12.3 Background: TODO (the one core idea)",
+    "text": "12.3 Background: TODO (the one core idea)\nEstimated time: ~TODO minutes (reading)\nTODO: introduce the single idea that ties the session together, concept before formula.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
     ]
   },
   {
     "objectID": "sessions/tlf.html#example-1-todo",
     "href": "sessions/tlf.html#example-1-todo",
-    "title": "11  Tables, Listings and Figures",
-    "section": "11.4 Example 1: TODO",
-    "text": "11.4 Example 1: TODO\nTODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.\n\n11.4.1 Run It Yourself\nTODO: the exact code block the learner should execute before reading on.\n\n\n11.4.2 Reading the Output Line by Line\nTODO: map each line of output to its plain-English meaning.",
+    "title": "12  Tables, Listings and Figures",
+    "section": "12.4 Example 1: TODO",
+    "text": "12.4 Example 1: TODO\nTODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.\n\n12.4.1 Run It Yourself\nTODO: the exact code block the learner should execute before reading on.\n\n\n12.4.2 Reading the Output Line by Line\nTODO: map each line of output to its plain-English meaning.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
     ]
   },
   {
     "objectID": "sessions/tlf.html#example-2-todo",
     "href": "sessions/tlf.html#example-2-todo",
-    "title": "11  Tables, Listings and Figures",
-    "section": "11.5 Example 2: TODO",
-    "text": "11.5 Example 2: TODO\nTODO: a second worked example.\n\n11.5.1 Run It Yourself\nTODO.",
+    "title": "12  Tables, Listings and Figures",
+    "section": "12.5 Example 2: TODO",
+    "text": "12.5 Example 2: TODO\nTODO: a second worked example.\n\n12.5.1 Run It Yourself\nTODO.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
     ]
   },
   {
     "objectID": "sessions/tlf.html#what-can-go-wrong",
     "href": "sessions/tlf.html#what-can-go-wrong",
-    "title": "11  Tables, Listings and Figures",
-    "section": "11.6 What Can Go Wrong",
-    "text": "11.6 What Can Go Wrong\nTODO: failure modes and misuse patterns.\n\n11.6.1 Common misinterpretations\nTODO.",
+    "title": "12  Tables, Listings and Figures",
+    "section": "12.6 What Can Go Wrong",
+    "text": "12.6 What Can Go Wrong\nTODO: failure modes and misuse patterns.\n\n12.6.1 Common misinterpretations\nTODO.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
     ]
   },
   {
     "objectID": "sessions/tlf.html#exercises",
     "href": "sessions/tlf.html#exercises",
-    "title": "11  Tables, Listings and Figures",
-    "section": "11.7 Exercises",
-    "text": "11.7 Exercises\nTODO: link the exercise file(s) for this session, or state that this session has no exercise.",
+    "title": "12  Tables, Listings and Figures",
+    "section": "12.7 Exercises",
+    "text": "12.7 Exercises\nTODO: link the exercise file(s) for this session, or state that this session has no exercise.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
     ]
   },
   {
     "objectID": "sessions/tlf.html#comprehension-check",
     "href": "sessions/tlf.html#comprehension-check",
-    "title": "11  Tables, Listings and Figures",
-    "section": "11.8 Comprehension Check",
-    "text": "11.8 Comprehension Check\nTODO: three to five short self-test questions.\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\nTODO: answers, collapsed.",
+    "title": "12  Tables, Listings and Figures",
+    "section": "12.8 Comprehension Check",
+    "text": "12.8 Comprehension Check\nTODO: three to five short self-test questions.\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\nTODO: answers, collapsed.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Tables, Listings and Figures</span>"
     ]
   },
   {
     "objectID": "sessions/adrg-and-submission.html",
     "href": "sessions/adrg-and-submission.html",
-    "title": "12  The ADRG and Submission",
+    "title": "13  The ADRG and Submission",
     "section": "",
-    "text": "12.1 When Do You Use This?",
+    "text": "13.1 When Do You Use This?",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>12</span>  <span class='chapter-title'>The ADRG and Submission</span>"
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>The ADRG and Submission</span>"
     ]
   },
   {
     "objectID": "sessions/adrg-and-submission.html#when-do-you-use-this",
     "href": "sessions/adrg-and-submission.html#when-do-you-use-this",
-    "title": "12  The ADRG and Submission",
+    "title": "13  The ADRG and Submission",
     "section": "",
     "text": "Tip\n\n\n\nTODO: two or three concrete scenarios that this session answers, ending with the single question it addresses in bold. Cross-link the session(s) this one builds on.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>12</span>  <span class='chapter-title'>The ADRG and Submission</span>"
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>The ADRG and Submission</span>"
     ]
   },
   {
     "objectID": "sessions/adrg-and-submission.html#learning-objectives",
     "href": "sessions/adrg-and-submission.html#learning-objectives",
-    "title": "12  The ADRG and Submission",
-    "section": "12.2 Learning Objectives",
-    "text": "12.2 Learning Objectives\nAfter completing this session you will be able to:\n\nTODO\nTODO\nTODO",
+    "title": "13  The ADRG and Submission",
+    "section": "13.2 Learning Objectives",
+    "text": "13.2 Learning Objectives\nAfter completing this session you will be able to:\n\nTODO\nTODO\nTODO",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>12</span>  <span class='chapter-title'>The ADRG and Submission</span>"
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>The ADRG and Submission</span>"
     ]
   },
   {
     "objectID": "sessions/adrg-and-submission.html#background-todo-the-one-core-idea",
     "href": "sessions/adrg-and-submission.html#background-todo-the-one-core-idea",
-    "title": "12  The ADRG and Submission",
-    "section": "12.3 Background: TODO (the one core idea)",
-    "text": "12.3 Background: TODO (the one core idea)\nEstimated time: ~TODO minutes (reading)\nTODO: introduce the single idea that ties the session together, concept before formula.",
+    "title": "13  The ADRG and Submission",
+    "section": "13.3 Background: TODO (the one core idea)",
+    "text": "13.3 Background: TODO (the one core idea)\nEstimated time: ~TODO minutes (reading)\nTODO: introduce the single idea that ties the session together, concept before formula.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>12</span>  <span class='chapter-title'>The ADRG and Submission</span>"
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>The ADRG and Submission</span>"
     ]
   },
   {
     "objectID": "sessions/adrg-and-submission.html#example-1-todo",
     "href": "sessions/adrg-and-submission.html#example-1-todo",
-    "title": "12  The ADRG and Submission",
-    "section": "12.4 Example 1: TODO",
-    "text": "12.4 Example 1: TODO\nTODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.\n\n12.4.1 Run It Yourself\nTODO: the exact code block the learner should execute before reading on.\n\n\n12.4.2 Reading the Output Line by Line\nTODO: map each line of output to its plain-English meaning.",
+    "title": "13  The ADRG and Submission",
+    "section": "13.4 Example 1: TODO",
+    "text": "13.4 Example 1: TODO\nTODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.\n\n13.4.1 Run It Yourself\nTODO: the exact code block the learner should execute before reading on.\n\n\n13.4.2 Reading the Output Line by Line\nTODO: map each line of output to its plain-English meaning.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>12</span>  <span class='chapter-title'>The ADRG and Submission</span>"
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>The ADRG and Submission</span>"
     ]
   },
   {
     "objectID": "sessions/adrg-and-submission.html#example-2-todo",
     "href": "sessions/adrg-and-submission.html#example-2-todo",
-    "title": "12  The ADRG and Submission",
-    "section": "12.5 Example 2: TODO",
-    "text": "12.5 Example 2: TODO\nTODO: a second worked example.\n\n12.5.1 Run It Yourself\nTODO.",
+    "title": "13  The ADRG and Submission",
+    "section": "13.5 Example 2: TODO",
+    "text": "13.5 Example 2: TODO\nTODO: a second worked example.\n\n13.5.1 Run It Yourself\nTODO.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>12</span>  <span class='chapter-title'>The ADRG and Submission</span>"
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>The ADRG and Submission</span>"
     ]
   },
   {
     "objectID": "sessions/adrg-and-submission.html#what-can-go-wrong",
     "href": "sessions/adrg-and-submission.html#what-can-go-wrong",
-    "title": "12  The ADRG and Submission",
-    "section": "12.6 What Can Go Wrong",
-    "text": "12.6 What Can Go Wrong\nTODO: failure modes and misuse patterns.\n\n12.6.1 Common misinterpretations\nTODO.",
+    "title": "13  The ADRG and Submission",
+    "section": "13.6 What Can Go Wrong",
+    "text": "13.6 What Can Go Wrong\nTODO: failure modes and misuse patterns.\n\n13.6.1 Common misinterpretations\nTODO.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>12</span>  <span class='chapter-title'>The ADRG and Submission</span>"
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>The ADRG and Submission</span>"
     ]
   },
   {
     "objectID": "sessions/adrg-and-submission.html#exercises",
     "href": "sessions/adrg-and-submission.html#exercises",
-    "title": "12  The ADRG and Submission",
-    "section": "12.7 Exercises",
-    "text": "12.7 Exercises\nTODO: link the exercise file(s) for this session, or state that this session has no exercise.",
+    "title": "13  The ADRG and Submission",
+    "section": "13.7 Exercises",
+    "text": "13.7 Exercises\nTODO: link the exercise file(s) for this session, or state that this session has no exercise.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>12</span>  <span class='chapter-title'>The ADRG and Submission</span>"
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>The ADRG and Submission</span>"
     ]
   },
   {
     "objectID": "sessions/adrg-and-submission.html#comprehension-check",
     "href": "sessions/adrg-and-submission.html#comprehension-check",
-    "title": "12  The ADRG and Submission",
-    "section": "12.8 Comprehension Check",
-    "text": "12.8 Comprehension Check\nTODO: three to five short self-test questions.\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\nTODO: answers, collapsed.",
+    "title": "13  The ADRG and Submission",
+    "section": "13.8 Comprehension Check",
+    "text": "13.8 Comprehension Check\nTODO: three to five short self-test questions.\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\nTODO: answers, collapsed.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>12</span>  <span class='chapter-title'>The ADRG and Submission</span>"
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>The ADRG and Submission</span>"
     ]
   },
   {
     "objectID": "sessions/dataset-json.html",
     "href": "sessions/dataset-json.html",
-    "title": "13  Dataset-JSON",
+    "title": "14  Dataset-JSON",
     "section": "",
-    "text": "13.1 When Do You Use This?",
+    "text": "14.1 When Do You Use This?",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Dataset-JSON</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Dataset-JSON</span>"
     ]
   },
   {
     "objectID": "sessions/dataset-json.html#when-do-you-use-this",
     "href": "sessions/dataset-json.html#when-do-you-use-this",
-    "title": "13  Dataset-JSON",
+    "title": "14  Dataset-JSON",
     "section": "",
     "text": "Tip\n\n\n\nTODO: two or three concrete scenarios that this session answers, ending with the single question it addresses in bold. Cross-link the session(s) this one builds on.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Dataset-JSON</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Dataset-JSON</span>"
     ]
   },
   {
     "objectID": "sessions/dataset-json.html#learning-objectives",
     "href": "sessions/dataset-json.html#learning-objectives",
-    "title": "13  Dataset-JSON",
-    "section": "13.2 Learning Objectives",
-    "text": "13.2 Learning Objectives\nAfter completing this session you will be able to:\n\nTODO\nTODO\nTODO",
+    "title": "14  Dataset-JSON",
+    "section": "14.2 Learning Objectives",
+    "text": "14.2 Learning Objectives\nAfter completing this session you will be able to:\n\nTODO\nTODO\nTODO",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Dataset-JSON</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Dataset-JSON</span>"
     ]
   },
   {
     "objectID": "sessions/dataset-json.html#background-todo-the-one-core-idea",
     "href": "sessions/dataset-json.html#background-todo-the-one-core-idea",
-    "title": "13  Dataset-JSON",
-    "section": "13.3 Background: TODO (the one core idea)",
-    "text": "13.3 Background: TODO (the one core idea)\nEstimated time: ~TODO minutes (reading)\nTODO: introduce the single idea that ties the session together, concept before formula.",
+    "title": "14  Dataset-JSON",
+    "section": "14.3 Background: TODO (the one core idea)",
+    "text": "14.3 Background: TODO (the one core idea)\nEstimated time: ~TODO minutes (reading)\nTODO: introduce the single idea that ties the session together, concept before formula.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Dataset-JSON</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Dataset-JSON</span>"
     ]
   },
   {
     "objectID": "sessions/dataset-json.html#example-1-todo",
     "href": "sessions/dataset-json.html#example-1-todo",
-    "title": "13  Dataset-JSON",
-    "section": "13.4 Example 1: TODO",
-    "text": "13.4 Example 1: TODO\nTODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.\n\n13.4.1 Run It Yourself\nTODO: the exact code block the learner should execute before reading on.\n\n\n13.4.2 Reading the Output Line by Line\nTODO: map each line of output to its plain-English meaning.",
+    "title": "14  Dataset-JSON",
+    "section": "14.4 Example 1: TODO",
+    "text": "14.4 Example 1: TODO\nTODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.\n\n14.4.1 Run It Yourself\nTODO: the exact code block the learner should execute before reading on.\n\n\n14.4.2 Reading the Output Line by Line\nTODO: map each line of output to its plain-English meaning.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Dataset-JSON</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Dataset-JSON</span>"
     ]
   },
   {
     "objectID": "sessions/dataset-json.html#example-2-todo",
     "href": "sessions/dataset-json.html#example-2-todo",
-    "title": "13  Dataset-JSON",
-    "section": "13.5 Example 2: TODO",
-    "text": "13.5 Example 2: TODO\nTODO: a second worked example.\n\n13.5.1 Run It Yourself\nTODO.",
+    "title": "14  Dataset-JSON",
+    "section": "14.5 Example 2: TODO",
+    "text": "14.5 Example 2: TODO\nTODO: a second worked example.\n\n14.5.1 Run It Yourself\nTODO.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Dataset-JSON</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Dataset-JSON</span>"
     ]
   },
   {
     "objectID": "sessions/dataset-json.html#what-can-go-wrong",
     "href": "sessions/dataset-json.html#what-can-go-wrong",
-    "title": "13  Dataset-JSON",
-    "section": "13.6 What Can Go Wrong",
-    "text": "13.6 What Can Go Wrong\nTODO: failure modes and misuse patterns.\n\n13.6.1 Common misinterpretations\nTODO.",
+    "title": "14  Dataset-JSON",
+    "section": "14.6 What Can Go Wrong",
+    "text": "14.6 What Can Go Wrong\nTODO: failure modes and misuse patterns.\n\n14.6.1 Common misinterpretations\nTODO.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Dataset-JSON</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Dataset-JSON</span>"
     ]
   },
   {
     "objectID": "sessions/dataset-json.html#exercises",
     "href": "sessions/dataset-json.html#exercises",
-    "title": "13  Dataset-JSON",
-    "section": "13.7 Exercises",
-    "text": "13.7 Exercises\nTODO: link the exercise file(s) for this session, or state that this session has no exercise.",
+    "title": "14  Dataset-JSON",
+    "section": "14.7 Exercises",
+    "text": "14.7 Exercises\nTODO: link the exercise file(s) for this session, or state that this session has no exercise.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Dataset-JSON</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Dataset-JSON</span>"
     ]
   },
   {
     "objectID": "sessions/dataset-json.html#comprehension-check",
     "href": "sessions/dataset-json.html#comprehension-check",
-    "title": "13  Dataset-JSON",
-    "section": "13.8 Comprehension Check",
-    "text": "13.8 Comprehension Check\nTODO: three to five short self-test questions.\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\nTODO: answers, collapsed.",
+    "title": "14  Dataset-JSON",
+    "section": "14.8 Comprehension Check",
+    "text": "14.8 Comprehension Check\nTODO: three to five short self-test questions.\n\n\n\n\n\n\nNoteAnswers\n\n\n\n\n\nTODO: answers, collapsed.",
     "crumbs": [
       "Part 4: Outputs and Submission",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Dataset-JSON</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Dataset-JSON</span>"
     ]
   },
   {
     "objectID": "exercises/sdtm-dm.html",
     "href": "exercises/sdtm-dm.html",
-    "title": "14  Exercise 1 — SDTM: The DM Domain",
+    "title": "15  Exercise 1 — SDTM: The DM Domain",
     "section": "",
-    "text": "14.1 Goal\nRebuild the core of the GLPX-001 DM dataset yourself — including the three decisions that make it more than a rename — and defend the result.",
+    "text": "15.1 Goal\nRebuild the core of the GLPX-001 DM dataset yourself — including the three decisions that make it more than a rename — and defend the result.",
     "crumbs": [
       "Exercises",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Exercise 1 — SDTM: The DM Domain</span>"
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Exercise 1 — SDTM: The DM Domain</span>"
     ]
   },
   {
     "objectID": "exercises/sdtm-dm.html#setup",
     "href": "exercises/sdtm-dm.html#setup",
-    "title": "14  Exercise 1 — SDTM: The DM Domain",
-    "section": "14.2 Setup",
-    "text": "14.2 Setup\nWork from the project root, with the session’s packages loaded:\n\nlibrary(tidyverse)\nlibrary(sdtm.terminology)\n\ndm_raw &lt;- read_csv(\"data/raw/dm_raw.csv\", show_col_types = FALSE,\n                   col_types = cols(.default = col_character()))\nex_raw &lt;- read_csv(\"data/raw/ex_raw.csv\", show_col_types = FALSE,\n                   col_types = cols(.default = col_character()))\n\nDo the tasks in order — each builds on the last. The DM Domain session is the reference; try each task before looking back at how the session did the equivalent step.",
+    "title": "15  Exercise 1 — SDTM: The DM Domain",
+    "section": "15.2 Setup",
+    "text": "15.2 Setup\nWork from the project root, with the session’s packages loaded:\n\nlibrary(tidyverse)\nlibrary(sdtm.terminology)\n\ndm_raw &lt;- read_csv(\"data/raw/dm_raw.csv\", show_col_types = FALSE,\n                   col_types = cols(.default = col_character()))\nex_raw &lt;- read_csv(\"data/raw/ex_raw.csv\", show_col_types = FALSE,\n                   col_types = cols(.default = col_character()))\n\nDo the tasks in order — each builds on the last. The DM Domain session is the reference; try each task before looking back at how the session did the equivalent step.",
     "crumbs": [
       "Exercises",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Exercise 1 — SDTM: The DM Domain</span>"
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Exercise 1 — SDTM: The DM Domain</span>"
     ]
   },
   {
     "objectID": "exercises/sdtm-dm.html#task",
     "href": "exercises/sdtm-dm.html#task",
-    "title": "14  Exercise 1 — SDTM: The DM Domain",
-    "section": "14.3 Task",
-    "text": "14.3 Task\n\n(Guided) The identifier block. Reduce dm_raw to one row per subject, then build STUDYID, DOMAIN, USUBJID and SUBJID. Confirm — with code, not by inspection — that USUBJID is unique and that no identifier would change if a subject moved sites.\n(Guided) The clock. Derive RFSTDTC, RFENDTC, RFXSTDTC and RFXENDTC from the dosing file. Then compute the study day of 2024-03-05 and 2024-03-06 for subject 101-012 (first dose 2024-03-06) and check you get −1 and 1.\n(Semi-guided) Defend the nulls. Identify every subject whose AGE must be null, and write one sentence per subject saying why — naming the precision of the birth date you refused to extend. Then name two columns that must be present-but-null and two that must be absent, and say which core designation produces each fate.\n(Open-ended) The decision log. Write the two decision-log entries a reviewer would want for this dataset: the one-row resolution for 101-012 and the SEX resolution for 111-003. Each entry: what conflicted, what rule was applied, why that rule, and what was queried. Aim for the register of study documentation, not a chat message.",
+    "title": "15  Exercise 1 — SDTM: The DM Domain",
+    "section": "15.3 Task",
+    "text": "15.3 Task\n\n(Guided) The identifier block. Reduce dm_raw to one row per subject, then build STUDYID, DOMAIN, USUBJID and SUBJID. Confirm — with code, not by inspection — that USUBJID is unique and that no identifier would change if a subject moved sites.\n(Guided) The clock. Derive RFSTDTC, RFENDTC, RFXSTDTC and RFXENDTC from the dosing file. Then compute the study day of 2024-03-05 and 2024-03-06 for subject 101-012 (first dose 2024-03-06) and check you get −1 and 1.\n(Semi-guided) Defend the nulls. Identify every subject whose AGE must be null, and write one sentence per subject saying why — naming the precision of the birth date you refused to extend. Then name two columns that must be present-but-null and two that must be absent, and say which core designation produces each fate.\n(Open-ended) The decision log. Write the two decision-log entries a reviewer would want for this dataset: the one-row resolution for 101-012 and the SEX resolution for 111-003. Each entry: what conflicted, what rule was applied, why that rule, and what was queried. Aim for the register of study documentation, not a chat message.",
     "crumbs": [
       "Exercises",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Exercise 1 — SDTM: The DM Domain</span>"
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Exercise 1 — SDTM: The DM Domain</span>"
     ]
   },
   {
     "objectID": "exercises/sdtm-dm.html#acceptance-criteria",
     "href": "exercises/sdtm-dm.html#acceptance-criteria",
-    "title": "14  Exercise 1 — SDTM: The DM Domain",
-    "section": "14.4 Acceptance criteria",
-    "text": "14.4 Acceptance criteria\n\n400 rows, USUBJID unique, identifiers built only from immutable facts\nReference dates populated for all subjects; study-day check returns −1 and 1 (no zero)\nFour AGE nulls, each with a stated reason; Expected-vs-Permissible fates correctly assigned\nBoth decision-log entries name the rule, not just the outcome\nEvery CT-governed column you touched was checked with is_term(), not asserted from memory\n\n\n\n\n\n\n\nTipHint\n\n\n\n\n\nTask 2’s check is the two-branch rule from the session: before the reference date, the study day is the plain date difference; on or after it, the difference plus one. If you got 0 for 2024-03-05, you used one branch for both dates.\nTask 4’s entries need three ingredients each: the conflict, the rule (one row per person; site-entered source outranks a downstream copy), and the action taken (SUPPDM note; query to the lab).\n\n\n\n\nSolutions are in the paid tier.",
-    "crumbs": [
-      "Exercises",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Exercise 1 — SDTM: The DM Domain</span>"
-    ]
-  },
-  {
-    "objectID": "exercises/sdtm-events-findings.html",
-    "href": "exercises/sdtm-events-findings.html",
-    "title": "15  Exercise 2 — SDTM: Events and Findings",
-    "section": "",
-    "text": "15.1 Goal\nTODO: one sentence.",
-    "crumbs": [
-      "Exercises",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Exercise 2 — SDTM: Events and Findings</span>"
-    ]
-  },
-  {
-    "objectID": "exercises/sdtm-events-findings.html#setup",
-    "href": "exercises/sdtm-events-findings.html#setup",
-    "title": "15  Exercise 2 — SDTM: Events and Findings",
-    "section": "15.2 Setup",
-    "text": "15.2 Setup\nTODO: starting code.",
-    "crumbs": [
-      "Exercises",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Exercise 2 — SDTM: Events and Findings</span>"
-    ]
-  },
-  {
-    "objectID": "exercises/sdtm-events-findings.html#task",
-    "href": "exercises/sdtm-events-findings.html#task",
-    "title": "15  Exercise 2 — SDTM: Events and Findings",
-    "section": "15.3 Task",
-    "text": "15.3 Task\n\nTODO\nTODO",
-    "crumbs": [
-      "Exercises",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Exercise 2 — SDTM: Events and Findings</span>"
-    ]
-  },
-  {
-    "objectID": "exercises/sdtm-events-findings.html#acceptance-criteria",
-    "href": "exercises/sdtm-events-findings.html#acceptance-criteria",
-    "title": "15  Exercise 2 — SDTM: Events and Findings",
+    "title": "15  Exercise 1 — SDTM: The DM Domain",
     "section": "15.4 Acceptance criteria",
-    "text": "15.4 Acceptance criteria\n\nTODO\nTODO\n\n\n\n\n\n\n\nTipHint\n\n\n\n\n\nTODO: hint.\n\n\n\n\nSolutions are in the paid tier.",
+    "text": "15.4 Acceptance criteria\n\n400 rows, USUBJID unique, identifiers built only from immutable facts\nReference dates populated for all subjects; study-day check returns −1 and 1 (no zero)\nFour AGE nulls, each with a stated reason; Expected-vs-Permissible fates correctly assigned\nBoth decision-log entries name the rule, not just the outcome\nEvery CT-governed column you touched was checked with is_term(), not asserted from memory\n\n\n\n\n\n\n\nTipHint\n\n\n\n\n\nTask 2’s check is the two-branch rule from the session: before the reference date, the study day is the plain date difference; on or after it, the difference plus one. If you got 0 for 2024-03-05, you used one branch for both dates.\nTask 4’s entries need three ingredients each: the conflict, the rule (one row per person; site-entered source outranks a downstream copy), and the action taken (SUPPDM note; query to the lab).\n\n\n\n\nSolutions are in the paid tier.",
     "crumbs": [
       "Exercises",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Exercise 2 — SDTM: Events and Findings</span>"
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Exercise 1 — SDTM: The DM Domain</span>"
+    ]
+  },
+  {
+    "objectID": "exercises/sdtm-events.html",
+    "href": "exercises/sdtm-events.html",
+    "title": "16  Exercise — SDTM: Events (Adverse Events)",
+    "section": "",
+    "text": "16.1 Goal\nFinish the AE domain slice from The Events session and use it to answer the questions a safety reviewer actually asks.",
+    "crumbs": [
+      "Exercises",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Exercise — SDTM: Events (Adverse Events)</span>"
+    ]
+  },
+  {
+    "objectID": "exercises/sdtm-events.html#setup",
+    "href": "exercises/sdtm-events.html#setup",
+    "title": "16  Exercise — SDTM: Events (Adverse Events)",
+    "section": "16.2 Setup",
+    "text": "16.2 Setup\nWork from the project root. The AE raw file and the DM dataset you built last session are both inputs:\n\nlibrary(tidyverse)\nlibrary(sdtm.terminology)\n\nae_raw &lt;- read_csv(\"data/raw/ae_raw.csv\", show_col_types = FALSE,\n                   col_types = cols(.default = col_character()))\ndm &lt;- read_csv(\"data/sdtm/dm.csv\", show_col_types = FALSE,\n               col_types = cols(.default = col_character()))\n\nDo the tasks in order. The Events session is the reference; try each task before looking back.",
+    "crumbs": [
+      "Exercises",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Exercise — SDTM: Events (Adverse Events)</span>"
+    ]
+  },
+  {
+    "objectID": "exercises/sdtm-events.html#task",
+    "href": "exercises/sdtm-events.html#task",
+    "title": "16  Exercise — SDTM: Events (Adverse Events)",
+    "section": "16.3 Task",
+    "text": "16.3 Task\n\n(Guided) Build the spine. Reproduce the session’s AE build: USUBJID from DM, AESEQ per subject, verbatim AETERM, empty AEDECOD. Confirm with code that AESEQ is unique within each USUBJID and that every AETERM value is preserved exactly as in the raw file.\n(Guided) Study days. Derive AESTDTC, AEENDTC, AESTDY and AEENDY. Find every row where AESTDY is null and explain, for each, why.\n(Semi-guided) Severity vs seriousness. Produce a table of event counts by AESEV and AESER. Then answer, with the numbers: how many serious adverse events were there, how many severe, and why are those two counts different?\n(Open-ended) The outcome column. The raw AEOUT value RECOVERED is not controlled terminology. Find the correct codelist value (codelist C66768), map it, and check it with is_term(). Then write one sentence a reviewer would accept explaining why the raw value could not be submitted as-is.",
+    "crumbs": [
+      "Exercises",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Exercise — SDTM: Events (Adverse Events)</span>"
+    ]
+  },
+  {
+    "objectID": "exercises/sdtm-events.html#acceptance-criteria",
+    "href": "exercises/sdtm-events.html#acceptance-criteria",
+    "title": "16  Exercise — SDTM: Events (Adverse Events)",
+    "section": "16.4 Acceptance criteria",
+    "text": "16.4 Acceptance criteria\n\nAESEQ unique within USUBJID; AETERM values identical to raw\nNull AESTDY rows identified, each with a stated reason\nSerious-vs-severe counts reported with the correct column for each\nAEOUT mapped to a value that passes is_term(..., \"C66768\")\n\n\n\n\n\n\n\nTipHint\n\n\n\n\n\nTask 2: AESTDY is null wherever AESTDTC is null — you cannot count days from a reference date without a date. There is exactly one such event in GLPX-001 (defect D4).\nTask 3: the serious count comes only from AESER == \"Y\"; the severe count from AESEV == \"SEVERE\". If those two numbers are equal, you have counted the same column twice.\n\n\n\n\nSolutions are in the paid tier.",
+    "crumbs": [
+      "Exercises",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Exercise — SDTM: Events (Adverse Events)</span>"
+    ]
+  },
+  {
+    "objectID": "exercises/sdtm-findings.html",
+    "href": "exercises/sdtm-findings.html",
+    "title": "17  Exercise — SDTM: Findings (Labs & Vital Signs)",
+    "section": "",
+    "text": "17.1 Goal\nBuild the Vital Signs (VS) domain slice — the structural twin of the LB domain from The Findings session — and handle its one deliberate difference from LB.",
+    "crumbs": [
+      "Exercises",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Exercise — SDTM: Findings (Labs & Vital Signs)</span>"
+    ]
+  },
+  {
+    "objectID": "exercises/sdtm-findings.html#setup",
+    "href": "exercises/sdtm-findings.html#setup",
+    "title": "17  Exercise — SDTM: Findings (Labs & Vital Signs)",
+    "section": "17.2 Setup",
+    "text": "17.2 Setup\nTODO (written with the Findings session): starting code reading data/raw/vs_raw.csv and data/sdtm/dm.csv.",
+    "crumbs": [
+      "Exercises",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Exercise — SDTM: Findings (Labs & Vital Signs)</span>"
+    ]
+  },
+  {
+    "objectID": "exercises/sdtm-findings.html#task",
+    "href": "exercises/sdtm-findings.html#task",
+    "title": "17  Exercise — SDTM: Findings (Labs & Vital Signs)",
+    "section": "17.3 Task",
+    "text": "17.3 Task\nTODO (written with the Findings session). Planned:\n\nBuild the VS result quartet (VSORRES/VSORRESU/VSSTRESC/ VSSTRESN/VSSTRESU), noting that VSORRESU uses the VSRESU codelist, not the generic UNIT codelist that LB uses — and check the units against the right codelist.\nDerive VSDY and identify each subject’s baseline row.",
+    "crumbs": [
+      "Exercises",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Exercise — SDTM: Findings (Labs & Vital Signs)</span>"
+    ]
+  },
+  {
+    "objectID": "exercises/sdtm-findings.html#acceptance-criteria",
+    "href": "exercises/sdtm-findings.html#acceptance-criteria",
+    "title": "17  Exercise — SDTM: Findings (Labs & Vital Signs)",
+    "section": "17.4 Acceptance criteria",
+    "text": "17.4 Acceptance criteria\n\nTODO\n\n\nSolutions are in the paid tier.",
+    "crumbs": [
+      "Exercises",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Exercise — SDTM: Findings (Labs & Vital Signs)</span>"
     ]
   },
   {
     "objectID": "exercises/adsl.html",
     "href": "exercises/adsl.html",
-    "title": "16  Exercise 3 — ADSL",
+    "title": "18  Exercise 3 — ADSL",
     "section": "",
-    "text": "16.1 Goal\nTODO: one sentence.",
+    "text": "18.1 Goal\nTODO: one sentence.",
     "crumbs": [
       "Exercises",
-      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Exercise 3 — ADSL</span>"
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Exercise 3 — ADSL</span>"
     ]
   },
   {
     "objectID": "exercises/adsl.html#setup",
     "href": "exercises/adsl.html#setup",
-    "title": "16  Exercise 3 — ADSL",
-    "section": "16.2 Setup",
-    "text": "16.2 Setup\nTODO: starting code.",
+    "title": "18  Exercise 3 — ADSL",
+    "section": "18.2 Setup",
+    "text": "18.2 Setup\nTODO: starting code.",
     "crumbs": [
       "Exercises",
-      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Exercise 3 — ADSL</span>"
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Exercise 3 — ADSL</span>"
     ]
   },
   {
     "objectID": "exercises/adsl.html#task",
     "href": "exercises/adsl.html#task",
-    "title": "16  Exercise 3 — ADSL",
-    "section": "16.3 Task",
-    "text": "16.3 Task\n\nTODO\nTODO",
+    "title": "18  Exercise 3 — ADSL",
+    "section": "18.3 Task",
+    "text": "18.3 Task\n\nTODO\nTODO",
     "crumbs": [
       "Exercises",
-      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Exercise 3 — ADSL</span>"
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Exercise 3 — ADSL</span>"
     ]
   },
   {
     "objectID": "exercises/adsl.html#acceptance-criteria",
     "href": "exercises/adsl.html#acceptance-criteria",
-    "title": "16  Exercise 3 — ADSL",
-    "section": "16.4 Acceptance criteria",
-    "text": "16.4 Acceptance criteria\n\nTODO\nTODO\n\n\n\n\n\n\n\nTipHint\n\n\n\n\n\nTODO: hint.\n\n\n\n\nSolutions are in the paid tier.",
+    "title": "18  Exercise 3 — ADSL",
+    "section": "18.4 Acceptance criteria",
+    "text": "18.4 Acceptance criteria\n\nTODO\nTODO\n\n\n\n\n\n\n\nTipHint\n\n\n\n\n\nTODO: hint.\n\n\n\n\nSolutions are in the paid tier.",
     "crumbs": [
       "Exercises",
-      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Exercise 3 — ADSL</span>"
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Exercise 3 — ADSL</span>"
     ]
   },
   {
     "objectID": "exercises/adae-adlb.html",
     "href": "exercises/adae-adlb.html",
-    "title": "17  Exercise 4 — ADAE and ADLB",
+    "title": "19  Exercise 4 — ADAE and ADLB",
     "section": "",
-    "text": "17.1 Goal\nTODO: one sentence.",
+    "text": "19.1 Goal\nTODO: one sentence.",
     "crumbs": [
       "Exercises",
-      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Exercise 4 — ADAE and ADLB</span>"
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Exercise 4 — ADAE and ADLB</span>"
     ]
   },
   {
     "objectID": "exercises/adae-adlb.html#setup",
     "href": "exercises/adae-adlb.html#setup",
-    "title": "17  Exercise 4 — ADAE and ADLB",
-    "section": "17.2 Setup",
-    "text": "17.2 Setup\nTODO: starting code.",
+    "title": "19  Exercise 4 — ADAE and ADLB",
+    "section": "19.2 Setup",
+    "text": "19.2 Setup\nTODO: starting code.",
     "crumbs": [
       "Exercises",
-      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Exercise 4 — ADAE and ADLB</span>"
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Exercise 4 — ADAE and ADLB</span>"
     ]
   },
   {
     "objectID": "exercises/adae-adlb.html#task",
     "href": "exercises/adae-adlb.html#task",
-    "title": "17  Exercise 4 — ADAE and ADLB",
-    "section": "17.3 Task",
-    "text": "17.3 Task\n\nTODO\nTODO",
+    "title": "19  Exercise 4 — ADAE and ADLB",
+    "section": "19.3 Task",
+    "text": "19.3 Task\n\nTODO\nTODO",
     "crumbs": [
       "Exercises",
-      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Exercise 4 — ADAE and ADLB</span>"
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Exercise 4 — ADAE and ADLB</span>"
     ]
   },
   {
     "objectID": "exercises/adae-adlb.html#acceptance-criteria",
     "href": "exercises/adae-adlb.html#acceptance-criteria",
-    "title": "17  Exercise 4 — ADAE and ADLB",
-    "section": "17.4 Acceptance criteria",
-    "text": "17.4 Acceptance criteria\n\nTODO\nTODO\n\n\n\n\n\n\n\nTipHint\n\n\n\n\n\nTODO: hint.\n\n\n\n\nSolutions are in the paid tier.",
+    "title": "19  Exercise 4 — ADAE and ADLB",
+    "section": "19.4 Acceptance criteria",
+    "text": "19.4 Acceptance criteria\n\nTODO\nTODO\n\n\n\n\n\n\n\nTipHint\n\n\n\n\n\nTODO: hint.\n\n\n\n\nSolutions are in the paid tier.",
     "crumbs": [
       "Exercises",
-      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Exercise 4 — ADAE and ADLB</span>"
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Exercise 4 — ADAE and ADLB</span>"
     ]
   },
   {
     "objectID": "exercises/tlf.html",
     "href": "exercises/tlf.html",
-    "title": "18  Exercise 5 — Tables, Listings and Figures",
+    "title": "20  Exercise 5 — Tables, Listings and Figures",
     "section": "",
-    "text": "18.1 Goal\nTODO: one sentence.",
+    "text": "20.1 Goal\nTODO: one sentence.",
     "crumbs": [
       "Exercises",
-      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Exercise 5 — Tables, Listings and Figures</span>"
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Exercise 5 — Tables, Listings and Figures</span>"
     ]
   },
   {
     "objectID": "exercises/tlf.html#setup",
     "href": "exercises/tlf.html#setup",
-    "title": "18  Exercise 5 — Tables, Listings and Figures",
-    "section": "18.2 Setup",
-    "text": "18.2 Setup\nTODO: starting code.",
+    "title": "20  Exercise 5 — Tables, Listings and Figures",
+    "section": "20.2 Setup",
+    "text": "20.2 Setup\nTODO: starting code.",
     "crumbs": [
       "Exercises",
-      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Exercise 5 — Tables, Listings and Figures</span>"
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Exercise 5 — Tables, Listings and Figures</span>"
     ]
   },
   {
     "objectID": "exercises/tlf.html#task",
     "href": "exercises/tlf.html#task",
-    "title": "18  Exercise 5 — Tables, Listings and Figures",
-    "section": "18.3 Task",
-    "text": "18.3 Task\n\nTODO\nTODO",
+    "title": "20  Exercise 5 — Tables, Listings and Figures",
+    "section": "20.3 Task",
+    "text": "20.3 Task\n\nTODO\nTODO",
     "crumbs": [
       "Exercises",
-      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Exercise 5 — Tables, Listings and Figures</span>"
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Exercise 5 — Tables, Listings and Figures</span>"
     ]
   },
   {
     "objectID": "exercises/tlf.html#acceptance-criteria",
     "href": "exercises/tlf.html#acceptance-criteria",
-    "title": "18  Exercise 5 — Tables, Listings and Figures",
-    "section": "18.4 Acceptance criteria",
-    "text": "18.4 Acceptance criteria\n\nTODO\nTODO\n\n\n\n\n\n\n\nTipHint\n\n\n\n\n\nTODO: hint.\n\n\n\n\nSolutions are in the paid tier.",
+    "title": "20  Exercise 5 — Tables, Listings and Figures",
+    "section": "20.4 Acceptance criteria",
+    "text": "20.4 Acceptance criteria\n\nTODO\nTODO\n\n\n\n\n\n\n\nTipHint\n\n\n\n\n\nTODO: hint.\n\n\n\n\nSolutions are in the paid tier.",
     "crumbs": [
       "Exercises",
-      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Exercise 5 — Tables, Listings and Figures</span>"
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Exercise 5 — Tables, Listings and Figures</span>"
     ]
   }
 ]

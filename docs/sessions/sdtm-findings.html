@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6&nbsp; SDTM: Events and Findings – CDISC with R</title>
+<title>7&nbsp; SDTM: Findings (Labs &amp; Vital Signs) – CDISC with R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../sessions/define-xml.html" rel="next">
-<link href="../sessions/sdtm-dm.html" rel="prev">
+<link href="../sessions/sdtm-events.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -88,7 +88,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../sessions/sdtm-concepts.html">Part 2: SDTM</a></li><li class="breadcrumb-item"><a href="../sessions/sdtm-events-findings.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">SDTM: Events and Findings</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../sessions/sdtm-concepts.html">Part 2: SDTM</a></li><li class="breadcrumb-item"><a href="../sessions/sdtm-findings.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">SDTM: Findings (Labs &amp; Vital Signs)</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -171,14 +171,20 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../sessions/sdtm-events-findings.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">SDTM: Events and Findings</span></span></a>
+  <a href="../sessions/sdtm-events.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">SDTM: Events (Adverse Events)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sessions/sdtm-findings.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">SDTM: Findings (Labs &amp; Vital Signs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../sessions/define-xml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Define-XML</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Define-XML</span></span></a>
   </div>
 </li>
       </ul>
@@ -195,19 +201,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../sessions/adam-concepts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ADaM Concepts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ADaM Concepts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../sessions/adsl.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ADSL</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ADSL</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../sessions/adae-adlb.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ADAE and ADLB</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ADAE and ADLB</span></span></a>
   </div>
 </li>
       </ul>
@@ -224,19 +230,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../sessions/tlf.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Tables, Listings and Figures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Tables, Listings and Figures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../sessions/adrg-and-submission.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">The ADRG and Submission</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The ADRG and Submission</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../sessions/dataset-json.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Dataset-JSON</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Dataset-JSON</span></span></a>
   </div>
 </li>
       </ul>
@@ -253,31 +259,37 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../exercises/sdtm-dm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Exercise 1 — SDTM: The DM Domain</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exercise 1 — SDTM: The DM Domain</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../exercises/sdtm-events-findings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exercise 2 — SDTM: Events and Findings</span></span></a>
+  <a href="../exercises/sdtm-events.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Exercise — SDTM: Events (Adverse Events)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/sdtm-findings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Exercise — SDTM: Findings (Labs &amp; Vital Signs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../exercises/adsl.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Exercise 3 — ADSL</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Exercise 3 — ADSL</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../exercises/adae-adlb.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Exercise 4 — ADAE and ADLB</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Exercise 4 — ADAE and ADLB</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../exercises/tlf.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Exercise 5 — Tables, Listings and Figures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Exercise 5 — Tables, Listings and Figures</span></span></a>
   </div>
 </li>
       </ul>
@@ -292,33 +304,23 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#when-do-you-use-this" id="toc-when-do-you-use-this" class="nav-link active" data-scroll-target="#when-do-you-use-this"><span class="header-section-number">6.1</span> When Do You Use This?</a></li>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives"><span class="header-section-number">6.2</span> Learning Objectives</a></li>
-  <li><a href="#background-todo-the-one-core-idea" id="toc-background-todo-the-one-core-idea" class="nav-link" data-scroll-target="#background-todo-the-one-core-idea"><span class="header-section-number">6.3</span> Background: TODO (the one core idea)</a></li>
-  <li><a href="#example-1-todo" id="toc-example-1-todo" class="nav-link" data-scroll-target="#example-1-todo"><span class="header-section-number">6.4</span> Example 1: TODO</a>
-  <ul class="collapse">
-  <li><a href="#run-it-yourself" id="toc-run-it-yourself" class="nav-link" data-scroll-target="#run-it-yourself"><span class="header-section-number">6.4.1</span> Run It Yourself</a></li>
-  <li><a href="#reading-the-output-line-by-line" id="toc-reading-the-output-line-by-line" class="nav-link" data-scroll-target="#reading-the-output-line-by-line"><span class="header-section-number">6.4.2</span> Reading the Output Line by Line</a></li>
-  </ul></li>
-  <li><a href="#example-2-todo" id="toc-example-2-todo" class="nav-link" data-scroll-target="#example-2-todo"><span class="header-section-number">6.5</span> Example 2: TODO</a>
-  <ul class="collapse">
-  <li><a href="#run-it-yourself-1" id="toc-run-it-yourself-1" class="nav-link" data-scroll-target="#run-it-yourself-1"><span class="header-section-number">6.5.1</span> Run It Yourself</a></li>
-  </ul></li>
-  <li><a href="#what-can-go-wrong" id="toc-what-can-go-wrong" class="nav-link" data-scroll-target="#what-can-go-wrong"><span class="header-section-number">6.6</span> What Can Go Wrong</a>
-  <ul class="collapse">
-  <li><a href="#common-misinterpretations" id="toc-common-misinterpretations" class="nav-link" data-scroll-target="#common-misinterpretations"><span class="header-section-number">6.6.1</span> Common misinterpretations</a></li>
-  </ul></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">6.7</span> Exercises</a></li>
-  <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">6.8</span> Comprehension Check</a></li>
+  <li><a href="#sec-sdtm-findings" id="toc-sec-sdtm-findings" class="nav-link active" data-scroll-target="#sec-sdtm-findings"><span class="header-section-number">7.1</span> When Do You Use This?</a></li>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives"><span class="header-section-number">7.2</span> Learning Objectives</a></li>
+  <li><a href="#background-todo-what-a-findings-row-is" id="toc-background-todo-what-a-findings-row-is" class="nav-link" data-scroll-target="#background-todo-what-a-findings-row-is"><span class="header-section-number">7.3</span> Background: TODO — What a Findings Row Is</a></li>
+  <li><a href="#example-1-todo-building-lb-the-result-quartet-de-dup-units" id="toc-example-1-todo-building-lb-the-result-quartet-de-dup-units" class="nav-link" data-scroll-target="#example-1-todo-building-lb-the-result-quartet-de-dup-units"><span class="header-section-number">7.4</span> Example 1: TODO — Building LB (the result quartet, de-dup, units)</a></li>
+  <li><a href="#example-2-todo-reference-ranges-the-real-outlier-and-baseline" id="toc-example-2-todo-reference-ranges-the-real-outlier-and-baseline" class="nav-link" data-scroll-target="#example-2-todo-reference-ranges-the-real-outlier-and-baseline"><span class="header-section-number">7.5</span> Example 2: TODO — Reference ranges, the real outlier, and baseline</a></li>
+  <li><a href="#what-can-go-wrong" id="toc-what-can-go-wrong" class="nav-link" data-scroll-target="#what-can-go-wrong"><span class="header-section-number">7.6</span> What Can Go Wrong</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">7.7</span> Exercises</a></li>
+  <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">7.8</span> Comprehension Check</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../sessions/sdtm-concepts.html">Part 2: SDTM</a></li><li class="breadcrumb-item"><a href="../sessions/sdtm-events-findings.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">SDTM: Events and Findings</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../sessions/sdtm-concepts.html">Part 2: SDTM</a></li><li class="breadcrumb-item"><a href="../sessions/sdtm-findings.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">SDTM: Findings (Labs &amp; Vital Signs)</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">SDTM: Events and Findings</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">SDTM: Findings (Labs &amp; Vital Signs)</span></h1>
 </div>
 
 
@@ -335,6 +337,95 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<!--
+========================================================================
+SKELETON + VERIFY LIST — prose NOT yet written. DO NOT COMMIT as final.
+
+This is the Findings half of the split (Events -> sessions/sdtm-events.qmd,
+already drafted). The F-list below was approved with the combined
+events-findings VERIFY list; it is reproduced here as the working list
+for this session's own drafting turn.
+
+All [IG] claims PRE-VERIFIED against local SDTMIG v3.4; [CT] confirmed
+live via sdtm.terminology at prose time.
+
+This session INTRODUCES R/build_sdtm.R and data/sdtm/ (the persisted,
+committed SDTM datasets), and ADDS lb + vs to build_sdtm.R (currently
+it builds dm + ae only).
+
+Registry defects for this session (distinct subjects):
+  D5 out-of-range HbA1c, REAL  -> 101-052 (13.9% at SCREENING)
+  D6 byte-perfect duplicate lb -> 101-010 (SCREENING HbA1c 8.2)
+  D7 missing unit              -> 101-037 (GLUC WEEK 8; met in sdtm-concepts)
+
+PROPOSED CENTRAL INTUITION (for approval, split from the combined one):
+  "A Findings row records what a measurement was — its test and its
+   result, kept twice as collected and standardised — and the domain's
+   natural key is what makes a duplicate detectable and a real outlier
+   keepable."
+
+OPEN ITEM TO RAISE AT DRAFTING: GLPX raw lb_raw.csv carries NO reference
+ranges (cols: subjid, sex, visit, colldt, test, result, unit). LBNRIND /
+LBORNRLO / LBORNRHI (F4, needed for D5) require a reference range per
+test. Decide the source: (a) add ref_lo/ref_hi to simulate_trial.R's lab
+vendor file (realistic — vendors supply ranges), or (b) a documented
+reference-range lookup in build_sdtm.R. Recommend (a). Author to decide
+before F4/D5 can be built with real values.
+
+========================================================================
+VERIFY LIST (Findings) — every SDTM specific this session will assert.
+
+F1 [IG §6.3.5.6 spec header] LB is Findings-class; ONE RECORD PER LAB
+   TEST PER TIME POINT PER VISIT PER SUBJECT. -> D6 duplicate violates
+   this natural key.
+
+F2 [IG §6.3.5.6 spec; §4.5.1.1] Result quartet, all Expected: LBORRES,
+   LBORRESU (UNIT), LBSTRESC, LBSTRESN, LBSTRESU (UNIT). Original
+   preserved beside standardised.
+
+F3 [IG §6.3.5.6 assumption 7] LBORRESU/LBSTRESU take the UNIT codelist;
+   submit the CDISC Submission Value; unmapped -> synonym or Define-XML
+   extension + new-term request. -> D7: 101-037 blank GLUC unit resolved
+   to mmol/L from the vendor's documented panel, logged as a query (no
+   fabricated confirmation — as approved).
+
+F4 [IG §6.3.5.6 spec; assumption 3; §4.5.5] Reference-range vars, all
+   Expected: LBORNRLO/HI, LBSTNRLO/HI, LBNRIND (codelist NRIND). LBNRIND
+   is NOT clinical significance. -> D5: 101-052 SCREENING HbA1c 13.9%
+   flagged HIGH and KEPT (real value, poorly controlled patient).
+   BLOCKED on the reference-range source decision above.
+
+F5 [IG §6.3.5.6 assumption 6; §4.1.8.1] Central-lab value is COLLECTED,
+   not derived; LBDRVFL null. (Why D6 is a transmission artefact.)
+
+F6 [IG §6.3.5.6 spec] Timing: LBDTC (Exp), LBDY (Perm), VISITNUM (Exp),
+   VISIT (Perm). Study day via the DM RFSTDTC rule (§4.4.4).
+
+F7 [IG §4.5.9; §6.3.5.6] Baseline: LBBLFL (Perm, backward-compat) vs
+   LBLOBXFL (Exp) = "last non-missing value prior to RFXSTDTC".
+   Authoritative analysis baseline is ADaM (forward-link to adsl).
+
+F8 [IG §6.3.5.6 spec] LBSEQ: Required, unique within subject/domain.
+
+V1 [IG §6.3.13 spec header] VS is Findings-class, ONE RECORD PER VITAL
+   SIGN MEASUREMENT PER TIME POINT PER VISIT PER SUBJECT — structurally
+   like LB. VSORRESU uses codelist VSRESU (NOT the generic UNIT). Mainly
+   in the exercise; LB carries the worked example.
+
+X2 [IG §6.3.5.6 header + natural key] De-duplication restores the
+   one-record-per-key structure (D6).
+X3 [IG §4.4.4] Study day reuses the DM study_day() rule.
+
+[CT] to confirm live: NRIND (id + NORMAL/ABNORMAL/HIGH/LOW); VSRESU
+(id + members); UNIT/mmol/L (confirmed); LBTESTCD (confirmed).
+
+Build/infra for this session:
+  - Add build_lb() and build_vs() to R/build_sdtm.R; regenerate and
+    commit data/sdtm/{lb,vs}.csv.
+  - Introduce data/sdtm/ and the traceability chain (raw -> build -> sdtm)
+    pedagogically here, since after this session the SDTM set is complete.
+========================================================================
+-->
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -345,150 +436,40 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Total core time: about TODO minutes.</strong></p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Section</th>
-<th>Time</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>When Do You Use This? + Learning Objectives</td>
-<td>TODO</td>
-<td>Reading</td>
-</tr>
-<tr class="even">
-<td>Background</td>
-<td>TODO</td>
-<td>Reading</td>
-</tr>
-<tr class="odd">
-<td>Example 1</td>
-<td>TODO</td>
-<td>Worked example</td>
-</tr>
-<tr class="even">
-<td>Example 2</td>
-<td>TODO</td>
-<td>Worked example</td>
-</tr>
-<tr class="odd">
-<td>What Can Go Wrong</td>
-<td>TODO</td>
-<td>Reading</td>
-</tr>
-<tr class="even">
-<td>Exercises</td>
-<td>TODO</td>
-<td>Practice</td>
-</tr>
-<tr class="odd">
-<td>Comprehension Check</td>
-<td>TODO</td>
-<td>Self-test</td>
-</tr>
-</tbody>
-</table>
-<p>TODO: how the session splits across sittings for self-paced study.</p>
+<p>TODO: time budget once written. Sibling of <a href="../sessions/sdtm-events.html">Events</a>; resolves defects D5, D6 and D7 and introduces the persisted SDTM datasets in <code>data/sdtm/</code>.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>How to Use the Code in This Session
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Every code chunk below is written so you can copy it into your R console (or an R script) and run it yourself, in the order shown. Where you see a “Run It Yourself” box, stop and run the code above it before reading the explanation that follows.</p>
-</div>
-</div>
-<section id="when-do-you-use-this" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="when-do-you-use-this"><span class="header-section-number">6.1</span> When Do You Use This?</h2>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>TODO: two or three concrete scenarios that this session answers, ending with the single question it addresses in bold. Cross-link the session(s) this one builds on.</p>
-</div>
-</div>
+<section id="sec-sdtm-findings" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="sec-sdtm-findings"><span class="header-section-number">7.1</span> When Do You Use This?</h2>
+<p>TODO (prose pass, after the reference-range decision): scenarios — a lab transfer with a byte-perfect duplicate and a real out-of-range value; a blank unit; and the moment you need a finished SDTM you can hand to the analysis team. Builds on <a href="../sessions/sdtm-concepts.html">SDTM Concepts</a>, <a href="../sessions/sdtm-dm.html">The DM Domain</a> and <a href="../sessions/sdtm-events.html">Events</a>.</p>
 </section>
-<section id="learning-objectives" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">6.2</span> Learning Objectives</h2>
-<p>After completing this session you will be able to:</p>
-<ul>
-<li>TODO</li>
-<li>TODO</li>
-<li>TODO</li>
-</ul>
+<section id="learning-objectives" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">7.2</span> Learning Objectives</h2>
+<p>TODO after approval.</p>
 </section>
-<section id="background-todo-the-one-core-idea" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="background-todo-the-one-core-idea"><span class="header-section-number">6.3</span> Background: TODO (the one core idea)</h2>
-<p><em>Estimated time: ~TODO minutes (reading)</em></p>
-<p>TODO: introduce the single idea that ties the session together, concept before formula.</p>
+<section id="background-todo-what-a-findings-row-is" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="background-todo-what-a-findings-row-is"><span class="header-section-number">7.3</span> Background: TODO — What a Findings Row Is</h2>
+<p>TODO after the reference-range source is decided.</p>
 </section>
-<section id="example-1-todo" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="example-1-todo"><span class="header-section-number">6.4</span> Example 1: TODO</h2>
-<p>TODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.</p>
-<section id="run-it-yourself" class="level3" data-number="6.4.1">
-<h3 data-number="6.4.1" class="anchored" data-anchor-id="run-it-yourself"><span class="header-section-number">6.4.1</span> Run It Yourself</h3>
-<p>TODO: the exact code block the learner should execute before reading on.</p>
-</section>
-<section id="reading-the-output-line-by-line" class="level3" data-number="6.4.2">
-<h3 data-number="6.4.2" class="anchored" data-anchor-id="reading-the-output-line-by-line"><span class="header-section-number">6.4.2</span> Reading the Output Line by Line</h3>
-<p>TODO: map each line of output to its plain-English meaning.</p>
-</section>
-</section>
-<section id="example-2-todo" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="example-2-todo"><span class="header-section-number">6.5</span> Example 2: TODO</h2>
-<p>TODO: a second worked example.</p>
-<section id="run-it-yourself-1" class="level3" data-number="6.5.1">
-<h3 data-number="6.5.1" class="anchored" data-anchor-id="run-it-yourself-1"><span class="header-section-number">6.5.1</span> Run It Yourself</h3>
+<section id="example-1-todo-building-lb-the-result-quartet-de-dup-units" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="example-1-todo-building-lb-the-result-quartet-de-dup-units"><span class="header-section-number">7.4</span> Example 1: TODO — Building LB (the result quartet, de-dup, units)</h2>
 <p>TODO.</p>
 </section>
+<section id="example-2-todo-reference-ranges-the-real-outlier-and-baseline" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="example-2-todo-reference-ranges-the-real-outlier-and-baseline"><span class="header-section-number">7.5</span> Example 2: TODO — Reference ranges, the real outlier, and baseline</h2>
+<p>TODO — blocked on reference-range source.</p>
 </section>
-<section id="what-can-go-wrong" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">6.6</span> What Can Go Wrong</h2>
-<p>TODO: failure modes and misuse patterns.</p>
-<section id="common-misinterpretations" class="level3" data-number="6.6.1">
-<h3 data-number="6.6.1" class="anchored" data-anchor-id="common-misinterpretations"><span class="header-section-number">6.6.1</span> Common misinterpretations</h3>
+<section id="what-can-go-wrong" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">7.6</span> What Can Go Wrong</h2>
 <p>TODO.</p>
 </section>
+<section id="exercises" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">7.7</span> Exercises</h2>
+<p>TODO — planned: build the VS slice (VSRESU units) in <a href="../exercises/sdtm-findings.html">exercises/sdtm-findings.qmd</a>.</p>
 </section>
-<section id="exercises" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">6.7</span> Exercises</h2>
-<p>TODO: link the exercise file(s) for this session, or state that this session has no exercise.</p>
-</section>
-<section id="comprehension-check" class="level2" data-number="6.8">
-<h2 data-number="6.8" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">6.8</span> Comprehension Check</h2>
-<p>TODO: three to five short self-test questions.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Answers
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>TODO: answers, collapsed.</p>
-</div>
-</div>
-</div>
+<section id="comprehension-check" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">7.8</span> Comprehension Check</h2>
+<p>TODO.</p>
 
 
 </section>
@@ -896,13 +877,13 @@ Tip
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../sessions/sdtm-dm.html" class="pagination-link" aria-label="SDTM: The DM Domain">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">SDTM: The DM Domain</span></span>
+      <a href="../sessions/sdtm-events.html" class="pagination-link" aria-label="SDTM: Events (Adverse Events)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">SDTM: Events (Adverse Events)</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../sessions/define-xml.html" class="pagination-link" aria-label="Define-XML">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Define-XML</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Define-XML</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

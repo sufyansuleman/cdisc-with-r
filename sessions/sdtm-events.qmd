@@ -1,0 +1,460 @@
+---
+title: "SDTM: Events (Adverse Events)"
+---
+
+```{r setup}
+#| include: false
+#| eval: true
+library(tidyverse)
+library(sdtm.terminology)
+```
+
+::: {.callout-note}
+### Session at a Glance
+
+**Total core time: about 75 minutes.**
+
+| Section | Time | Type |
+|---|---|---|
+| When Do You Use This? + Learning Objectives | 5 min | Reading |
+| Background: what an Events row is | 15 min | Reading |
+| Example 1: From raw events to AE rows | 20 min | Worked example |
+| Example 2: Qualifying and timing the event | 20 min | Worked example |
+| What Can Go Wrong | 10 min | Reading |
+| Exercises + Comprehension Check | 15 min | Practice / Self-test |
+
+This is the first of two domain-building sessions in the general
+observation classes; [Findings](sdtm-findings.qmd) is its sibling. It
+fits one sitting. It resolves one of the raw data's deliberate defects
+(an adverse event with no start date).
+:::
+
+::: {.callout-tip}
+### How to Use the Code in This Session
+
+Every code chunk below is written so you can copy it into your R
+console (or an R script) and run it yourself, in the order shown.
+Where you see a "Run It Yourself" box, stop and run the code above it
+before reading the explanation that follows. Run R from the project
+root, as in earlier sessions.
+
+Controlled-terminology checks use the **`sdtm.terminology`** package,
+as in [SDTM Concepts](sdtm-concepts.qmd).
+:::
+
+## When Do You Use This? {#sec-sdtm-events}
+
+::: {.callout-tip}
+A safety reviewer asks "how many serious adverse events were there?"
+and you need to know that seriousness is a regulatory category, not a
+measure of how bad the event felt. A site reports an event by phone
+and never sends a start date. A subject reports no adverse events at
+all — and you have to know that "none" is represented by *no row*, not
+a row that says none.
+
+All three are the same underlying task: representing *things that
+happened to subjects*. This session asks: **once you know a dataset is
+about occurrences rather than measurements, how do you build it?**
+
+Builds on [SDTM Concepts](sdtm-concepts.qmd) (the three observation
+classes; controlled terminology) and [The DM Domain](sdtm-dm.qmd)
+(RFSTDTC and the study-day rule, both reused here). Its sibling is
+[Findings](sdtm-findings.qmd).
+:::
+
+## Learning Objectives
+
+After completing this session you will be able to:
+
+- Recognise an Events-class domain from what one row represents, and
+  predict its key variables
+- Build an AE dataset from raw events, keeping the verbatim term and
+  naming (not faking) the dictionary-coding step
+- Distinguish seriousness from severity and represent each correctly
+- Map raw outcome text to controlled terminology, and check it
+- Handle an adverse event with no start date the way the standard
+  intends
+- Derive event study days from the subject's reference date
+
+## Background: What an Events Row Is
+
+*Estimated time: ~15 minutes (reading)*
+
+::: {.callout-important}
+### The one thing to remember
+
+**An Events row records that something happened — carried by a verbatim
+term and a timing. Everything else in the row qualifies that
+occurrence; it never turns the row into a measurement.**
+:::
+
+Adverse Events (AE) is an Events-class domain, and its structure is
+**one record per adverse event per subject** (SDTMIG v3.4, §6.2.1). The
+sponsor defines what counts as one event, but the unit is the event: a
+subject with three events has three rows, a subject with none has no
+rows at all.
+
+The **topic** variable — the thing each row is about — is `AETERM`, the
+Required, verbatim name of the event exactly as it was reported (SDTMIG
+v3.4, §6.2.1, assumption 2a). "Verbatim" is doing real work: `AETERM`
+holds what the site actually wrote, messiness and all, and it is never
+cleaned in place. The cleaned, standardised version lives in a
+*separate* variable, `AEDECOD` — the dictionary-derived preferred term,
+also Required, produced by coding each verbatim term against a medical
+dictionary, normally MedDRA (SDTMIG v3.4, §6.2.1, assumption 2c).
+
+::: {.callout-warning}
+### This course stops at the verbatim term
+
+Coding `AETERM` into `AEDECOD` requires **MedDRA**, a licensed external
+dictionary that is not part of CDISC Controlled Terminology and not
+available in the `sdtm.terminology` package. This course therefore
+builds `AETERM` honestly and leaves `AEDECOD` empty, *naming* the
+coding step rather than performing it. It will never invent a preferred
+term, because a plausible-looking MedDRA code that is wrong is exactly
+the kind of silent error the whole course is built to avoid. In a real
+study, coding is done by trained coders (or a supervised process) and
+the dictionary name and version are recorded in the Define-XML.
+:::
+
+Around the topic sit **qualifiers** — and two of them are constantly
+confused. `AESEV` is the event's *severity* (its intensity: MILD,
+MODERATE, SEVERE). `AESER` is whether the event is *serious* — a
+regulatory category with a Y/N answer, defined by criteria like death,
+hospitalisation, or life-threatening risk. They are independent: a
+severe headache may not be serious, and a "mild" event can be serious.
+Getting these two straight is the single most important idea in AE
+data, and Example 2 shows the trap directly.
+
+Finally, **timing**. `AESTDTC` and `AEENDTC` are the ISO 8601 start and
+end of the event — and both are *Expected*, meaning the column is
+always present but a value may be missing (SDTMIG v3.4, §6.2.1). That
+core designation is not a technicality: it is exactly what lets the
+standard represent an event whose start date was never captured.
+Study-day versions (`AESTDY`, `AEENDY`) are derived from the DM
+reference date using the rule from [The DM Domain](sdtm-dm.qmd).
+
+## Example 1: From Raw Events to AE Rows
+
+*Estimated time: ~20 minutes (worked example)*
+
+Start with the raw adverse-event file and the DM dataset you built and
+saved in the previous session:
+
+```{r read}
+#| eval: true
+
+ae_raw <- read_csv("data/raw/ae_raw.csv", show_col_types = FALSE,
+                   col_types = cols(.default = col_character()))
+
+# DM, built in the previous session and saved to data/sdtm/ (the build
+# script that produces it is covered in the Findings session)
+dm <- read_csv("data/sdtm/dm.csv", show_col_types = FALSE,
+               col_types = cols(.default = col_character()))
+
+c(ae_rows = nrow(ae_raw),
+  subjects_with_events = n_distinct(ae_raw$SUBJID),
+  subjects_total = nrow(dm))
+```
+
+::: {.callout-note}
+### Reading the Output Line by Line
+
+389 event rows across 262 subjects, out of 400 enrolled. The gap — 138
+subjects — is the point: those subjects have **no AE rows**, and that
+is the correct representation of "no adverse events." A dataset never
+carries a row that says a subject had none; absence is the record
+(SDTMIG v3.4, §6.2.1, assumption 4d). If you counted rows expecting
+400, this is where you would learn that Events data is one-row-per-
+occurrence, not one-row-per-subject.
+:::
+
+Now build the identifier spine and the topic. `USUBJID` comes from DM —
+the AE file only knows the study's `SUBJID`, so DM is where the
+across-submission identifier is joined in. `AESEQ` numbers each
+subject's events. `AETERM` is copied verbatim; `AEDECOD` is created and
+left empty for the coding step:
+
+```{r build-ae}
+#| eval: true
+
+ae <- ae_raw |>
+  left_join(dm |> select(SUBJID, USUBJID, RFSTDTC), by = "SUBJID") |>
+  arrange(USUBJID, AESTDT, AETERM) |>
+  group_by(USUBJID) |>
+  mutate(AESEQ = row_number()) |>
+  ungroup() |>
+  mutate(STUDYID = "GLPX001", DOMAIN = "AE",
+         AEDECOD = NA_character_)   # MedDRA preferred term — coding step, not done here
+
+ae |>
+  filter(USUBJID == "GLPX001-101-037") |>
+  select(USUBJID, AESEQ, AETERM, AEDECOD)
+```
+
+::: {.callout-tip}
+### Run It Yourself
+
+Run both chunks. Subject `101-037` should come back with two events,
+`AESEQ` 1 and 2, each with a verbatim `AETERM` and an empty `AEDECOD`.
+Look back at [Why Standards](why-standards.qmd): the raw `AETERM`
+column is where `Nausea`, `NAUSEA`, `Diarrea` and `nausea and
+vomitting` all live. Every one of those is preserved here exactly as
+written — because `AETERM` is verbatim, and fixing the spelling is the
+coder's job, recorded in `AEDECOD`, not ours to guess.
+:::
+
+## Example 2: Qualifying and Timing the Event
+
+*Estimated time: ~20 minutes (worked example)*
+
+### Severity is not seriousness
+
+The raw file carries both the intensity of each event and whether it
+was serious. Map them straight across — `AESEV` for severity, `AESER`
+for the serious flag — then look at what they say together:
+
+```{r sev-ser}
+#| eval: true
+
+ae <- ae |>
+  mutate(AESEV = AESEV,    # MILD / MODERATE / SEVERE (intensity)
+         AESER = AESER)    # Y / N (regulatory seriousness)
+
+ae |> count(AESEV, AESER)
+```
+
+::: {.callout-note}
+### Reading the Output Line by Line
+
+Read the cross-tabulation carefully. There are `SEVERE` events that are
+**not** serious (`AESER = "N"`), and exactly one event that **is**
+serious (`AESER = "Y"`). Severity and seriousness are different axes:
+severity is how intense the event was; seriousness is whether it met a
+regulatory criterion (here, a hypoglycaemia that required
+hospitalisation). Most severe events are not serious, and — though
+GLPX-001 has no such case — a mild event *could* be serious. Confusing
+the two is how a safety table ends up with the wrong SAE count.
+:::
+
+Look at the one serious event directly, and confirm both qualifier
+columns hold only legal controlled-terminology values:
+
+```{r sae}
+#| eval: true
+
+ae |> filter(AESER == "Y") |> select(USUBJID, AETERM, AESEV, AESER)
+
+# AESEV -> codelist C66769; AESER -> the NY (No/Yes) codelist C66742
+c(
+  aesev_valid = all(map_lgl(unique(ae$AESEV), \(x) is_term(x, clst_code = "C66769"))),
+  aeser_valid = all(map_lgl(unique(ae$AESER), \(x) is_term(x, clst_code = "C66742")))
+)
+```
+
+### Outcome: a term that needs mapping
+
+The raw outcome column reads `RECOVERED`, but that is *not* a legal
+value of the AE outcome codelist — the published term is
+`RECOVERED/RESOLVED`. This is the controlled-terminology discipline
+from [SDTM Concepts](sdtm-concepts.qmd) in miniature: a raw string that
+looks right is not automatically a codelist member, so it is mapped and
+the mapping is checked:
+
+```{r aeout}
+#| eval: true
+
+ae <- ae |>
+  mutate(AEOUT = case_when(
+    AEOUT == "RECOVERED"     ~ "RECOVERED/RESOLVED",
+    AEOUT == "NOT RECOVERED" ~ "NOT RECOVERED/NOT RESOLVED"
+  ))
+
+c(
+  raw_recovered_valid = is_term("RECOVERED", clst_code = "C66768"),
+  mapped_valid        = is_term("RECOVERED/RESOLVED", clst_code = "C66768")
+)
+```
+
+::: {.callout-tip}
+### Run It Yourself
+
+Run the chunk. The raw `RECOVERED` returns `FALSE` — it is not in the
+outcome codelist — while the mapped `RECOVERED/RESOLVED` returns `TRUE`.
+Every GLPX-001 event resolved, so after mapping, `AEOUT` is a single
+value across the file; there are no ongoing events to represent. (Had
+there been, an event still ongoing at last contact would carry a null
+`AEENDTC`; the relative-timing variable `AEENRF` exists for expressing
+"ongoing" against the study reference period, per SDTMIG v3.4, §4.4.7,
+but this trial gives us no occasion to use it.)
+:::
+
+### Timing, and the event with no start date
+
+Now the dates — and defect D4. Map `AESTDTC`/`AEENDTC` from the raw
+start and end, turning blanks into true nulls, and derive the study
+day from each subject's `RFSTDTC` with the same rule as [The DM
+Domain](sdtm-dm.qmd):
+
+```{r timing}
+#| eval: true
+
+study_day <- function(date, ref) {
+  date <- as.Date(date); ref <- as.Date(ref)
+  d <- as.integer(date - ref)
+  if_else(is.na(date) | is.na(ref), NA_integer_,
+          if_else(date >= ref, d + 1L, d))
+}
+
+ae <- ae |>
+  mutate(
+    AESTDTC = na_if(AESTDT, ""),
+    AEENDTC = na_if(AEENDT, ""),
+    AESTDY  = study_day(AESTDTC, RFSTDTC),
+    AEENDY  = study_day(AEENDTC, RFSTDTC)
+  )
+
+ae |>
+  filter(is.na(AESTDTC)) |>
+  select(USUBJID, AETERM, AESTDTC, AEENDTC, AESTDY, AEENDY)
+```
+
+::: {.callout-note}
+### Reading the Output Line by Line
+
+One event comes back — subject `103-199`'s constipation — with a null
+`AESTDTC`. It was reported by phone and the start date was never
+obtained (defect D4). The standard handles this without complaint,
+because `AESTDTC` is **Expected**, not Required: the column is present,
+and this one value is legitimately null (SDTMIG v3.4, §6.2.1). The
+study day `AESTDY` is null too — you cannot compute days-from-reference
+without a date — while `AEENDTC` is present, so `AEENDY` is not. Note
+what the standard did *not* make you do: it did not force you to invent
+a start date to fill the column, and it did not make you drop the
+event. The missing value is carried honestly, exactly as with the
+partial birth dates in DM.
+:::
+
+## What Can Go Wrong
+
+*Estimated time: ~10 minutes (reading)*
+
+**Conflating seriousness and severity**
+
+The most consequential AE error there is. A count of `AESEV = "SEVERE"`
+is not a count of serious adverse events; the SAE count comes from
+`AESER = "Y"`. In GLPX-001 the two numbers are wildly different — many
+severe events, one serious one — and reporting the wrong column
+misstates the trial's safety profile.
+
+**Inventing preferred terms**
+
+Filling `AEDECOD` by guessing what a verbatim term "should" code to,
+rather than leaving it for the dictionary step, plants exactly the kind
+of authoritative-looking error a reviewer cannot catch. If you do not
+have MedDRA and a coding process, `AEDECOD` stays empty — and the
+Define-XML says so.
+
+**A row that says "no events"**
+
+If a subject had no adverse events, they get no AE rows. A row created
+to state "none" is not just unnecessary; it is wrong, and it will
+inflate every event count and every join (SDTMIG v3.4, §6.2.1,
+assumption 4d).
+
+**Cleaning `AETERM` in place**
+
+Correcting `Diarrea` to `Diarrhoea` in `AETERM` destroys the verbatim
+record. The verbatim term is a source value; the corrected concept
+belongs in `AEDECOD`, produced by coding. Keep both.
+
+**Copying raw outcome text without checking it**
+
+`RECOVERED` is not a codelist value. Carrying raw text straight into a
+CT-governed variable produces data that fails conformance — the map to
+`RECOVERED/RESOLVED` is not optional.
+
+::: {.callout-warning}
+### Common misinterpretations
+
+**"389 adverse events means the drug caused 389 problems"**
+It means 389 were *recorded*, across both arms, most unrelated to
+treatment. Counts describe what was captured, not what the drug did —
+causality is a separate variable (`AEREL`) and a separate analysis.
+
+**"A missing start date is a data-quality failure to fix"**
+It is a fact about collection, carried honestly in an Expected
+variable. The failure would be inventing a date to make the column
+look complete.
+
+**"Severe and serious are synonyms"**
+Severity (`AESEV`) is intensity; seriousness (`AESER`) is a regulatory
+category. They vary independently, and the SAE count depends only on
+`AESER`.
+
+**"AETERM should be tidied so the counts come out right"**
+Tidying belongs in `AEDECOD` via coding, which maps `Nausea`, `NAUSEA`
+and `nausea and vomitting` to their preferred terms while preserving
+the verbatim originals. Editing `AETERM` throws away the source.
+:::
+
+## Exercises
+
+The AE exercise set is in [Exercise — SDTM:
+Events](../exercises/sdtm-events.qmd): completing the domain slice,
+deriving the study days, and articulating the severity/seriousness
+distinction on real rows. Solutions are in the paid tier.
+
+## Comprehension Check
+
+*Estimated time: ~10 minutes*
+
+1. A subject had no adverse events. How many AE rows do they have, and
+   why?
+2. `AETERM` for one event reads `nausea and vomitting`. What do you put
+   in `AETERM`, what in `AEDECOD`, and why does this course leave the
+   second empty?
+3. GLPX-001 has many `SEVERE` events and one `AESER = "Y"` event.
+   Explain, to a colleague who thinks they are the same thing, how both
+   can be true.
+4. Subject `103-199`'s constipation has a null `AESTDTC`. Why is the
+   dataset still conformant, and what must you *not* do to "fix" it?
+5. The raw outcome value is `RECOVERED`. Why can it not go straight into
+   `AEOUT`, and how do you find the value that can?
+
+::: {.callout-note collapse="true"}
+### Answers
+
+1. Zero rows. Adverse-event data is one record per event per subject,
+   and "no events" is represented by the absence of records, never by a
+   row asserting none (SDTMIG v3.4, §6.2.1, assumption 4d). Creating a
+   "none" row would inflate counts and joins.
+
+2. `AETERM` holds the verbatim string `nausea and vomitting` exactly as
+   reported — it is a Required, verbatim topic variable (SDTMIG v3.4,
+   §6.2.1, assumption 2a). `AEDECOD` would hold the dictionary-derived
+   preferred term(s) from coding (SDTMIG v3.4, §6.2.1, assumption 2c).
+   This course leaves `AEDECOD` empty because coding needs MedDRA, a
+   licensed dictionary it does not use — and guessing a preferred term
+   would risk a confident, invisible error.
+
+3. Severity (`AESEV`) measures how intense the event was; seriousness
+   (`AESER`) is a yes/no regulatory category based on criteria such as
+   hospitalisation or life-threatening risk. They are independent axes,
+   so a study can have many intense-but-not-serious events and very few
+   serious ones. The SAE count comes only from `AESER = "Y"`.
+
+4. `AESTDTC` is an Expected variable: the column must be present, but a
+   value may be null (SDTMIG v3.4, §6.2.1). The start date was never
+   collected, so null is the honest value, and `AESTDY` is null in
+   consequence. You must not invent a start date to fill the column,
+   and you must not drop the event — both would misrepresent what was
+   recorded.
+
+5. `RECOVERED` is not a member of the AE outcome codelist; the published
+   value is `RECOVERED/RESOLVED`, confirmed with
+   `is_term("RECOVERED/RESOLVED", clst_code = "C66768")`. Controlled-
+   terminology variables take only published values, so the raw string
+   is mapped to the codelist term, and the mapping is checked with the
+   package rather than assumed.
+:::

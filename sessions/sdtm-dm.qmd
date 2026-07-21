@@ -622,8 +622,8 @@ before the clock started, so negative, with no zero crossed on the way
 day after first dose. Nominal week 26 lands on day 184. All three are
 the reality behind the tidy visit labels: `--DY` records when things
 *actually* happened on the subject's own clock. When you build full
-findings domains in [Events and Findings](sdtm-events-findings.qmd),
-this function is applied to every dated record in the study.
+findings domains in [Findings](sdtm-findings.qmd), this function is
+applied to every dated record in the study.
 :::
 
 ## What Can Go Wrong

@@ -1,0 +1,69 @@
+---
+title: "Exercise — SDTM: Events (Adverse Events)"
+---
+
+## Goal
+
+Finish the AE domain slice from [The Events
+session](../sessions/sdtm-events.qmd) and use it to answer the
+questions a safety reviewer actually asks.
+
+## Setup
+
+Work from the project root. The AE raw file and the DM dataset you built
+last session are both inputs:
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(sdtm.terminology)
+
+ae_raw <- read_csv("data/raw/ae_raw.csv", show_col_types = FALSE,
+                   col_types = cols(.default = col_character()))
+dm <- read_csv("data/sdtm/dm.csv", show_col_types = FALSE,
+               col_types = cols(.default = col_character()))
+```
+
+Do the tasks in order. [The Events session](../sessions/sdtm-events.qmd)
+is the reference; try each task before looking back.
+
+## Task
+
+1. **(Guided) Build the spine.** Reproduce the session's AE build:
+   `USUBJID` from DM, `AESEQ` per subject, verbatim `AETERM`, empty
+   `AEDECOD`. Confirm with code that `AESEQ` is unique within each
+   `USUBJID` and that every `AETERM` value is preserved exactly as in
+   the raw file.
+2. **(Guided) Study days.** Derive `AESTDTC`, `AEENDTC`, `AESTDY` and
+   `AEENDY`. Find every row where `AESTDY` is null and explain, for
+   each, why.
+3. **(Semi-guided) Severity vs seriousness.** Produce a table of event
+   counts by `AESEV` and `AESER`. Then answer, with the numbers: how
+   many *serious* adverse events were there, how many *severe*, and why
+   are those two counts different?
+4. **(Open-ended) The outcome column.** The raw `AEOUT` value
+   `RECOVERED` is not controlled terminology. Find the correct codelist
+   value (codelist `C66768`), map it, and check it with `is_term()`.
+   Then write one sentence a reviewer would accept explaining why the
+   raw value could not be submitted as-is.
+
+## Acceptance criteria
+
+- [ ] `AESEQ` unique within `USUBJID`; `AETERM` values identical to raw
+- [ ] Null `AESTDY` rows identified, each with a stated reason
+- [ ] Serious-vs-severe counts reported with the correct column for each
+- [ ] `AEOUT` mapped to a value that passes `is_term(..., "C66768")`
+
+::: {.callout-tip collapse="true"}
+## Hint
+
+Task 2: `AESTDY` is null wherever `AESTDTC` is null — you cannot count
+days from a reference date without a date. There is exactly one such
+event in GLPX-001 (defect D4).
+
+Task 3: the *serious* count comes only from `AESER == "Y"`; the *severe*
+count from `AESEV == "SEVERE"`. If those two numbers are equal, you have
+counted the same column twice.
+:::
+
+> Solutions are in the paid tier.

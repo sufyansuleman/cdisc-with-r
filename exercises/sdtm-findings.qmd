@@ -1,0 +1,30 @@
+---
+title: "Exercise — SDTM: Findings (Labs & Vital Signs)"
+---
+
+## Goal
+
+Build the Vital Signs (VS) domain slice — the structural twin of the LB
+domain from [The Findings session](../sessions/sdtm-findings.qmd) — and
+handle its one deliberate difference from LB.
+
+## Setup
+
+TODO (written with the Findings session): starting code reading
+`data/raw/vs_raw.csv` and `data/sdtm/dm.csv`.
+
+## Task
+
+TODO (written with the Findings session). Planned:
+
+1. Build the VS result quartet (`VSORRES`/`VSORRESU`/`VSSTRESC`/
+   `VSSTRESN`/`VSSTRESU`), noting that `VSORRESU` uses the `VSRESU`
+   codelist, **not** the generic `UNIT` codelist that LB uses — and
+   check the units against the right codelist.
+2. Derive `VSDY` and identify each subject's baseline row.
+
+## Acceptance criteria
+
+- [ ] TODO
+
+> Solutions are in the paid tier.

@@ -58,8 +58,8 @@ another, where does each version live?
 
 Every one of those is a **modelling question, not a coding question.**
 This session is the vocabulary and the mental model you need before
-[The DM Domain](sdtm-dm.qmd) and [Events and
-Findings](sdtm-events-findings.qmd), where you build real domains from
+[The DM Domain](sdtm-dm.qmd), [Events](sdtm-events.qmd) and
+[Findings](sdtm-findings.qmd), where you build real domains from
 the raw data.
 
 It builds on [Why Standards](why-standards.qmd) (why a shared structure
@@ -393,7 +393,7 @@ is_term("", clst_code = "C71620")
 The check returns `FALSE`: an empty string is not a member of the UNIT
 codelist. So the week-8 glucose cannot be silently accepted — its unit
 has to be recovered from the lab's documentation or queried, a piece of
-work you do in [Events and Findings](sdtm-events-findings.qmd). The
+work you do in [Findings](sdtm-findings.qmd). The
 point for now: **the standard did not fix the data, it located the
 problem** — and it located it in a specific variable with a specific
 rule, not in a vague sense that "something looks off."

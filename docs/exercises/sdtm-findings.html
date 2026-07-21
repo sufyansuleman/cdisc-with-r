@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>14&nbsp; Dataset-JSON – CDISC with R</title>
+<title>17&nbsp; Exercise — SDTM: Findings (Labs &amp; Vital Signs) – CDISC with R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../exercises/sdtm-dm.html" rel="next">
-<link href="../sessions/adrg-and-submission.html" rel="prev">
+<link href="../exercises/adsl.html" rel="next">
+<link href="../exercises/sdtm-events.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -88,7 +88,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../sessions/tlf.html">Part 4: Outputs and Submission</a></li><li class="breadcrumb-item"><a href="../sessions/dataset-json.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Dataset-JSON</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../exercises/sdtm-dm.html">Exercises</a></li><li class="breadcrumb-item"><a href="../exercises/sdtm-findings.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Exercise — SDTM: Findings (Labs &amp; Vital Signs)</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -241,7 +241,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../sessions/dataset-json.html" class="sidebar-item-text sidebar-link active">
+  <a href="../sessions/dataset-json.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Dataset-JSON</span></span></a>
   </div>
 </li>
@@ -270,7 +270,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../exercises/sdtm-findings.html" class="sidebar-item-text sidebar-link">
+  <a href="../exercises/sdtm-findings.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Exercise — SDTM: Findings (Labs &amp; Vital Signs)</span></span></a>
   </div>
 </li>
@@ -304,33 +304,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#when-do-you-use-this" id="toc-when-do-you-use-this" class="nav-link active" data-scroll-target="#when-do-you-use-this"><span class="header-section-number">14.1</span> When Do You Use This?</a></li>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives"><span class="header-section-number">14.2</span> Learning Objectives</a></li>
-  <li><a href="#background-todo-the-one-core-idea" id="toc-background-todo-the-one-core-idea" class="nav-link" data-scroll-target="#background-todo-the-one-core-idea"><span class="header-section-number">14.3</span> Background: TODO (the one core idea)</a></li>
-  <li><a href="#example-1-todo" id="toc-example-1-todo" class="nav-link" data-scroll-target="#example-1-todo"><span class="header-section-number">14.4</span> Example 1: TODO</a>
-  <ul class="collapse">
-  <li><a href="#run-it-yourself" id="toc-run-it-yourself" class="nav-link" data-scroll-target="#run-it-yourself"><span class="header-section-number">14.4.1</span> Run It Yourself</a></li>
-  <li><a href="#reading-the-output-line-by-line" id="toc-reading-the-output-line-by-line" class="nav-link" data-scroll-target="#reading-the-output-line-by-line"><span class="header-section-number">14.4.2</span> Reading the Output Line by Line</a></li>
-  </ul></li>
-  <li><a href="#example-2-todo" id="toc-example-2-todo" class="nav-link" data-scroll-target="#example-2-todo"><span class="header-section-number">14.5</span> Example 2: TODO</a>
-  <ul class="collapse">
-  <li><a href="#run-it-yourself-1" id="toc-run-it-yourself-1" class="nav-link" data-scroll-target="#run-it-yourself-1"><span class="header-section-number">14.5.1</span> Run It Yourself</a></li>
-  </ul></li>
-  <li><a href="#what-can-go-wrong" id="toc-what-can-go-wrong" class="nav-link" data-scroll-target="#what-can-go-wrong"><span class="header-section-number">14.6</span> What Can Go Wrong</a>
-  <ul class="collapse">
-  <li><a href="#common-misinterpretations" id="toc-common-misinterpretations" class="nav-link" data-scroll-target="#common-misinterpretations"><span class="header-section-number">14.6.1</span> Common misinterpretations</a></li>
-  </ul></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">14.7</span> Exercises</a></li>
-  <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">14.8</span> Comprehension Check</a></li>
+  <li><a href="#goal" id="toc-goal" class="nav-link active" data-scroll-target="#goal"><span class="header-section-number">17.1</span> Goal</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">17.2</span> Setup</a></li>
+  <li><a href="#task" id="toc-task" class="nav-link" data-scroll-target="#task"><span class="header-section-number">17.3</span> Task</a></li>
+  <li><a href="#acceptance-criteria" id="toc-acceptance-criteria" class="nav-link" data-scroll-target="#acceptance-criteria"><span class="header-section-number">17.4</span> Acceptance criteria</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../sessions/tlf.html">Part 4: Outputs and Submission</a></li><li class="breadcrumb-item"><a href="../sessions/dataset-json.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Dataset-JSON</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../exercises/sdtm-dm.html">Exercises</a></li><li class="breadcrumb-item"><a href="../exercises/sdtm-findings.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Exercise — SDTM: Findings (Labs &amp; Vital Signs)</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Dataset-JSON</span></h1>
+<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Exercise — SDTM: Findings (Labs &amp; Vital Signs)</span></h1>
 </div>
 
 
@@ -347,160 +333,30 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Session at a Glance
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Total core time: about TODO minutes.</strong></p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Section</th>
-<th>Time</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>When Do You Use This? + Learning Objectives</td>
-<td>TODO</td>
-<td>Reading</td>
-</tr>
-<tr class="even">
-<td>Background</td>
-<td>TODO</td>
-<td>Reading</td>
-</tr>
-<tr class="odd">
-<td>Example 1</td>
-<td>TODO</td>
-<td>Worked example</td>
-</tr>
-<tr class="even">
-<td>Example 2</td>
-<td>TODO</td>
-<td>Worked example</td>
-</tr>
-<tr class="odd">
-<td>What Can Go Wrong</td>
-<td>TODO</td>
-<td>Reading</td>
-</tr>
-<tr class="even">
-<td>Exercises</td>
-<td>TODO</td>
-<td>Practice</td>
-</tr>
-<tr class="odd">
-<td>Comprehension Check</td>
-<td>TODO</td>
-<td>Self-test</td>
-</tr>
-</tbody>
-</table>
-<p>TODO: how the session splits across sittings for self-paced study.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>How to Use the Code in This Session
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Every code chunk below is written so you can copy it into your R console (or an R script) and run it yourself, in the order shown. Where you see a “Run It Yourself” box, stop and run the code above it before reading the explanation that follows.</p>
-</div>
-</div>
-<section id="when-do-you-use-this" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="when-do-you-use-this"><span class="header-section-number">14.1</span> When Do You Use This?</h2>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>TODO: two or three concrete scenarios that this session answers, ending with the single question it addresses in bold. Cross-link the session(s) this one builds on.</p>
-</div>
-</div>
+<section id="goal" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="goal"><span class="header-section-number">17.1</span> Goal</h2>
+<p>Build the Vital Signs (VS) domain slice — the structural twin of the LB domain from <a href="../sessions/sdtm-findings.html">The Findings session</a> — and handle its one deliberate difference from LB.</p>
 </section>
-<section id="learning-objectives" class="level2" data-number="14.2">
-<h2 data-number="14.2" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">14.2</span> Learning Objectives</h2>
-<p>After completing this session you will be able to:</p>
-<ul>
-<li>TODO</li>
-<li>TODO</li>
-<li>TODO</li>
+<section id="setup" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="setup"><span class="header-section-number">17.2</span> Setup</h2>
+<p>TODO (written with the Findings session): starting code reading <code>data/raw/vs_raw.csv</code> and <code>data/sdtm/dm.csv</code>.</p>
+</section>
+<section id="task" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="task"><span class="header-section-number">17.3</span> Task</h2>
+<p>TODO (written with the Findings session). Planned:</p>
+<ol type="1">
+<li>Build the VS result quartet (<code>VSORRES</code>/<code>VSORRESU</code>/<code>VSSTRESC</code>/ <code>VSSTRESN</code>/<code>VSSTRESU</code>), noting that <code>VSORRESU</code> uses the <code>VSRESU</code> codelist, <strong>not</strong> the generic <code>UNIT</code> codelist that LB uses — and check the units against the right codelist.</li>
+<li>Derive <code>VSDY</code> and identify each subject’s baseline row.</li>
+</ol>
+</section>
+<section id="acceptance-criteria" class="level2" data-number="17.4">
+<h2 data-number="17.4" class="anchored" data-anchor-id="acceptance-criteria"><span class="header-section-number">17.4</span> Acceptance criteria</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">TODO</label></li>
 </ul>
-</section>
-<section id="background-todo-the-one-core-idea" class="level2" data-number="14.3">
-<h2 data-number="14.3" class="anchored" data-anchor-id="background-todo-the-one-core-idea"><span class="header-section-number">14.3</span> Background: TODO (the one core idea)</h2>
-<p><em>Estimated time: ~TODO minutes (reading)</em></p>
-<p>TODO: introduce the single idea that ties the session together, concept before formula.</p>
-</section>
-<section id="example-1-todo" class="level2" data-number="14.4">
-<h2 data-number="14.4" class="anchored" data-anchor-id="example-1-todo"><span class="header-section-number">14.4</span> Example 1: TODO</h2>
-<p>TODO: worked example on GLPX-001 data. Show the code, then the output, then explain it.</p>
-<section id="run-it-yourself" class="level3" data-number="14.4.1">
-<h3 data-number="14.4.1" class="anchored" data-anchor-id="run-it-yourself"><span class="header-section-number">14.4.1</span> Run It Yourself</h3>
-<p>TODO: the exact code block the learner should execute before reading on.</p>
-</section>
-<section id="reading-the-output-line-by-line" class="level3" data-number="14.4.2">
-<h3 data-number="14.4.2" class="anchored" data-anchor-id="reading-the-output-line-by-line"><span class="header-section-number">14.4.2</span> Reading the Output Line by Line</h3>
-<p>TODO: map each line of output to its plain-English meaning.</p>
-</section>
-</section>
-<section id="example-2-todo" class="level2" data-number="14.5">
-<h2 data-number="14.5" class="anchored" data-anchor-id="example-2-todo"><span class="header-section-number">14.5</span> Example 2: TODO</h2>
-<p>TODO: a second worked example.</p>
-<section id="run-it-yourself-1" class="level3" data-number="14.5.1">
-<h3 data-number="14.5.1" class="anchored" data-anchor-id="run-it-yourself-1"><span class="header-section-number">14.5.1</span> Run It Yourself</h3>
-<p>TODO.</p>
-</section>
-</section>
-<section id="what-can-go-wrong" class="level2" data-number="14.6">
-<h2 data-number="14.6" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">14.6</span> What Can Go Wrong</h2>
-<p>TODO: failure modes and misuse patterns.</p>
-<section id="common-misinterpretations" class="level3" data-number="14.6.1">
-<h3 data-number="14.6.1" class="anchored" data-anchor-id="common-misinterpretations"><span class="header-section-number">14.6.1</span> Common misinterpretations</h3>
-<p>TODO.</p>
-</section>
-</section>
-<section id="exercises" class="level2" data-number="14.7">
-<h2 data-number="14.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">14.7</span> Exercises</h2>
-<p>TODO: link the exercise file(s) for this session, or state that this session has no exercise.</p>
-</section>
-<section id="comprehension-check" class="level2" data-number="14.8">
-<h2 data-number="14.8" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">14.8</span> Comprehension Check</h2>
-<p>TODO: three to five short self-test questions.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Answers
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>TODO: answers, collapsed.</p>
-</div>
-</div>
-</div>
+<blockquote class="blockquote">
+<p>Solutions are in the paid tier.</p>
+</blockquote>
 
 
 </section>
@@ -908,13 +764,13 @@ Tip
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../sessions/adrg-and-submission.html" class="pagination-link" aria-label="The ADRG and Submission">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The ADRG and Submission</span></span>
+      <a href="../exercises/sdtm-events.html" class="pagination-link" aria-label="Exercise — SDTM: Events (Adverse Events)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Exercise — SDTM: Events (Adverse Events)</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../exercises/sdtm-dm.html" class="pagination-link" aria-label="Exercise 1 — SDTM: The DM Domain">
-        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exercise 1 — SDTM: The DM Domain</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../exercises/adsl.html" class="pagination-link" aria-label="Exercise 3 — ADSL">
+        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Exercise 3 — ADSL</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

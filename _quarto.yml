@@ -23,7 +23,8 @@ book:
     chapters:
     - sessions/sdtm-concepts.qmd
     - sessions/sdtm-dm.qmd
-    - sessions/sdtm-events-findings.qmd
+    - sessions/sdtm-events.qmd
+    - sessions/sdtm-findings.qmd
     - sessions/define-xml.qmd
   - part: "Part 3: ADaM"
     chapters:
@@ -38,7 +39,8 @@ book:
   - part: "Exercises"
     chapters:
     - exercises/sdtm-dm.qmd
-    - exercises/sdtm-events-findings.qmd
+    - exercises/sdtm-events.qmd
+    - exercises/sdtm-findings.qmd
     - exercises/adsl.qmd
     - exercises/adae-adlb.qmd
     - exercises/tlf.qmd
