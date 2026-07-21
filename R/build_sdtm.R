@@ -134,6 +134,122 @@ build_ae <- function(dm) {
     )
 }
 
+# ---- LB (Laboratory Test Results; Findings class) --------------------------
+# See sessions/sdtm-findings.qmd. One record per test per time point per visit
+# per subject. LBNRIND is DERIVED from the result vs the vendor reference
+# range (never hard-coded). Central-lab values are collected, not derived
+# (LBDRVFL null), which is why a byte-perfect duplicate is a transmission
+# artefact to remove, not a real second measurement.
+
+VISIT_NUM <- c("SCREENING" = 1, "BASELINE" = 2, "WEEK 4" = 3, "WEEK 8" = 4,
+               "WEEK 12" = 5, "WEEK 16" = 6, "WEEK 20" = 7, "WEEK 26" = 8)
+
+# Operationally-derived baseline flag (SDTMIG v3.4 §4.5.9): the last
+# non-missing value prior to RFXSTDTC, per subject per test, flagged "Y".
+# The authoritative analysis baseline lives in ADaM; this is the consistent
+# SDTM reference flag. (Derived inline in each build to keep it readable.)
+
+build_lb <- function(dm) {
+  lb_raw <- read_raw("lb_raw.csv")
+
+  test_name  <- c(HBA1C = "Hemoglobin A1C", GLUC = "Glucose",
+                  ALT = "Alanine Aminotransferase", CREAT = "Creatinine")
+  panel_unit <- c(HBA1C = "%", GLUC = "mmol/L", ALT = "U/L", CREAT = "umol/L")
+
+  lb_raw |>
+    distinct() |>                       # D6: drop the byte-perfect duplicate
+    left_join(dm |> select(SUBJID, USUBJID, RFSTDTC, RFXSTDTC),
+              by = c("subjid" = "SUBJID")) |>
+    mutate(
+      STUDYID  = STUDYID,
+      DOMAIN   = "LB",
+      LBTESTCD = test,
+      LBTEST   = unname(test_name[test]),
+      # D7: recover the blank unit from the vendor's documented panel (all
+      # other results for this test carry the same unit); logged as a query.
+      LBORRES  = result,
+      LBORRESU = if_else(is.na(unit) | unit == "", unname(panel_unit[test]), unit),
+      LBSTRESC = result,                       # no unit conversion for these analytes
+      LBSTRESN = as.numeric(result),
+      LBSTRESU = LBORRESU,
+      LBORNRLO = ref_lo, LBORNRHI = ref_hi,    # original-unit range (Char)
+      LBSTNRLO = as.numeric(ref_lo),           # standard-unit range (Num)
+      LBSTNRHI = as.numeric(ref_hi),
+      # LBNRIND derived from result vs range — D5's 13.9 -> HIGH, not hard-coded
+      LBNRIND  = case_when(
+        as.numeric(result) > as.numeric(ref_hi) ~ "HIGH",
+        as.numeric(result) < as.numeric(ref_lo) ~ "LOW",
+        TRUE                                    ~ "NORMAL"),
+      LBDRVFL  = NA_character_,                 # central-lab value = collected
+      VISIT    = visit,
+      VISITNUM = unname(VISIT_NUM[visit]),
+      LBDTC    = colldt,
+      LBDY     = study_day(colldt, RFSTDTC)
+    ) |>
+    group_by(USUBJID, LBTESTCD) |>
+    mutate(
+      dt_       = as.Date(LBDTC),
+      pre_      = !is.na(dt_) & dt_ < as.Date(RFXSTDTC) & !is.na(LBORRES),
+      mx_       = suppressWarnings(max(dt_[pre_])),
+      LBLOBXFL  = if_else(pre_ & is.finite(mx_) & dt_ == mx_, "Y", NA_character_)
+    ) |>
+    ungroup() |>
+    select(-dt_, -pre_, -mx_) |>
+    arrange(USUBJID, LBDTC, LBTESTCD) |>
+    group_by(USUBJID) |>
+    mutate(LBSEQ = row_number()) |>
+    ungroup() |>
+    select(STUDYID, DOMAIN, USUBJID, LBSEQ, LBTESTCD, LBTEST,
+           LBORRES, LBORRESU, LBSTRESC, LBSTRESN, LBSTRESU,
+           LBORNRLO, LBORNRHI, LBSTNRLO, LBSTNRHI, LBNRIND,
+           LBDRVFL, LBLOBXFL, VISITNUM, VISIT, LBDTC, LBDY)
+}
+
+# ---- VS (Vital Signs; Findings class) --------------------------------------
+# See sessions/sdtm-findings.qmd (exercise). Structural twin of LB, but
+# VSORRESU uses the VS-specific VSRESU codelist, not the generic UNIT.
+
+build_vs <- function(dm) {
+  vs_raw <- read_raw("vs_raw.csv")
+
+  vs_name <- c(SYSBP = "Systolic Blood Pressure", DIABP = "Diastolic Blood Pressure",
+               PULSE = "Pulse Rate", WEIGHT = "Weight", HEIGHT = "Height")
+
+  vs_raw |>
+    left_join(dm |> select(SUBJID, USUBJID, RFSTDTC, RFXSTDTC), by = "SUBJID") |>
+    mutate(
+      STUDYID  = STUDYID,
+      DOMAIN   = "VS",
+      VSTESTCD = TEST,
+      VSTEST   = unname(vs_name[TEST]),
+      VSORRES  = RESULT,
+      VSORRESU = UNIT,                          # VSRESU codelist, not UNIT
+      VSSTRESC = RESULT,
+      VSSTRESN = as.numeric(RESULT),
+      VSSTRESU = UNIT,
+      VISIT    = VISIT,
+      VISITNUM = unname(VISIT_NUM[VISIT]),
+      VSDTC    = VSDT,
+      VSDY     = study_day(VSDT, RFSTDTC)
+    ) |>
+    group_by(USUBJID, VSTESTCD) |>
+    mutate(
+      dt_       = as.Date(VSDTC),
+      pre_      = !is.na(dt_) & dt_ < as.Date(RFXSTDTC) & !is.na(VSORRES),
+      mx_       = suppressWarnings(max(dt_[pre_])),
+      VSLOBXFL  = if_else(pre_ & is.finite(mx_) & dt_ == mx_, "Y", NA_character_)
+    ) |>
+    ungroup() |>
+    select(-dt_, -pre_, -mx_) |>
+    arrange(USUBJID, VSDTC, VSTESTCD) |>
+    group_by(USUBJID) |>
+    mutate(VSSEQ = row_number()) |>
+    ungroup() |>
+    select(STUDYID, DOMAIN, USUBJID, VSSEQ, VSTESTCD, VSTEST,
+           VSORRES, VSORRESU, VSSTRESC, VSSTRESN, VSSTRESU,
+           VSLOBXFL, VISITNUM, VISIT, VSDTC, VSDY)
+}
+
 # ---- entry point -----------------------------------------------------------
 
 main <- function(out_dir = file.path("data", "sdtm")) {
@@ -141,8 +257,10 @@ main <- function(out_dir = file.path("data", "sdtm")) {
 
   dm <- build_dm()
   ae <- build_ae(dm)
+  lb <- build_lb(dm)
+  vs <- build_vs(dm)
 
-  sdtm <- list(dm = dm, ae = ae)
+  sdtm <- list(dm = dm, ae = ae, lb = lb, vs = vs)
 
   iwalk(sdtm, \(df, name) {
     write_csv(df, file.path(out_dir, paste0(name, ".csv")), na = "")
