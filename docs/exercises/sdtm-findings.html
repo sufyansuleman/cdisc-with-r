@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -335,25 +370,55 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="goal" class="level2" data-number="17.1">
 <h2 data-number="17.1" class="anchored" data-anchor-id="goal"><span class="header-section-number">17.1</span> Goal</h2>
-<p>Build the Vital Signs (VS) domain slice — the structural twin of the LB domain from <a href="../sessions/sdtm-findings.html">The Findings session</a> — and handle its one deliberate difference from LB.</p>
+<p>Build the Vital Signs (VS) domain slice — the structural twin of the LB domain from <a href="../sessions/sdtm-findings.html">The Findings session</a> — and catch its one deliberate difference from LB.</p>
 </section>
 <section id="setup" class="level2" data-number="17.2">
 <h2 data-number="17.2" class="anchored" data-anchor-id="setup"><span class="header-section-number">17.2</span> Setup</h2>
-<p>TODO (written with the Findings session): starting code reading <code>data/raw/vs_raw.csv</code> and <code>data/sdtm/dm.csv</code>.</p>
+<p>Work from the project root. The VS raw file and the DM dataset you built earlier are the inputs:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sdtm.terminology)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>vs_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/raw/vs_raw.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>()))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>dm <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/sdtm/dm.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Do the tasks in order. <a href="../sessions/sdtm-findings.html">The Findings session</a> is the reference; try each task before looking back.</p>
 </section>
 <section id="task" class="level2" data-number="17.3">
 <h2 data-number="17.3" class="anchored" data-anchor-id="task"><span class="header-section-number">17.3</span> Task</h2>
-<p>TODO (written with the Findings session). Planned:</p>
 <ol type="1">
-<li>Build the VS result quartet (<code>VSORRES</code>/<code>VSORRESU</code>/<code>VSSTRESC</code>/ <code>VSSTRESN</code>/<code>VSSTRESU</code>), noting that <code>VSORRESU</code> uses the <code>VSRESU</code> codelist, <strong>not</strong> the generic <code>UNIT</code> codelist that LB uses — and check the units against the right codelist.</li>
-<li>Derive <code>VSDY</code> and identify each subject’s baseline row.</li>
+<li><strong>(Guided) The result quartet.</strong> Build <code>VSTESTCD</code>, <code>VSORRES</code>, <code>VSORRESU</code>, <code>VSSTRESC</code> and <code>VSSTRESN</code> from the raw file, joining <code>USUBJID</code> from DM. Confirm every <code>VSTESTCD</code> value is valid controlled terminology.</li>
+<li><strong>(The trap) Units.</strong> <code>VSORRESU</code> does <strong>not</strong> use the same units codelist as LB’s <code>LBORRESU</code>. Find the codelist VS uses, and check the trial’s vital-sign units against it — not against the generic UNIT codelist. Explain in one sentence why checking against the wrong codelist would have looked fine but been meaningless.</li>
+<li><strong>(Semi-guided) Timing and structure.</strong> Derive <code>VSDY</code> from each subject’s <code>RFSTDTC</code>, and assign <code>VSSEQ</code> uniquely within <code>USUBJID</code>. How many rows does <code>HEIGHT</code> contribute per subject, and why does that differ from the other vitals?</li>
 </ol>
 </section>
 <section id="acceptance-criteria" class="level2" data-number="17.4">
 <h2 data-number="17.4" class="anchored" data-anchor-id="acceptance-criteria"><span class="header-section-number">17.4</span> Acceptance criteria</h2>
 <ul class="task-list">
-<li><label><input type="checkbox">TODO</label></li>
+<li><label><input type="checkbox"><code>VSTESTCD</code> values all valid CT; <code>USUBJID</code> joined from DM</label></li>
+<li><label><input type="checkbox"><code>VSORRESU</code> checked against the <strong>VS</strong> units codelist, not <code>UNIT</code></label></li>
+<li><label><input type="checkbox"><code>VSDY</code> derived with the no-day-0 rule; <code>VSSEQ</code> unique within <code>USUBJID</code></label></li>
+<li><label><input type="checkbox">The height-versus-other-vitals row-count difference explained</label></li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Hint
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Task 2: the LB session used codelist <code>C71620</code> (UNIT) for lab units. VS has its own. Search the terminology for the VS results-unit codelist by name (<code>ct("list")</code> filtered on something like “Vital Signs” or “VSRESU”) — the point of the exercise is that you <em>look it up</em> rather than assume LB’s codelist carries over.</p>
+<p>Task 3: height is measured once, at screening; the other vitals are measured at every visit. So height contributes one row per subject and the others many.</p>
+</div>
+</div>
+</div>
 <blockquote class="blockquote">
 <p>Solutions are in the paid tier.</p>
 </blockquote>

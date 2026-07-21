@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -306,12 +341,22 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#sec-sdtm-findings" id="toc-sec-sdtm-findings" class="nav-link active" data-scroll-target="#sec-sdtm-findings"><span class="header-section-number">7.1</span> When Do You Use This?</a></li>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives"><span class="header-section-number">7.2</span> Learning Objectives</a></li>
-  <li><a href="#background-todo-what-a-findings-row-is" id="toc-background-todo-what-a-findings-row-is" class="nav-link" data-scroll-target="#background-todo-what-a-findings-row-is"><span class="header-section-number">7.3</span> Background: TODO — What a Findings Row Is</a></li>
-  <li><a href="#example-1-todo-building-lb-the-result-quartet-de-dup-units" id="toc-example-1-todo-building-lb-the-result-quartet-de-dup-units" class="nav-link" data-scroll-target="#example-1-todo-building-lb-the-result-quartet-de-dup-units"><span class="header-section-number">7.4</span> Example 1: TODO — Building LB (the result quartet, de-dup, units)</a></li>
-  <li><a href="#example-2-todo-reference-ranges-the-real-outlier-and-baseline" id="toc-example-2-todo-reference-ranges-the-real-outlier-and-baseline" class="nav-link" data-scroll-target="#example-2-todo-reference-ranges-the-real-outlier-and-baseline"><span class="header-section-number">7.5</span> Example 2: TODO — Reference ranges, the real outlier, and baseline</a></li>
-  <li><a href="#what-can-go-wrong" id="toc-what-can-go-wrong" class="nav-link" data-scroll-target="#what-can-go-wrong"><span class="header-section-number">7.6</span> What Can Go Wrong</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">7.7</span> Exercises</a></li>
-  <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">7.8</span> Comprehension Check</a></li>
+  <li><a href="#background-what-a-findings-row-is" id="toc-background-what-a-findings-row-is" class="nav-link" data-scroll-target="#background-what-a-findings-row-is"><span class="header-section-number">7.3</span> Background: What a Findings Row Is</a></li>
+  <li><a href="#example-1-building-lb-results-units-and-a-duplicate" id="toc-example-1-building-lb-results-units-and-a-duplicate" class="nav-link" data-scroll-target="#example-1-building-lb-results-units-and-a-duplicate"><span class="header-section-number">7.4</span> Example 1: Building LB — Results, Units, and a Duplicate</a>
+  <ul class="collapse">
+  <li><a href="#the-natural-key-and-the-duplicate-that-breaks-it" id="toc-the-natural-key-and-the-duplicate-that-breaks-it" class="nav-link" data-scroll-target="#the-natural-key-and-the-duplicate-that-breaks-it"><span class="header-section-number">7.4.1</span> The natural key, and the duplicate that breaks it</a></li>
+  <li><a href="#the-result-quartet-and-a-missing-unit" id="toc-the-result-quartet-and-a-missing-unit" class="nav-link" data-scroll-target="#the-result-quartet-and-a-missing-unit"><span class="header-section-number">7.4.2</span> The result quartet, and a missing unit</a></li>
+  </ul></li>
+  <li><a href="#example-2-reference-ranges-a-real-outlier-and-baseline" id="toc-example-2-reference-ranges-a-real-outlier-and-baseline" class="nav-link" data-scroll-target="#example-2-reference-ranges-a-real-outlier-and-baseline"><span class="header-section-number">7.5</span> Example 2: Reference Ranges, a Real Outlier, and Baseline</a>
+  <ul class="collapse">
+  <li><a href="#deriving-the-range-indicator" id="toc-deriving-the-range-indicator" class="nav-link" data-scroll-target="#deriving-the-range-indicator"><span class="header-section-number">7.5.1</span> Deriving the range indicator</a></li>
+  <li><a href="#the-value-that-looks-like-an-error-but-isnt" id="toc-the-value-that-looks-like-an-error-but-isnt" class="nav-link" data-scroll-target="#the-value-that-looks-like-an-error-but-isnt"><span class="header-section-number">7.5.2</span> The value that looks like an error but isn’t</a></li>
+  <li><a href="#the-operational-baseline-flag" id="toc-the-operational-baseline-flag" class="nav-link" data-scroll-target="#the-operational-baseline-flag"><span class="header-section-number">7.5.3</span> The operational baseline flag</a></li>
+  </ul></li>
+  <li><a href="#the-finished-sdtm-saved" id="toc-the-finished-sdtm-saved" class="nav-link" data-scroll-target="#the-finished-sdtm-saved"><span class="header-section-number">7.6</span> The Finished SDTM, Saved</a></li>
+  <li><a href="#what-can-go-wrong" id="toc-what-can-go-wrong" class="nav-link" data-scroll-target="#what-can-go-wrong"><span class="header-section-number">7.7</span> What Can Go Wrong</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">7.8</span> Exercises</a></li>
+  <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">7.9</span> Comprehension Check</a></li>
   </ul>
 </nav>
     </div>
@@ -337,95 +382,6 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<!--
-========================================================================
-SKELETON + VERIFY LIST — prose NOT yet written. DO NOT COMMIT as final.
-
-This is the Findings half of the split (Events -> sessions/sdtm-events.qmd,
-already drafted). The F-list below was approved with the combined
-events-findings VERIFY list; it is reproduced here as the working list
-for this session's own drafting turn.
-
-All [IG] claims PRE-VERIFIED against local SDTMIG v3.4; [CT] confirmed
-live via sdtm.terminology at prose time.
-
-This session INTRODUCES R/build_sdtm.R and data/sdtm/ (the persisted,
-committed SDTM datasets), and ADDS lb + vs to build_sdtm.R (currently
-it builds dm + ae only).
-
-Registry defects for this session (distinct subjects):
-  D5 out-of-range HbA1c, REAL  -> 101-052 (13.9% at SCREENING)
-  D6 byte-perfect duplicate lb -> 101-010 (SCREENING HbA1c 8.2)
-  D7 missing unit              -> 101-037 (GLUC WEEK 8; met in sdtm-concepts)
-
-PROPOSED CENTRAL INTUITION (for approval, split from the combined one):
-  "A Findings row records what a measurement was — its test and its
-   result, kept twice as collected and standardised — and the domain's
-   natural key is what makes a duplicate detectable and a real outlier
-   keepable."
-
-OPEN ITEM TO RAISE AT DRAFTING: GLPX raw lb_raw.csv carries NO reference
-ranges (cols: subjid, sex, visit, colldt, test, result, unit). LBNRIND /
-LBORNRLO / LBORNRHI (F4, needed for D5) require a reference range per
-test. Decide the source: (a) add ref_lo/ref_hi to simulate_trial.R's lab
-vendor file (realistic — vendors supply ranges), or (b) a documented
-reference-range lookup in build_sdtm.R. Recommend (a). Author to decide
-before F4/D5 can be built with real values.
-
-========================================================================
-VERIFY LIST (Findings) — every SDTM specific this session will assert.
-
-F1 [IG §6.3.5.6 spec header] LB is Findings-class; ONE RECORD PER LAB
-   TEST PER TIME POINT PER VISIT PER SUBJECT. -> D6 duplicate violates
-   this natural key.
-
-F2 [IG §6.3.5.6 spec; §4.5.1.1] Result quartet, all Expected: LBORRES,
-   LBORRESU (UNIT), LBSTRESC, LBSTRESN, LBSTRESU (UNIT). Original
-   preserved beside standardised.
-
-F3 [IG §6.3.5.6 assumption 7] LBORRESU/LBSTRESU take the UNIT codelist;
-   submit the CDISC Submission Value; unmapped -> synonym or Define-XML
-   extension + new-term request. -> D7: 101-037 blank GLUC unit resolved
-   to mmol/L from the vendor's documented panel, logged as a query (no
-   fabricated confirmation — as approved).
-
-F4 [IG §6.3.5.6 spec; assumption 3; §4.5.5] Reference-range vars, all
-   Expected: LBORNRLO/HI, LBSTNRLO/HI, LBNRIND (codelist NRIND). LBNRIND
-   is NOT clinical significance. -> D5: 101-052 SCREENING HbA1c 13.9%
-   flagged HIGH and KEPT (real value, poorly controlled patient).
-   BLOCKED on the reference-range source decision above.
-
-F5 [IG §6.3.5.6 assumption 6; §4.1.8.1] Central-lab value is COLLECTED,
-   not derived; LBDRVFL null. (Why D6 is a transmission artefact.)
-
-F6 [IG §6.3.5.6 spec] Timing: LBDTC (Exp), LBDY (Perm), VISITNUM (Exp),
-   VISIT (Perm). Study day via the DM RFSTDTC rule (§4.4.4).
-
-F7 [IG §4.5.9; §6.3.5.6] Baseline: LBBLFL (Perm, backward-compat) vs
-   LBLOBXFL (Exp) = "last non-missing value prior to RFXSTDTC".
-   Authoritative analysis baseline is ADaM (forward-link to adsl).
-
-F8 [IG §6.3.5.6 spec] LBSEQ: Required, unique within subject/domain.
-
-V1 [IG §6.3.13 spec header] VS is Findings-class, ONE RECORD PER VITAL
-   SIGN MEASUREMENT PER TIME POINT PER VISIT PER SUBJECT — structurally
-   like LB. VSORRESU uses codelist VSRESU (NOT the generic UNIT). Mainly
-   in the exercise; LB carries the worked example.
-
-X2 [IG §6.3.5.6 header + natural key] De-duplication restores the
-   one-record-per-key structure (D6).
-X3 [IG §4.4.4] Study day reuses the DM study_day() rule.
-
-[CT] to confirm live: NRIND (id + NORMAL/ABNORMAL/HIGH/LOW); VSRESU
-(id + members); UNIT/mmol/L (confirmed); LBTESTCD (confirmed).
-
-Build/infra for this session:
-  - Add build_lb() and build_vs() to R/build_sdtm.R; regenerate and
-    commit data/sdtm/{lb,vs}.csv.
-  - Introduce data/sdtm/ and the traceability chain (raw -> build -> sdtm)
-    pedagogically here, since after this session the SDTM set is complete.
-========================================================================
--->
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -436,40 +392,462 @@ Build/infra for this session:
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>TODO: time budget once written. Sibling of <a href="../sessions/sdtm-events.html">Events</a>; resolves defects D5, D6 and D7 and introduces the persisted SDTM datasets in <code>data/sdtm/</code>.</p>
+<p><strong>Total core time: about 100 minutes.</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Section</th>
+<th>Time</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>When Do You Use This? + Learning Objectives</td>
+<td>5 min</td>
+<td>Reading</td>
+</tr>
+<tr class="even">
+<td>Background: what a Findings row is</td>
+<td>20 min</td>
+<td>Reading</td>
+</tr>
+<tr class="odd">
+<td>Example 1: Building LB — results, units, and a duplicate</td>
+<td>25 min</td>
+<td>Worked example</td>
+</tr>
+<tr class="even">
+<td>Example 2: Reference ranges, a real outlier, and baseline</td>
+<td>25 min</td>
+<td>Worked example</td>
+</tr>
+<tr class="odd">
+<td>The finished SDTM, saved</td>
+<td>10 min</td>
+<td>Reading</td>
+</tr>
+<tr class="even">
+<td>What Can Go Wrong</td>
+<td>10 min</td>
+<td>Reading</td>
+</tr>
+<tr class="odd">
+<td>Exercises + Comprehension Check</td>
+<td>15 min</td>
+<td>Practice / Self-test</td>
+</tr>
+</tbody>
+</table>
+<p>The sibling of <a href="../sessions/sdtm-events.html">Events</a> and the last domain-building session in Part 2. It resolves three deliberate defects (a duplicate record, a missing unit, a real out-of-range value) and completes the persisted SDTM the ADaM sessions will read. Split after Example 1 for self-paced study.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>How to Use the Code in This Session
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Every code chunk below is written so you can copy it into your R console (or an R script) and run it yourself, in the order shown. Where you see a “Run It Yourself” box, stop and run the code above it before reading the explanation that follows. Run R from the project root, as in earlier sessions.</p>
+<p>Controlled-terminology checks use the <strong><code>sdtm.terminology</code></strong> package, as in <a href="../sessions/sdtm-concepts.html">SDTM Concepts</a>.</p>
 </div>
 </div>
 <section id="sec-sdtm-findings" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="sec-sdtm-findings"><span class="header-section-number">7.1</span> When Do You Use This?</h2>
-<p>TODO (prose pass, after the reference-range decision): scenarios — a lab transfer with a byte-perfect duplicate and a real out-of-range value; a blank unit; and the moment you need a finished SDTM you can hand to the analysis team. Builds on <a href="../sessions/sdtm-concepts.html">SDTM Concepts</a>, <a href="../sessions/sdtm-dm.html">The DM Domain</a> and <a href="../sessions/sdtm-events.html">Events</a>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A lab transfer lands and you have to make it submission-ready: it has a record the vendor sent twice, a result whose unit field is blank, and a value so high it looks like a typo — except it isn’t. Then the analysis team asks for a finished SDTM they can build ADaM from.</p>
+<p>All of it is the same task: representing <em>measurements</em>. This session asks: <strong>once you know a dataset is about results rather than occurrences, how do you build it — and how does the standard help you tell a data error from a real extreme?</strong></p>
+<p>Builds on <a href="../sessions/sdtm-concepts.html">SDTM Concepts</a> (the result quartet; controlled terminology), <a href="../sessions/sdtm-dm.html">The DM Domain</a> (RFSTDTC and the study-day rule), and <a href="../sessions/sdtm-events.html">Events</a> (its sibling). After this session the SDTM is complete.</p>
+</div>
+</div>
 </section>
 <section id="learning-objectives" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">7.2</span> Learning Objectives</h2>
-<p>TODO after approval.</p>
+<p>After completing this session you will be able to:</p>
+<ul>
+<li>Recognise a Findings-class domain from what one row represents, and predict its result variables</li>
+<li>Build an LB dataset with original and standardised results and units</li>
+<li>Use a domain’s natural key to detect and remove a duplicate record</li>
+<li>Recover a missing unit from documented sources rather than guessing</li>
+<li>Derive a reference-range indicator, and distinguish a mechanical range flag from the judgement of whether a value is real</li>
+<li>Derive an operational baseline flag, and say why the authoritative baseline lives in ADaM</li>
+<li>Explain how the raw data becomes the committed SDTM through a reproducible build</li>
+</ul>
 </section>
-<section id="background-todo-what-a-findings-row-is" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="background-todo-what-a-findings-row-is"><span class="header-section-number">7.3</span> Background: TODO — What a Findings Row Is</h2>
-<p>TODO after the reference-range source is decided.</p>
+<section id="background-what-a-findings-row-is" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="background-what-a-findings-row-is"><span class="header-section-number">7.3</span> Background: What a Findings Row Is</h2>
+<p><em>Estimated time: ~20 minutes (reading)</em></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>The one thing to remember
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>A Findings row records what a measurement was — its test and its result, kept twice as collected and standardised — and the domain’s natural key is what makes a duplicate detectable and a real outlier keepable.</strong></p>
+</div>
+</div>
+<p>Laboratory Test Results (LB) is a Findings-class domain, and its structure is <strong>one record per lab test per time point per visit per subject</strong> (SDTMIG v3.4, §6.3.5.6). That sentence is also the domain’s <strong>natural key</strong>: the combination of subject, visit, and test that should identify a row uniquely. Hold onto it — it is what turns “the vendor sent a duplicate” from a vague worry into a checkable fact.</p>
+<p>The <strong>topic</strong> is <code>LBTESTCD</code> (the test), and the result is not one column but a small family, all Expected (SDTMIG v3.4, §6.3.5.6; §4.5.1.1): <code>LBORRES</code> (the result as collected) with <code>LBORRESU</code> (its unit), and the standardised pair <code>LBSTRESC</code> (character) / <code>LBSTRESN</code> (numeric) with <code>LBSTRESU</code>. You met this in <a href="../sessions/sdtm-concepts.html">SDTM Concepts</a>: the original is always kept beside the standardised version. Units are controlled terminology — <code>LBORRESU</code> and <code>LBSTRESU</code> draw on the UNIT codelist, and a unit the vendor uses that is not a submission value must be mapped to an equivalent or added in the Define-XML (SDTMIG v3.4, §6.3.5.6, assumption 7).</p>
+<p>Findings also carry a <strong>reference range</strong> and an indicator of where the result falls in it (SDTMIG v3.4, §6.3.5.6): <code>LBORNRLO</code>/<code>LBORNRHI</code> (the range in original units), <code>LBSTNRLO</code>/<code>LBSTNRHI</code> (in standard units), and <code>LBNRIND</code> — the “Reference Range Indicator”, which “indicates where the value falls with respect to reference range defined by LBORNRLO and LBORNRHI” (SDTMIG v3.4, §6.3.5.6), taking values from the NRIND codelist (<code>NORMAL</code>, <code>LOW</code>, <code>HIGH</code>, <code>ABNORMAL</code>).</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>LBNRIND is a comparison, not a verdict
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>LBNRIND</code> is a <strong>mechanical</strong> comparison of a number against a range. It is <em>not</em> a clinical-significance flag and <em>not</em> a judgement about whether the value is a data error (SDTMIG v3.4, §6.3.5.6, assumption 3; §4.5.5). Whether a <code>HIGH</code> value is a genuine extreme or a transcription mistake is a separate question, answered by data review, not by the flag. Example 2 turns on exactly this distinction.</p>
+</div>
+</div>
+<p>One more, because it recurs: a value produced by a central lab following its own procedures is considered <strong>collected, not derived</strong>, so its <code>LBDRVFL</code> (derived flag) is null (SDTMIG v3.4, §6.3.5.6, assumption 6; §4.1.8.1). That is why a byte-perfect duplicate from the vendor is a <em>transmission artefact</em> to remove — not a real second measurement to keep.</p>
 </section>
-<section id="example-1-todo-building-lb-the-result-quartet-de-dup-units" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="example-1-todo-building-lb-the-result-quartet-de-dup-units"><span class="header-section-number">7.4</span> Example 1: TODO — Building LB (the result quartet, de-dup, units)</h2>
-<p>TODO.</p>
+<section id="example-1-building-lb-results-units-and-a-duplicate" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="example-1-building-lb-results-units-and-a-duplicate"><span class="header-section-number">7.4</span> Example 1: Building LB — Results, Units, and a Duplicate</h2>
+<p><em>Estimated time: ~25 minutes (worked example)</em></p>
+<section id="the-natural-key-and-the-duplicate-that-breaks-it" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="the-natural-key-and-the-duplicate-that-breaks-it"><span class="header-section-number">7.4.1</span> The natural key, and the duplicate that breaks it</h3>
+<p>Read the raw lab file and test the natural key directly — is any (subject, visit, test) combination present more than once?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>lb_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/raw/lb_raw.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>()))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(lb_raw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12389</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>lb_raw <span class="sc">|&gt;</span> <span class="fu">count</span>(subjid, visit, test) <span class="sc">|&gt;</span> <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  subjid  visit     test      n
+  &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;int&gt;
+1 101-010 SCREENING HBA1C     2</code></pre>
+</div>
+</div>
+<p>One key value occurs twice: subject <code>101-010</code>’s screening HbA1c. Look at the two rows:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>lb_raw <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(subjid <span class="sc">==</span> <span class="st">"101-010"</span>, visit <span class="sc">==</span> <span class="st">"SCREENING"</span>, test <span class="sc">==</span> <span class="st">"HBA1C"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 9
+  subjid  sex   visit     colldt     test  result unit  ref_lo ref_hi
+  &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; 
+1 101-010 M     SCREENING 2024-03-12 HBA1C 8.2    %     4      5.6   
+2 101-010 M     SCREENING 2024-03-12 HBA1C 8.2    %     4      5.6   </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reading the Output Line by Line
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The two rows are <strong>byte-for-byte identical</strong> — same result, same date, same everything. Because a central-lab value is collected once (SDTMIG v3.4, §6.3.5.6, assumption 6), two identical rows for one key cannot both be real measurements; the second is a transmission artefact. This is the one case where removing a row is correct — and the natural key is what licenses it. Contrast this with the out-of-range value in Example 2, which is also unusual but must be <em>kept</em>: the difference is that the duplicate violates the key and the outlier does not.</p>
+</div>
+</div>
+<p>Remove it with <code>distinct()</code>, which drops only fully identical rows:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lb <span class="ot">&lt;-</span> <span class="fu">distinct</span>(lb_raw)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">before =</span> <span class="fu">nrow</span>(lb_raw), <span class="at">after =</span> <span class="fu">nrow</span>(lb), <span class="at">removed =</span> <span class="fu">nrow</span>(lb_raw) <span class="sc">-</span> <span class="fu">nrow</span>(lb))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> before   after removed 
+  12389   12388       1 </code></pre>
+</div>
+</div>
+<p>Exactly one row goes. Had the two rows differed in any field — a different result, a different date — <code>distinct()</code> would have kept both, and you would have a genuine discrepancy to investigate rather than a duplicate to drop. De-duplication is safe <em>only</em> because the rows are identical.</p>
 </section>
-<section id="example-2-todo-reference-ranges-the-real-outlier-and-baseline" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="example-2-todo-reference-ranges-the-real-outlier-and-baseline"><span class="header-section-number">7.5</span> Example 2: TODO — Reference ranges, the real outlier, and baseline</h2>
-<p>TODO — blocked on reference-range source.</p>
+<section id="the-result-quartet-and-a-missing-unit" class="level3" data-number="7.4.2">
+<h3 data-number="7.4.2" class="anchored" data-anchor-id="the-result-quartet-and-a-missing-unit"><span class="header-section-number">7.4.2</span> The result quartet, and a missing unit</h3>
+<p>Now map the results. The collected value and unit become <code>LBORRES</code>/<code>LBORRESU</code>; the standardised versions become <code>LBSTRESC</code>/<code>LBSTRESN</code>/<code>LBSTRESU</code>. These analytes need no unit conversion, so standardising is a copy — but first, defect D7: one glucose result arrived with a blank unit.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lb <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(subjid <span class="sc">==</span> <span class="st">"101-037"</span>, visit <span class="sc">==</span> <span class="st">"WEEK 8"</span>, test <span class="sc">==</span> <span class="st">"GLUC"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(subjid, test, result, unit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  subjid  test  result unit 
+  &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;
+1 101-037 GLUC  9.6    &lt;NA&gt; </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a blank is not a valid unit value</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is_term</span>(<span class="st">""</span>, <span class="at">clst_code =</span> <span class="st">"C71620"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<p>The unit is missing, and a blank is not a legal UNIT value. You met this row in <a href="../sessions/sdtm-concepts.html">SDTM Concepts</a>; here you resolve it. The resolution is not a guess: the vendor’s documented panel measures glucose in <code>mmol/L</code>, and every other glucose result in the file confirms it, so the unit is <strong>recovered from the documented source</strong> and the gap is logged as a query to the vendor — the same discipline as the sex conflict in <a href="../sessions/sdtm-dm.html">The DM Domain</a>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>panel_unit <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">HBA1C =</span> <span class="st">"%"</span>, <span class="at">GLUC =</span> <span class="st">"mmol/L"</span>, <span class="at">ALT =</span> <span class="st">"U/L"</span>, <span class="at">CREAT =</span> <span class="st">"umol/L"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>lb <span class="ot">&lt;-</span> lb <span class="sc">|&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">unit =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(unit) <span class="sc">|</span> unit <span class="sc">==</span> <span class="st">""</span>, <span class="fu">unname</span>(panel_unit[test]), unit))</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># the recovered unit is valid CT</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">is_term</span>(<span class="st">"mmol/L"</span>, <span class="at">clst_code =</span> <span class="st">"C71620"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Run It Yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Run the chunks. The blank returns <code>FALSE</code> (not a unit), and <code>mmol/L</code> returns <code>TRUE</code>. Notice the shape of the fix: the value was <strong>recovered from a documented source and logged</strong>, not invented to fill the column. If the vendor’s panel had <em>not</em> pinned the unit, the honest step would be to leave it null and query — never to assume.</p>
+</div>
+</div>
 </section>
-<section id="what-can-go-wrong" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">7.6</span> What Can Go Wrong</h2>
-<p>TODO.</p>
 </section>
-<section id="exercises" class="level2" data-number="7.7">
-<h2 data-number="7.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">7.7</span> Exercises</h2>
-<p>TODO — planned: build the VS slice (VSRESU units) in <a href="../exercises/sdtm-findings.html">exercises/sdtm-findings.qmd</a>.</p>
+<section id="example-2-reference-ranges-a-real-outlier-and-baseline" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="example-2-reference-ranges-a-real-outlier-and-baseline"><span class="header-section-number">7.5</span> Example 2: Reference Ranges, a Real Outlier, and Baseline</h2>
+<p><em>Estimated time: ~25 minutes (worked example)</em></p>
+<section id="deriving-the-range-indicator" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="deriving-the-range-indicator"><span class="header-section-number">7.5.1</span> Deriving the range indicator</h3>
+<p>The raw file carries the vendor’s reference range per result (<code>ref_lo</code>/<code>ref_hi</code>). Map them to <code>LBORNRLO</code>/<code>LBORNRHI</code>, and <strong>derive</strong> <code>LBNRIND</code> by comparing the result to the range — never hard-code it:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>lb <span class="ot">&lt;-</span> lb <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBORRES  =</span> result,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBSTRESN =</span> <span class="fu">as.numeric</span>(result),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBORNRLO =</span> ref_lo,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBORNRHI =</span> ref_hi,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBNRIND  =</span> <span class="fu">case_when</span>(</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(result) <span class="sc">&gt;</span> <span class="fu">as.numeric</span>(ref_hi) <span class="sc">~</span> <span class="st">"HIGH"</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(result) <span class="sc">&lt;</span> <span class="fu">as.numeric</span>(ref_lo) <span class="sc">~</span> <span class="st">"LOW"</span>,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span>                                    <span class="sc">~</span> <span class="st">"NORMAL"</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>lb <span class="sc">|&gt;</span> <span class="fu">filter</span>(test <span class="sc">==</span> <span class="st">"HBA1C"</span>) <span class="sc">|&gt;</span> <span class="fu">count</span>(LBNRIND)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  LBNRIND     n
+  &lt;chr&gt;   &lt;int&gt;
+1 HIGH     3080
+2 NORMAL     17</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reading the Output Line by Line
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Almost every HbA1c reads <code>HIGH</code>. That is correct and expected: the reference range (4.0–5.6%) is the <em>non-diabetic</em> normal, and this is a trial of people with type 2 diabetes, so nearly all of them sit above it — exactly as they would on a real lab report. <code>LBNRIND</code> is doing precisely its job: a mechanical comparison against the range. It is not telling you anything is wrong. Whether HbA1c should have flagged against a diabetic-appropriate range is an <em>analysis</em> decision (ADaM); SDTM records the range the lab supplied.</p>
+</div>
+</div>
 </section>
-<section id="comprehension-check" class="level2" data-number="7.8">
-<h2 data-number="7.8" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">7.8</span> Comprehension Check</h2>
-<p>TODO.</p>
+<section id="the-value-that-looks-like-an-error-but-isnt" class="level3" data-number="7.5.2">
+<h3 data-number="7.5.2" class="anchored" data-anchor-id="the-value-that-looks-like-an-error-but-isnt"><span class="header-section-number">7.5.2</span> The value that looks like an error but isn’t</h3>
+<p>Now defect D5. One screening HbA1c is <code>13.9%</code>. Against the range it is <code>HIGH</code> — like every other HbA1c, so the flag alone does not single it out. What singles it out is its <em>magnitude</em>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>screening <span class="ot">&lt;-</span> lb <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(test <span class="sc">==</span> <span class="st">"HBA1C"</span>, visit <span class="sc">==</span> <span class="st">"SCREENING"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">result =</span> <span class="fu">as.numeric</span>(result))</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">median =</span> <span class="fu">median</span>(screening<span class="sc">$</span>result),</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">max    =</span> <span class="fu">max</span>(screening<span class="sc">$</span>result),</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_at_or_above_13.9 =</span> <span class="fu">sum</span>(screening<span class="sc">$</span>result <span class="sc">&gt;=</span> <span class="fl">13.9</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            median                max n_at_or_above_13.9 
+               8.4               13.9                1.0 </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reading the Output Line by Line
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>13.9%</code> is the single highest screening HbA1c in the trial — one value of 400, against a median of about 8.4. That is the kind of extreme an <strong>edit check</strong> flags automatically: it looks like it could be a transcription error (a slipped digit, an 8.9 mistyped). The flag routes the value into <strong>data review</strong> — a process, not a hunch — which checks it against the source record. Here the source confirms it: a genuinely, severely uncontrolled patient. So the value is <strong>kept</strong>.</p>
+<p>This is the whole lesson of D5, and it is a <em>process</em>, not a person’s opinion: an automated check flags an implausible-looking value → data review investigates it against source → the value is confirmed real → it is retained, unchanged. A range flag (<code>LBNRIND = HIGH</code>) and a plausibility flag are different signals; neither is permission to delete or “correct” a value. Silently changing <code>13.9</code> to something tidier would be fabricating data — the opposite of what the review exists to prevent.</p>
+</div>
+</div>
+</section>
+<section id="the-operational-baseline-flag" class="level3" data-number="7.5.3">
+<h3 data-number="7.5.3" class="anchored" data-anchor-id="the-operational-baseline-flag"><span class="header-section-number">7.5.3</span> The operational baseline flag</h3>
+<p>Finally, <code>LBLOBXFL</code> — the flag SDTM uses for a consistent pre-treatment reference value, defined as the <strong>last non-missing value prior to RFXSTDTC</strong> (SDTMIG v3.4, §4.5.9). It needs each subject’s first-exposure date, which lives in the DM you built last session:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>dm <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/sdtm/dm.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>()))</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>lb <span class="ot">&lt;-</span> lb <span class="sc">|&gt;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dm <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="at">subjid =</span> SUBJID, RFXSTDTC), <span class="at">by =</span> <span class="st">"subjid"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(subjid, test) <span class="sc">|&gt;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">is_pre   =</span> <span class="fu">as.Date</span>(colldt) <span class="sc">&lt;</span> <span class="fu">as.Date</span>(RFXSTDTC),</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">last_pre =</span> <span class="fu">suppressWarnings</span>(<span class="fu">max</span>(<span class="fu">as.Date</span>(colldt)[is_pre])),</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBLOBXFL =</span> <span class="fu">if_else</span>(is_pre <span class="sc">&amp;</span> <span class="fu">is.finite</span>(last_pre) <span class="sc">&amp;</span> <span class="fu">as.Date</span>(colldt) <span class="sc">==</span> last_pre,</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"Y"</span>, <span class="cn">NA_character_</span>)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>lb <span class="sc">|&gt;</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(subjid <span class="sc">==</span> <span class="st">"101-010"</span>, test <span class="sc">==</span> <span class="st">"HBA1C"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(visit, colldt, LBLOBXFL)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 3
+  visit     colldt     LBLOBXFL
+  &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;   
+1 SCREENING 2024-03-12 Y       
+2 BASELINE  2024-03-28 &lt;NA&gt;    
+3 WEEK 4    2024-04-26 &lt;NA&gt;    
+4 WEEK 8    2024-05-25 &lt;NA&gt;    
+5 WEEK 12   2024-06-21 &lt;NA&gt;    
+6 WEEK 16   2024-07-20 &lt;NA&gt;    
+7 WEEK 20   2024-08-18 &lt;NA&gt;    
+8 WEEK 26   2024-09-24 &lt;NA&gt;    </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reading the Output Line by Line
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Exactly one row per subject per test is flagged <code>Y</code> — here the screening draw, the last HbA1c taken before this subject’s first dose. Everything after treatment starts is null. <code>LBLOBXFL</code> gives every study a <em>consistent</em> pre-treatment reference, computed the same way everywhere. But note the standard’s own caution (SDTMIG v3.4, §4.5.9): this is an operational flag, and the <strong>authoritative</strong> baseline for analysis — which visit counts as baseline, how it is chosen — is defined later, in ADaM. You will set it in <a href="../sessions/adsl.html">ADSL</a>. SDTM marks a consistent reference; ADaM decides what baseline <em>means</em> for the analysis.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="the-finished-sdtm-saved" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="the-finished-sdtm-saved"><span class="header-section-number">7.6</span> The Finished SDTM, Saved</h2>
+<p><em>Estimated time: ~10 minutes (reading)</em></p>
+<p>You have now built all four of GLPX-001’s domains across three sessions — DM, AE, and here LB and VS. Rebuilding them by hand every time a later session needs them would invite drift: the DM logic in one session subtly disagreeing with another. So the course reifies exactly these mappings in one script, <a href="https://github.com/sufyansuleman/cdisc-with-r/blob/main/R/build_sdtm.R"><code>R/build_sdtm.R</code></a>, which reads <code>data/raw/</code> and writes the finished domains to <code>data/sdtm/</code>:</p>
+<pre><code>data/raw/*.csv   --  simulate_trial.R  (the EDC + vendor extracts)
+      |
+      |  R/build_sdtm.R   (the mappings these sessions taught)
+      v
+data/sdtm/{dm,ae,lb,vs}.csv   --  conformant, committed, reproducible</code></pre>
+<p>Two properties make this more than a convenience, and both are the subject matter of the course, not incidental to it:</p>
+<ul>
+<li><strong>Reproducibility.</strong> <code>simulate_trial.R</code> is fixed-seed and <code>build_sdtm.R</code> has no randomness, so <code>data/sdtm/</code> is fully determined by those two scripts. Anyone who clones the repository regenerates byte-identical datasets. Reproducibility is not a nicety in regulated work; it is a requirement, and here the pipeline demonstrates it.</li>
+<li><strong>Traceability.</strong> Every value in <code>data/sdtm/lb.csv</code> traces back through <code>build_sdtm.R</code> to a row in <code>data/raw/lb_raw.csv</code> — the provenance a reviewer needs to follow a result from a table back to its source. You will meet traceability again, formally, in <a href="../sessions/define-xml.html">define.xml</a> and <a href="../sessions/adrg-and-submission.html">ADRG and Submission</a>.</li>
+</ul>
+<p>From here on, the ADaM sessions read <code>data/sdtm/</code> rather than rebuilding from raw. The committed CSVs are the hand-off point between “what happened in the trial” (SDTM) and “what the trial shows” (ADaM).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>built <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/sdtm/lb.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>()))</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">rows =</span> <span class="fu">nrow</span>(built), <span class="at">subjects =</span> <span class="fu">n_distinct</span>(built<span class="sc">$</span>USUBJID))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    rows subjects 
+   12388      400 </code></pre>
+</div>
+</div>
+</section>
+<section id="what-can-go-wrong" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">7.7</span> What Can Go Wrong</h2>
+<p><em>Estimated time: ~10 minutes (reading)</em></p>
+<p><strong>Deleting the out-of-range value as an error</strong></p>
+<p>The 13.9% HbA1c is the most tempting mistake in the session. It looks wrong; it is real. A range flag and a plausibility flag both send it to review, and review — checking source — keeps it. Deleting or “correcting” a value because it is extreme is fabricating data.</p>
+<p><strong>De-duplicating rows that are not duplicates</strong></p>
+<p><code>distinct()</code> is safe only for byte-perfect duplicates. Two rows for one key that differ in <em>any</em> field are a discrepancy to investigate, not a duplicate to drop — collapsing them silently discards a real, conflicting measurement.</p>
+<p><strong>Guessing a missing unit</strong></p>
+<p>The blank glucose unit was recovered from the vendor’s documented panel and logged. Typing <code>mmol/L</code> because it “must be” that is a different act — an assumption dressed as data. Recover from a source, or leave null and query.</p>
+<p><strong>Reading LBNRIND as a quality or significance flag</strong></p>
+<p><code>LBNRIND = HIGH</code> on nearly every HbA1c does not mean the data is bad or the finding clinically significant. It is a mechanical comparison against the supplied range (SDTMIG v3.4, §6.3.5.6, assumption 3). Clinical significance and analysis-appropriate ranges are separate, later, and elsewhere.</p>
+<p><strong>Treating LBLOBXFL as the analysis baseline</strong></p>
+<p><code>LBLOBXFL</code> is an operational SDTM flag; the baseline that drives change-from-baseline analysis is defined in ADaM (SDTMIG v3.4, §4.5.9). Using the SDTM flag as if it were the analysis baseline skips the decision ADaM exists to record.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common misinterpretations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>“An out-of-range value is a data error”</strong> <code>LBNRIND</code> marks where a value sits relative to a range; it says nothing about whether the value is correct. The 13.9% is out of range <em>and</em> real. Range position and data quality are different questions.</p>
+<p><strong>“Every HIGH flag needs action”</strong> In a diabetes trial almost every HbA1c is HIGH against the non-diabetic range. A flag that fires for nearly everyone is describing the population, not signalling individual problems.</p>
+<p><strong>“The vendor file is clean because it is machine-generated”</strong> This file had a duplicate transmission and a blank unit. Consistent formatting is not the same as correct data — the same lesson as <a href="../sessions/why-standards.html">Why Standards</a>.</p>
+<p><strong>“data/sdtm/ is just cached output I can edit”</strong> It is generated. Editing a CSV by hand breaks the traceability the whole pipeline exists to provide; the way to change it is to change <code>build_sdtm.R</code> and regenerate.</p>
+</div>
+</div>
+</section>
+<section id="exercises" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="exercises"><span class="header-section-number">7.8</span> Exercises</h2>
+<p>The Findings exercise builds the <strong>VS</strong> domain — the structural twin of LB, with one deliberate difference to catch: <a href="../exercises/sdtm-findings.html">Exercise — SDTM: Findings (Labs &amp; Vital Signs)</a>. Solutions are in the paid tier.</p>
+</section>
+<section id="comprehension-check" class="level2" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">7.9</span> Comprehension Check</h2>
+<p><em>Estimated time: ~10 minutes</em></p>
+<ol type="1">
+<li>What is the natural key of the LB domain, and how did it let you remove exactly one row safely?</li>
+<li>A glucose result arrived with a blank unit. What did you put in <code>LBORRESU</code>, and what makes that a resolution rather than a guess?</li>
+<li>Nearly every HbA1c in the trial reads <code>LBNRIND = HIGH</code>. Is that a data problem? What is <code>LBNRIND</code> actually telling you?</li>
+<li>The 13.9% HbA1c is flagged, reviewed, and kept. Describe the process that led to “kept”, and say why deleting it would be wrong.</li>
+<li><code>LBLOBXFL</code> marks one pre-treatment value per subject per test. Why is it not the baseline used for the analysis?</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answers
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>The natural key is subject + visit + test — “one record per lab test per time point per visit per subject” (SDTMIG v3.4, §6.3.5.6). One key value (subject <code>101-010</code>, screening, HbA1c) appeared twice, and the two rows were byte-for-byte identical, so one was a transmission artefact of a collected-once value (assumption 6) and <code>distinct()</code> removed exactly it. Removal was safe <em>only</em> because the rows were identical.</p></li>
+<li><p><code>mmol/L</code> — recovered from the vendor’s documented panel, which measures glucose in <code>mmol/L</code>, as every other glucose result confirms; the gap was logged as a query. It is a resolution rather than a guess because the value came from a documented source, not from assuming what the unit “should” be. Had no source pinned it, the honest step is null plus a query.</p></li>
+<li><p>Not a data problem. <code>LBNRIND</code> is a mechanical comparison of the result against the supplied reference range (SDTMIG v3.4, §6.3.5.6, assumption 3). The range is the non-diabetic normal, so a diabetic cohort reads <code>HIGH</code> almost everywhere — the flag is describing the population relative to that range, not signalling errors or clinical significance.</p></li>
+<li><p>An automated edit check flagged 13.9% as an implausible extreme (the highest of 400 screening values, against a median near 8.4); that routed it to data review; review checked it against the source record and confirmed a genuinely uncontrolled patient; so it was retained unchanged. Deleting or “correcting” it would fabricate data — the value is real, and its being extreme is not evidence that it is wrong.</p></li>
+<li><p><code>LBLOBXFL</code> is an <em>operational</em> flag — the last non-missing value before first exposure, computed identically across studies (SDTMIG v3.4, §4.5.9). The <em>authoritative</em> baseline for analysis (which visit counts, how it is chosen, how missing baselines are handled) is a decision recorded in ADaM, not SDTM. You set it in <a href="../sessions/adsl.html">ADSL</a>.</p></li>
+</ol>
+</div>
+</div>
+</div>
 
 
 </section>

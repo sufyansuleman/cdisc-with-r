@@ -2,96 +2,6 @@
 title: "SDTM: Findings (Labs & Vital Signs)"
 ---
 
-<!--
-========================================================================
-SKELETON + VERIFY LIST — prose NOT yet written. DO NOT COMMIT as final.
-
-This is the Findings half of the split (Events -> sessions/sdtm-events.qmd,
-already drafted). The F-list below was approved with the combined
-events-findings VERIFY list; it is reproduced here as the working list
-for this session's own drafting turn.
-
-All [IG] claims PRE-VERIFIED against local SDTMIG v3.4; [CT] confirmed
-live via sdtm.terminology at prose time.
-
-This session INTRODUCES R/build_sdtm.R and data/sdtm/ (the persisted,
-committed SDTM datasets), and ADDS lb + vs to build_sdtm.R (currently
-it builds dm + ae only).
-
-Registry defects for this session (distinct subjects):
-  D5 out-of-range HbA1c, REAL  -> 101-052 (13.9% at SCREENING)
-  D6 byte-perfect duplicate lb -> 101-010 (SCREENING HbA1c 8.2)
-  D7 missing unit              -> 101-037 (GLUC WEEK 8; met in sdtm-concepts)
-
-PROPOSED CENTRAL INTUITION (for approval, split from the combined one):
-  "A Findings row records what a measurement was — its test and its
-   result, kept twice as collected and standardised — and the domain's
-   natural key is what makes a duplicate detectable and a real outlier
-   keepable."
-
-OPEN ITEM TO RAISE AT DRAFTING: GLPX raw lb_raw.csv carries NO reference
-ranges (cols: subjid, sex, visit, colldt, test, result, unit). LBNRIND /
-LBORNRLO / LBORNRHI (F4, needed for D5) require a reference range per
-test. Decide the source: (a) add ref_lo/ref_hi to simulate_trial.R's lab
-vendor file (realistic — vendors supply ranges), or (b) a documented
-reference-range lookup in build_sdtm.R. Recommend (a). Author to decide
-before F4/D5 can be built with real values.
-
-========================================================================
-VERIFY LIST (Findings) — every SDTM specific this session will assert.
-
-F1 [IG §6.3.5.6 spec header] LB is Findings-class; ONE RECORD PER LAB
-   TEST PER TIME POINT PER VISIT PER SUBJECT. -> D6 duplicate violates
-   this natural key.
-
-F2 [IG §6.3.5.6 spec; §4.5.1.1] Result quartet, all Expected: LBORRES,
-   LBORRESU (UNIT), LBSTRESC, LBSTRESN, LBSTRESU (UNIT). Original
-   preserved beside standardised.
-
-F3 [IG §6.3.5.6 assumption 7] LBORRESU/LBSTRESU take the UNIT codelist;
-   submit the CDISC Submission Value; unmapped -> synonym or Define-XML
-   extension + new-term request. -> D7: 101-037 blank GLUC unit resolved
-   to mmol/L from the vendor's documented panel, logged as a query (no
-   fabricated confirmation — as approved).
-
-F4 [IG §6.3.5.6 spec; assumption 3; §4.5.5] Reference-range vars, all
-   Expected: LBORNRLO/HI, LBSTNRLO/HI, LBNRIND (codelist NRIND). LBNRIND
-   is NOT clinical significance. -> D5: 101-052 SCREENING HbA1c 13.9%
-   flagged HIGH and KEPT (real value, poorly controlled patient).
-   BLOCKED on the reference-range source decision above.
-
-F5 [IG §6.3.5.6 assumption 6; §4.1.8.1] Central-lab value is COLLECTED,
-   not derived; LBDRVFL null. (Why D6 is a transmission artefact.)
-
-F6 [IG §6.3.5.6 spec] Timing: LBDTC (Exp), LBDY (Perm), VISITNUM (Exp),
-   VISIT (Perm). Study day via the DM RFSTDTC rule (§4.4.4).
-
-F7 [IG §4.5.9; §6.3.5.6] Baseline: LBBLFL (Perm, backward-compat) vs
-   LBLOBXFL (Exp) = "last non-missing value prior to RFXSTDTC".
-   Authoritative analysis baseline is ADaM (forward-link to adsl).
-
-F8 [IG §6.3.5.6 spec] LBSEQ: Required, unique within subject/domain.
-
-V1 [IG §6.3.13 spec header] VS is Findings-class, ONE RECORD PER VITAL
-   SIGN MEASUREMENT PER TIME POINT PER VISIT PER SUBJECT — structurally
-   like LB. VSORRESU uses codelist VSRESU (NOT the generic UNIT). Mainly
-   in the exercise; LB carries the worked example.
-
-X2 [IG §6.3.5.6 header + natural key] De-duplication restores the
-   one-record-per-key structure (D6).
-X3 [IG §4.4.4] Study day reuses the DM study_day() rule.
-
-[CT] to confirm live: NRIND (id + NORMAL/ABNORMAL/HIGH/LOW); VSRESU
-(id + members); UNIT/mmol/L (confirmed); LBTESTCD (confirmed).
-
-Build/infra for this session:
-  - Add build_lb() and build_vs() to R/build_sdtm.R; regenerate and
-    commit data/sdtm/{lb,vs}.csv.
-  - Introduce data/sdtm/ and the traceability chain (raw -> build -> sdtm)
-    pedagogically here, since after this session the SDTM set is complete.
-========================================================================
--->
-
 ```{r setup}
 #| include: false
 #| eval: true
@@ -102,44 +12,530 @@ library(sdtm.terminology)
 ::: {.callout-note}
 ### Session at a Glance
 
-TODO: time budget once written. Sibling of
-[Events](sdtm-events.qmd); resolves defects D5, D6 and D7 and
-introduces the persisted SDTM datasets in `data/sdtm/`.
+**Total core time: about 100 minutes.**
+
+| Section | Time | Type |
+|---|---|---|
+| When Do You Use This? + Learning Objectives | 5 min | Reading |
+| Background: what a Findings row is | 20 min | Reading |
+| Example 1: Building LB — results, units, and a duplicate | 25 min | Worked example |
+| Example 2: Reference ranges, a real outlier, and baseline | 25 min | Worked example |
+| The finished SDTM, saved | 10 min | Reading |
+| What Can Go Wrong | 10 min | Reading |
+| Exercises + Comprehension Check | 15 min | Practice / Self-test |
+
+The sibling of [Events](sdtm-events.qmd) and the last domain-building
+session in Part 2. It resolves three deliberate defects (a duplicate
+record, a missing unit, a real out-of-range value) and completes the
+persisted SDTM the ADaM sessions will read. Split after Example 1 for
+self-paced study.
+:::
+
+::: {.callout-tip}
+### How to Use the Code in This Session
+
+Every code chunk below is written so you can copy it into your R
+console (or an R script) and run it yourself, in the order shown.
+Where you see a "Run It Yourself" box, stop and run the code above it
+before reading the explanation that follows. Run R from the project
+root, as in earlier sessions.
+
+Controlled-terminology checks use the **`sdtm.terminology`** package,
+as in [SDTM Concepts](sdtm-concepts.qmd).
 :::
 
 ## When Do You Use This? {#sec-sdtm-findings}
 
-TODO (prose pass, after the reference-range decision): scenarios — a lab
-transfer with a byte-perfect duplicate and a real out-of-range value; a
-blank unit; and the moment you need a finished SDTM you can hand to the
-analysis team. Builds on [SDTM Concepts](sdtm-concepts.qmd),
-[The DM Domain](sdtm-dm.qmd) and [Events](sdtm-events.qmd).
+::: {.callout-tip}
+A lab transfer lands and you have to make it submission-ready: it has a
+record the vendor sent twice, a result whose unit field is blank, and a
+value so high it looks like a typo — except it isn't. Then the analysis
+team asks for a finished SDTM they can build ADaM from.
+
+All of it is the same task: representing *measurements*. This session
+asks: **once you know a dataset is about results rather than
+occurrences, how do you build it — and how does the standard help you
+tell a data error from a real extreme?**
+
+Builds on [SDTM Concepts](sdtm-concepts.qmd) (the result quartet;
+controlled terminology), [The DM Domain](sdtm-dm.qmd) (RFSTDTC and the
+study-day rule), and [Events](sdtm-events.qmd) (its sibling). After
+this session the SDTM is complete.
+:::
 
 ## Learning Objectives
 
-TODO after approval.
+After completing this session you will be able to:
 
-## Background: TODO — What a Findings Row Is
+- Recognise a Findings-class domain from what one row represents, and
+  predict its result variables
+- Build an LB dataset with original and standardised results and units
+- Use a domain's natural key to detect and remove a duplicate record
+- Recover a missing unit from documented sources rather than guessing
+- Derive a reference-range indicator, and distinguish a mechanical
+  range flag from the judgement of whether a value is real
+- Derive an operational baseline flag, and say why the authoritative
+  baseline lives in ADaM
+- Explain how the raw data becomes the committed SDTM through a
+  reproducible build
 
-TODO after the reference-range source is decided.
+## Background: What a Findings Row Is
 
-## Example 1: TODO — Building LB (the result quartet, de-dup, units)
+*Estimated time: ~20 minutes (reading)*
 
-TODO.
+::: {.callout-important}
+### The one thing to remember
 
-## Example 2: TODO — Reference ranges, the real outlier, and baseline
+**A Findings row records what a measurement was — its test and its
+result, kept twice as collected and standardised — and the domain's
+natural key is what makes a duplicate detectable and a real outlier
+keepable.**
+:::
 
-TODO — blocked on reference-range source.
+Laboratory Test Results (LB) is a Findings-class domain, and its
+structure is **one record per lab test per time point per visit per
+subject** (SDTMIG v3.4, §6.3.5.6). That sentence is also the domain's
+**natural key**: the combination of subject, visit, and test that
+should identify a row uniquely. Hold onto it — it is what turns "the
+vendor sent a duplicate" from a vague worry into a checkable fact.
+
+The **topic** is `LBTESTCD` (the test), and the result is not one
+column but a small family, all Expected (SDTMIG v3.4, §6.3.5.6;
+§4.5.1.1): `LBORRES` (the result as collected) with `LBORRESU` (its
+unit), and the standardised pair `LBSTRESC` (character) / `LBSTRESN`
+(numeric) with `LBSTRESU`. You met this in [SDTM
+Concepts](sdtm-concepts.qmd): the original is always kept beside the
+standardised version. Units are controlled terminology — `LBORRESU`
+and `LBSTRESU` draw on the UNIT codelist, and a unit the vendor uses
+that is not a submission value must be mapped to an equivalent or added
+in the Define-XML (SDTMIG v3.4, §6.3.5.6, assumption 7).
+
+Findings also carry a **reference range** and an indicator of where the
+result falls in it (SDTMIG v3.4, §6.3.5.6): `LBORNRLO`/`LBORNRHI` (the
+range in original units), `LBSTNRLO`/`LBSTNRHI` (in standard units),
+and `LBNRIND` — the "Reference Range Indicator", which "indicates where
+the value falls with respect to reference range defined by LBORNRLO and
+LBORNRHI" (SDTMIG v3.4, §6.3.5.6), taking values from the NRIND codelist
+(`NORMAL`, `LOW`, `HIGH`, `ABNORMAL`).
+
+::: {.callout-important}
+### LBNRIND is a comparison, not a verdict
+
+`LBNRIND` is a **mechanical** comparison of a number against a range. It
+is *not* a clinical-significance flag and *not* a judgement about
+whether the value is a data error (SDTMIG v3.4, §6.3.5.6, assumption 3;
+§4.5.5). Whether a `HIGH` value is a genuine extreme or a transcription
+mistake is a separate question, answered by data review, not by the
+flag. Example 2 turns on exactly this distinction.
+:::
+
+One more, because it recurs: a value produced by a central lab
+following its own procedures is considered **collected, not derived**,
+so its `LBDRVFL` (derived flag) is null (SDTMIG v3.4, §6.3.5.6,
+assumption 6; §4.1.8.1). That is why a byte-perfect duplicate from the
+vendor is a *transmission artefact* to remove — not a real second
+measurement to keep.
+
+## Example 1: Building LB — Results, Units, and a Duplicate
+
+*Estimated time: ~25 minutes (worked example)*
+
+### The natural key, and the duplicate that breaks it
+
+Read the raw lab file and test the natural key directly — is any
+(subject, visit, test) combination present more than once?
+
+```{r read-key}
+#| eval: true
+
+lb_raw <- read_csv("data/raw/lb_raw.csv", show_col_types = FALSE,
+                   col_types = cols(.default = col_character()))
+
+nrow(lb_raw)
+
+lb_raw |> count(subjid, visit, test) |> filter(n > 1)
+```
+
+One key value occurs twice: subject `101-010`'s screening HbA1c. Look
+at the two rows:
+
+```{r show-dup}
+#| eval: true
+
+lb_raw |>
+  filter(subjid == "101-010", visit == "SCREENING", test == "HBA1C")
+```
+
+::: {.callout-note}
+### Reading the Output Line by Line
+
+The two rows are **byte-for-byte identical** — same result, same date,
+same everything. Because a central-lab value is collected once (SDTMIG
+v3.4, §6.3.5.6, assumption 6), two identical rows for one key cannot
+both be real measurements; the second is a transmission artefact. This
+is the one case where removing a row is correct — and the natural key
+is what licenses it. Contrast this with the out-of-range value in
+Example 2, which is also unusual but must be *kept*: the difference is
+that the duplicate violates the key and the outlier does not.
+:::
+
+Remove it with `distinct()`, which drops only fully identical rows:
+
+```{r dedup}
+#| eval: true
+
+lb <- distinct(lb_raw)
+
+c(before = nrow(lb_raw), after = nrow(lb), removed = nrow(lb_raw) - nrow(lb))
+```
+
+Exactly one row goes. Had the two rows differed in any field — a
+different result, a different date — `distinct()` would have kept both,
+and you would have a genuine discrepancy to investigate rather than a
+duplicate to drop. De-duplication is safe *only* because the rows are
+identical.
+
+### The result quartet, and a missing unit
+
+Now map the results. The collected value and unit become
+`LBORRES`/`LBORRESU`; the standardised versions become
+`LBSTRESC`/`LBSTRESN`/`LBSTRESU`. These analytes need no unit
+conversion, so standardising is a copy — but first, defect D7: one
+glucose result arrived with a blank unit.
+
+```{r missing-unit}
+#| eval: true
+
+lb |>
+  filter(subjid == "101-037", visit == "WEEK 8", test == "GLUC") |>
+  select(subjid, test, result, unit)
+
+# a blank is not a valid unit value
+is_term("", clst_code = "C71620")
+```
+
+The unit is missing, and a blank is not a legal UNIT value. You met
+this row in [SDTM Concepts](sdtm-concepts.qmd); here you resolve it. The
+resolution is not a guess: the vendor's documented panel measures
+glucose in `mmol/L`, and every other glucose result in the file confirms
+it, so the unit is **recovered from the documented source** and the gap
+is logged as a query to the vendor — the same discipline as the sex
+conflict in [The DM Domain](sdtm-dm.qmd):
+
+```{r resolve-unit}
+#| eval: true
+
+panel_unit <- c(HBA1C = "%", GLUC = "mmol/L", ALT = "U/L", CREAT = "umol/L")
+
+lb <- lb |>
+  mutate(unit = if_else(is.na(unit) | unit == "", unname(panel_unit[test]), unit))
+
+# the recovered unit is valid CT
+is_term("mmol/L", clst_code = "C71620")
+```
+
+::: {.callout-tip}
+### Run It Yourself
+
+Run the chunks. The blank returns `FALSE` (not a unit), and `mmol/L`
+returns `TRUE`. Notice the shape of the fix: the value was **recovered
+from a documented source and logged**, not invented to fill the column.
+If the vendor's panel had *not* pinned the unit, the honest step would
+be to leave it null and query — never to assume.
+:::
+
+## Example 2: Reference Ranges, a Real Outlier, and Baseline
+
+*Estimated time: ~25 minutes (worked example)*
+
+### Deriving the range indicator
+
+The raw file carries the vendor's reference range per result
+(`ref_lo`/`ref_hi`). Map them to `LBORNRLO`/`LBORNRHI`, and **derive**
+`LBNRIND` by comparing the result to the range — never hard-code it:
+
+```{r nrind}
+#| eval: true
+
+lb <- lb |>
+  mutate(
+    LBORRES  = result,
+    LBSTRESN = as.numeric(result),
+    LBORNRLO = ref_lo,
+    LBORNRHI = ref_hi,
+    LBNRIND  = case_when(
+      as.numeric(result) > as.numeric(ref_hi) ~ "HIGH",
+      as.numeric(result) < as.numeric(ref_lo) ~ "LOW",
+      TRUE                                    ~ "NORMAL"
+    )
+  )
+
+lb |> filter(test == "HBA1C") |> count(LBNRIND)
+```
+
+::: {.callout-note}
+### Reading the Output Line by Line
+
+Almost every HbA1c reads `HIGH`. That is correct and expected: the
+reference range (4.0–5.6%) is the *non-diabetic* normal, and this is a
+trial of people with type 2 diabetes, so nearly all of them sit above
+it — exactly as they would on a real lab report. `LBNRIND` is doing
+precisely its job: a mechanical comparison against the range. It is not
+telling you anything is wrong. Whether HbA1c should have flagged against
+a diabetic-appropriate range is an *analysis* decision (ADaM); SDTM
+records the range the lab supplied.
+:::
+
+### The value that looks like an error but isn't
+
+Now defect D5. One screening HbA1c is `13.9%`. Against the range it is
+`HIGH` — like every other HbA1c, so the flag alone does not single it
+out. What singles it out is its *magnitude*:
+
+```{r outlier}
+#| eval: true
+
+screening <- lb |>
+  filter(test == "HBA1C", visit == "SCREENING") |>
+  mutate(result = as.numeric(result))
+
+c(median = median(screening$result),
+  max    = max(screening$result),
+  n_at_or_above_13.9 = sum(screening$result >= 13.9))
+```
+
+::: {.callout-note}
+### Reading the Output Line by Line
+
+`13.9%` is the single highest screening HbA1c in the trial — one value
+of 400, against a median of about 8.4. That is the kind of extreme an
+**edit check** flags automatically: it looks like it could be a
+transcription error (a slipped digit, an 8.9 mistyped). The flag routes
+the value into **data review** — a process, not a hunch — which checks
+it against the source record. Here the source confirms it: a genuinely,
+severely uncontrolled patient. So the value is **kept**.
+
+This is the whole lesson of D5, and it is a *process*, not a person's
+opinion: an automated check flags an implausible-looking value → data
+review investigates it against source → the value is confirmed real →
+it is retained, unchanged. A range flag (`LBNRIND = HIGH`) and a
+plausibility flag are different signals; neither is permission to delete
+or "correct" a value. Silently changing `13.9` to something tidier would
+be fabricating data — the opposite of what the review exists to prevent.
+:::
+
+### The operational baseline flag
+
+Finally, `LBLOBXFL` — the flag SDTM uses for a consistent pre-treatment
+reference value, defined as the **last non-missing value prior to
+RFXSTDTC** (SDTMIG v3.4, §4.5.9). It needs each subject's first-exposure
+date, which lives in the DM you built last session:
+
+```{r baseline}
+#| eval: true
+
+dm <- read_csv("data/sdtm/dm.csv", show_col_types = FALSE,
+               col_types = cols(.default = col_character()))
+
+lb <- lb |>
+  left_join(dm |> select(subjid = SUBJID, RFXSTDTC), by = "subjid") |>
+  group_by(subjid, test) |>
+  mutate(
+    is_pre   = as.Date(colldt) < as.Date(RFXSTDTC),
+    last_pre = suppressWarnings(max(as.Date(colldt)[is_pre])),
+    LBLOBXFL = if_else(is_pre & is.finite(last_pre) & as.Date(colldt) == last_pre,
+                       "Y", NA_character_)
+  ) |>
+  ungroup()
+
+lb |>
+  filter(subjid == "101-010", test == "HBA1C") |>
+  select(visit, colldt, LBLOBXFL)
+```
+
+::: {.callout-note}
+### Reading the Output Line by Line
+
+Exactly one row per subject per test is flagged `Y` — here the
+screening draw, the last HbA1c taken before this subject's first dose.
+Everything after treatment starts is null. `LBLOBXFL` gives every study
+a *consistent* pre-treatment reference, computed the same way
+everywhere. But note the standard's own caution (SDTMIG v3.4, §4.5.9):
+this is an operational flag, and the **authoritative** baseline for
+analysis — which visit counts as baseline, how it is chosen — is
+defined later, in ADaM. You will set it in [ADSL](adsl.qmd). SDTM marks
+a consistent reference; ADaM decides what baseline *means* for the
+analysis.
+:::
+
+## The Finished SDTM, Saved
+
+*Estimated time: ~10 minutes (reading)*
+
+You have now built all four of GLPX-001's domains across three sessions
+— DM, AE, and here LB and VS. Rebuilding them by hand every time a later
+session needs them would invite drift: the DM logic in one session
+subtly disagreeing with another. So the course reifies exactly these
+mappings in one script, [`R/build_sdtm.R`](https://github.com/sufyansuleman/cdisc-with-r/blob/main/R/build_sdtm.R),
+which reads `data/raw/` and writes the finished domains to `data/sdtm/`:
+
+```
+data/raw/*.csv   --  simulate_trial.R  (the EDC + vendor extracts)
+      |
+      |  R/build_sdtm.R   (the mappings these sessions taught)
+      v
+data/sdtm/{dm,ae,lb,vs}.csv   --  conformant, committed, reproducible
+```
+
+Two properties make this more than a convenience, and both are the
+subject matter of the course, not incidental to it:
+
+- **Reproducibility.** `simulate_trial.R` is fixed-seed and
+  `build_sdtm.R` has no randomness, so `data/sdtm/` is fully determined
+  by those two scripts. Anyone who clones the repository regenerates
+  byte-identical datasets. Reproducibility is not a nicety in regulated
+  work; it is a requirement, and here the pipeline demonstrates it.
+- **Traceability.** Every value in `data/sdtm/lb.csv` traces back
+  through `build_sdtm.R` to a row in `data/raw/lb_raw.csv` — the
+  provenance a reviewer needs to follow a result from a table back to
+  its source. You will meet traceability again, formally, in
+  [define.xml](define-xml.qmd) and [ADRG and
+  Submission](adrg-and-submission.qmd).
+
+From here on, the ADaM sessions read `data/sdtm/` rather than rebuilding
+from raw. The committed CSVs are the hand-off point between "what
+happened in the trial" (SDTM) and "what the trial shows" (ADaM).
+
+```{r read-built}
+#| eval: true
+
+built <- read_csv("data/sdtm/lb.csv", show_col_types = FALSE,
+                  col_types = cols(.default = col_character()))
+
+c(rows = nrow(built), subjects = n_distinct(built$USUBJID))
+```
 
 ## What Can Go Wrong
 
-TODO.
+*Estimated time: ~10 minutes (reading)*
+
+**Deleting the out-of-range value as an error**
+
+The 13.9% HbA1c is the most tempting mistake in the session. It looks
+wrong; it is real. A range flag and a plausibility flag both send it to
+review, and review — checking source — keeps it. Deleting or "correcting"
+a value because it is extreme is fabricating data.
+
+**De-duplicating rows that are not duplicates**
+
+`distinct()` is safe only for byte-perfect duplicates. Two rows for one
+key that differ in *any* field are a discrepancy to investigate, not a
+duplicate to drop — collapsing them silently discards a real, conflicting
+measurement.
+
+**Guessing a missing unit**
+
+The blank glucose unit was recovered from the vendor's documented panel
+and logged. Typing `mmol/L` because it "must be" that is a different
+act — an assumption dressed as data. Recover from a source, or leave
+null and query.
+
+**Reading LBNRIND as a quality or significance flag**
+
+`LBNRIND = HIGH` on nearly every HbA1c does not mean the data is bad or
+the finding clinically significant. It is a mechanical comparison
+against the supplied range (SDTMIG v3.4, §6.3.5.6, assumption 3).
+Clinical significance and analysis-appropriate ranges are separate,
+later, and elsewhere.
+
+**Treating LBLOBXFL as the analysis baseline**
+
+`LBLOBXFL` is an operational SDTM flag; the baseline that drives
+change-from-baseline analysis is defined in ADaM (SDTMIG v3.4, §4.5.9).
+Using the SDTM flag as if it were the analysis baseline skips the
+decision ADaM exists to record.
+
+::: {.callout-warning}
+### Common misinterpretations
+
+**"An out-of-range value is a data error"**
+`LBNRIND` marks where a value sits relative to a range; it says nothing
+about whether the value is correct. The 13.9% is out of range *and*
+real. Range position and data quality are different questions.
+
+**"Every HIGH flag needs action"**
+In a diabetes trial almost every HbA1c is HIGH against the non-diabetic
+range. A flag that fires for nearly everyone is describing the
+population, not signalling individual problems.
+
+**"The vendor file is clean because it is machine-generated"**
+This file had a duplicate transmission and a blank unit. Consistent
+formatting is not the same as correct data — the same lesson as [Why
+Standards](why-standards.qmd).
+
+**"data/sdtm/ is just cached output I can edit"**
+It is generated. Editing a CSV by hand breaks the traceability the whole
+pipeline exists to provide; the way to change it is to change
+`build_sdtm.R` and regenerate.
+:::
 
 ## Exercises
 
-TODO — planned: build the VS slice (VSRESU units) in
-[exercises/sdtm-findings.qmd](../exercises/sdtm-findings.qmd).
+The Findings exercise builds the **VS** domain — the structural twin of
+LB, with one deliberate difference to catch: [Exercise — SDTM: Findings
+(Labs & Vital Signs)](../exercises/sdtm-findings.qmd). Solutions are in
+the paid tier.
 
 ## Comprehension Check
 
-TODO.
+*Estimated time: ~10 minutes*
+
+1. What is the natural key of the LB domain, and how did it let you
+   remove exactly one row safely?
+2. A glucose result arrived with a blank unit. What did you put in
+   `LBORRESU`, and what makes that a resolution rather than a guess?
+3. Nearly every HbA1c in the trial reads `LBNRIND = HIGH`. Is that a
+   data problem? What is `LBNRIND` actually telling you?
+4. The 13.9% HbA1c is flagged, reviewed, and kept. Describe the process
+   that led to "kept", and say why deleting it would be wrong.
+5. `LBLOBXFL` marks one pre-treatment value per subject per test. Why is
+   it not the baseline used for the analysis?
+
+::: {.callout-note collapse="true"}
+### Answers
+
+1. The natural key is subject + visit + test — "one record per lab test
+   per time point per visit per subject" (SDTMIG v3.4, §6.3.5.6). One
+   key value (subject `101-010`, screening, HbA1c) appeared twice, and
+   the two rows were byte-for-byte identical, so one was a transmission
+   artefact of a collected-once value (assumption 6) and `distinct()`
+   removed exactly it. Removal was safe *only* because the rows were
+   identical.
+
+2. `mmol/L` — recovered from the vendor's documented panel, which
+   measures glucose in `mmol/L`, as every other glucose result confirms;
+   the gap was logged as a query. It is a resolution rather than a guess
+   because the value came from a documented source, not from assuming
+   what the unit "should" be. Had no source pinned it, the honest step
+   is null plus a query.
+
+3. Not a data problem. `LBNRIND` is a mechanical comparison of the result
+   against the supplied reference range (SDTMIG v3.4, §6.3.5.6,
+   assumption 3). The range is the non-diabetic normal, so a diabetic
+   cohort reads `HIGH` almost everywhere — the flag is describing the
+   population relative to that range, not signalling errors or clinical
+   significance.
+
+4. An automated edit check flagged 13.9% as an implausible extreme (the
+   highest of 400 screening values, against a median near 8.4); that
+   routed it to data review; review checked it against the source record
+   and confirmed a genuinely uncontrolled patient; so it was retained
+   unchanged. Deleting or "correcting" it would fabricate data — the
+   value is real, and its being extreme is not evidence that it is wrong.
+
+5. `LBLOBXFL` is an *operational* flag — the last non-missing value
+   before first exposure, computed identically across studies (SDTMIG
+   v3.4, §4.5.9). The *authoritative* baseline for analysis (which visit
+   counts, how it is chosen, how missing baselines are handled) is a
+   decision recorded in ADaM, not SDTM. You set it in [ADSL](adsl.qmd).
+:::
