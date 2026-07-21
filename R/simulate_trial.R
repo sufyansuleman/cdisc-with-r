@@ -67,10 +67,10 @@ defect_registry <- tribble(
   "D1", "dm",    "103-141", NA,   "missing birth date",                    "sdtm-dm",
   "D2", "dm",    "101-012", NA,   "enrolled at two sites",                 "sdtm-dm",
   "D3", "dm",    "111-003", NA,   "sex inconsistent across raw sources",   "sdtm-dm",
-  "D4", "ae",    "103-199", 1L,   "AE with no start date",                 "sdtm-events-findings",
-  "D5", "lb",    "101-052", NA,   "out-of-range HbA1c, genuine not error", "sdtm-events-findings",
-  "D6", "lb",    "101-010", NA,   "byte-perfect duplicate record",         "sdtm-events-findings",
-  "D7", "lb",    "101-037", NA,   "missing unit",                          "sdtm-events-findings"
+  "D4", "ae",    "103-199", 1L,   "AE with no start date",                 "sdtm-events",
+  "D5", "lb",    "101-052", NA,   "out-of-range HbA1c, genuine not error", "sdtm-findings",
+  "D6", "lb",    "101-010", NA,   "byte-perfect duplicate record",         "sdtm-findings",
+  "D7", "lb",    "101-037", NA,   "missing unit",                          "sdtm-findings"
 )
 
 # Invariant: no subject carries two defects. Entangled defects teach nothing —
@@ -205,13 +205,13 @@ simulate_ae <- function(subjects) {
   ae$AETERM[i[24]]    <- "nausea and vomitting"
 
   # One severe hypoglycaemia requiring hospitalisation: the trial's only
-  # serious AE. Teaches seriousness vs severity in sessions/adae-adlb.qmd.
+  # serious AE. Teaches seriousness vs severity in sessions/sdtm-events.qmd.
   sev <- which(ae$AETERM == "Hypoglycaemia")[1]
   ae$AESEV[sev] <- "SEVERE"
   ae$AESER[sev] <- "Y"
 
   # D4: one AE reported by phone; the start date was never obtained.
-  # Teaches missing-date handling in sessions/sdtm-events-findings.qmd.
+  # Teaches missing-date handling in sessions/sdtm-events.qmd.
   d4 <- filter(defect_registry, id == "D4")
   ae$AESTDT[which(ae$SUBJID == d4$usubjid)[d4$seq]] <- ""
 
@@ -227,6 +227,25 @@ simulate_lb <- function(subjects, visits) {
     "GLUC",   "mmol/L",   9.6,     1.1,
     "ALT",    "U/L",      27,      8,
     "CREAT",  "umol/L",   NA,      9       # sex-dependent mean below
+  )
+
+  # Reference ranges as a central-lab vendor supplies them: per test, and
+  # per sex where clinically real (ALT, creatinine). Synthetic but
+  # realistic general-population ranges — the values are the vendor's,
+  # not CDISC's. Carried into the raw file so the SDTM build can DERIVE
+  # LBNRIND (result vs range) rather than hard-code any flag. HbA1c and
+  # glucose ranges are non-diabetic normals, so this diabetic cohort will
+  # generally read HIGH — as it does on a real lab report.
+  ref_ranges <- tribble(
+    ~test,    ~sex, ~ref_lo, ~ref_hi,
+    "HBA1C",  "M",    4.0,     5.6,
+    "HBA1C",  "F",    4.0,     5.6,
+    "GLUC",   "M",    3.9,     5.6,
+    "GLUC",   "F",    3.9,     5.6,
+    "ALT",    "M",   10,      40,
+    "ALT",    "F",    7,      35,
+    "CREAT",  "M",   62,     106,
+    "CREAT",  "F",   44,      80
   )
 
   grid <- subjects |>
@@ -260,14 +279,14 @@ simulate_lb <- function(subjects, visits) {
   # D5: one screening HbA1c of 13.9% — far out of range and REAL: a
   # genuinely poorly controlled patient, not a data error. Teaches that
   # range checks flag values for review, not deletion
-  # (sessions/sdtm-events-findings.qmd).
+  # (sessions/sdtm-findings.qmd).
   hi <- which(lb$subjid == defect_subject("D5") &
                 lb$test == "HBA1C" & lb$visit == "SCREENING")
   stopifnot(length(hi) == 1)
   lb$result[hi] <- 13.9
 
   # D7: one result arrived with the unit field blank.
-  # Teaches unit reconciliation in sessions/sdtm-events-findings.qmd.
+  # Teaches unit reconciliation in sessions/sdtm-findings.qmd.
   ui <- which(lb$subjid == defect_subject("D7") &
                 lb$test == "GLUC" & lb$visit == "WEEK 8")
   stopifnot(length(ui) == 1)
@@ -279,11 +298,15 @@ simulate_lb <- function(subjects, visits) {
   lb$sex[lb$subjid == defect_subject("D3")] <- "M"
 
   # D6: one record was transmitted twice by the vendor — a byte-perfect
-  # duplicate. Teaches de-duplication in sessions/sdtm-events-findings.qmd.
+  # duplicate. Teaches de-duplication in sessions/sdtm-findings.qmd.
   dup_row <- filter(lb, subjid == defect_subject("D6"),
                     visit == "SCREENING", test == "HBA1C")
   stopifnot(nrow(dup_row) == 1)
   lb <- bind_rows(lb, dup_row)
+
+  # Attach the vendor reference ranges last (deterministic lookup on the
+  # final test/sex; consumes no RNG, so every result above is unchanged).
+  lb <- left_join(lb, ref_ranges, by = c("test", "sex"))
 
   arrange(lb, subjid, colldt, test)
 }
