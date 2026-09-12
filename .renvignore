@@ -1,0 +1,15 @@
+# Directories renv should not scan for package dependencies.
+#
+# renv uses implicit snapshots, which means it reads every file in the
+# project looking for library() calls. Without this file that includes the
+# 317 MB of CDISC reference material under refs/, and dependency discovery
+# takes over ten minutes.
+#
+# Every real dependency lives in R/, sessions/ or exercises/.
+
+refs/
+docs/
+_freeze/
+data/
+renv/library/
+renv/staging/

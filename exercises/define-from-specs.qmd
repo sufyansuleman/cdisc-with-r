@@ -58,9 +58,11 @@ of a controlled document is that it does not change casually.
 
    Then answer, with the count to back it up:
 
-   - How many of the 48 variables can you assign a 2.1 `Source` to with
-     confidence, and how many are genuinely ambiguous from the workbook
-     alone?
+   - How many of the variables in the generated document can you assign
+     a 2.1 `Source` to with confidence, and how many are genuinely
+     ambiguous from the workbook alone? Report the total you found, and
+     say why it is not the same as the number of rows in
+     `VARIABLE_METADATA`.
    - For the ambiguous ones, what information would you need, and who
      in a real sponsor would have it?
 
