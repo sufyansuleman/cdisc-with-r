@@ -125,9 +125,18 @@ unresolved <- setdiff(refs, defs)
 
 derived_items <- xml_attr(
   xml_find_all(define, "//d1:ItemDef[def:Origin/@Type='Derived']"), "OID")
+
+# NOTE ON SCOPE. The obvious XPath here is
+#   //d1:ItemGroupDef/d1:ItemRef[@ItemOID='...']
+# and it is wrong. Value-level ItemDefs are referenced from
+# def:ValueListDef, not from ItemGroupDef, so that path returns a missing
+# node for every one of them, `!is.na(ref)` is FALSE, and they are dropped
+# from the result without a warning. Rule 73 applies to them too.
+#
+# Narrow path: 13 findings. This path: 17. The difference is the four
+# value-level LBSTRESN definitions. See sessions/adrg.qmd.
 no_method <- keep(derived_items, function(oid) {
-  ref <- xml_find_first(
-    define, sprintf("//d1:ItemGroupDef/d1:ItemRef[@ItemOID='%s']", oid))
+  ref <- xml_find_first(define, sprintf("//d1:ItemRef[@ItemOID='%s']", oid))
   !is.na(ref) && is.na(xml_attr(ref, "MethodOID"))
 })
 

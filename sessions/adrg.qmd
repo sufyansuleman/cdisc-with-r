@@ -347,7 +347,7 @@ read_csv("data/adrg/06_conformance_issues.csv", show_col_types = FALSE) |>
 
 ### Reading the Output Line by Line
 
-Thirteen variables in GLPX-1's define.xml have `Origin Type="Derived"`
+Seventeen variables in GLPX-1's define.xml have `Origin Type="Derived"`
 and no `MethodOID`: nothing states how they were derived. The cause is
 upstream, in the specification workbook: `COMPUTATION_METHOD` defines
 five methods, but twenty-three variables are marked derived.
@@ -363,6 +363,77 @@ quietly fixed.** Two reasons, and both are the point of section 6:
    ADRG, exactly as
    [the previous session](define-from-specs.qmd) argued. The ADRG
    reports the state of the submission; it does not launder it.
+
+### The Same Rule, Two XPaths, Two Answers
+
+Before trusting that seventeen, look at how it was counted. Rule 73
+says a `Derived` origin needs a `MethodOID` on the `ItemRef` that
+points at it. So you find the derived `ItemDef`s and check their
+`ItemRef`s. The obvious way to write that is wrong.
+
+```{r rule73-scope}
+define <- read_xml("data/define/define.sdtm.xml")
+
+derived <- xml_attr(
+  xml_find_all(define, "//d1:ItemDef[def:Origin/@Type='Derived']"), "OID")
+
+count_missing <- function(path) {
+  sum(map_lgl(derived, function(oid) {
+    ref <- xml_find_first(define, sprintf("%s[@ItemOID='%s']", path, oid))
+    !is.na(ref) && is.na(xml_attr(ref, "MethodOID"))
+  }))
+}
+
+c(narrow = count_missing("//d1:ItemGroupDef/d1:ItemRef"),
+  wide   = count_missing("//d1:ItemRef"))
+```
+
+Same rule, same document, same day. Four findings appear or disappear
+depending on one path fragment.
+
+The narrow version looks reasonable: variables live in datasets, so
+their `ItemRef`s live in `ItemGroupDef`. But **value-level definitions
+are referenced from `def:ValueListDef`**, not from `ItemGroupDef`. For
+those four, `xml_find_first()` returns a missing node, `!is.na(ref)`
+is `FALSE`, and they are dropped.
+
+Not skipped with a warning. Dropped.
+
+```{r rule73-missed}
+setdiff(
+  keep(derived, function(oid) {
+    ref <- xml_find_first(define, sprintf("//d1:ItemRef[@ItemOID='%s']", oid))
+    !is.na(ref) && is.na(xml_attr(ref, "MethodOID"))
+  }),
+  keep(derived, function(oid) {
+    ref <- xml_find_first(
+      define, sprintf("//d1:ItemGroupDef/d1:ItemRef[@ItemOID='%s']", oid))
+    !is.na(ref) && is.na(xml_attr(ref, "MethodOID"))
+  })
+)
+```
+
+The four value-level `LBSTRESN` definitions, the ones
+[Define-XML](define-xml.qmd) built to give each lab parameter its own
+units and ranges. They are derived, they have no method, and the narrow
+check never looked at them.
+
+::: {.callout-important}
+### A check that reports zero is saying one of two things
+
+*There are no findings*, or *I did not look there*. These are not the
+same claim and the output is identical.
+
+You cannot tell them apart by reading the number. You can only tell them
+apart by reading the check, or by running it against a document you have
+broken on purpose and confirming it complains.
+
+This matters more than it sounds. Conformance tooling is how a sponsor
+convinces itself a submission is sound. A check with an unadvertised
+blind spot does not fail loudly, it reassures quietly, which is the one
+behaviour you cannot afford in an instrument you are using to decide
+whether you are done.
+:::
 
 A real ADRG's issues summary would carry, for each finding, an
 explanation of why it is acceptable or what was done about it. Writing
@@ -469,7 +540,7 @@ one narrative section this course can honestly ask you to write.
    the protocol, SAP and define.xml. Why is that not a design flaw?
 2. GLPX-1's define.xml records that `AGE` has `Origin Type="Derived"`.
    What can it not record, and which ADRG section carries it?
-3. Your ADRG's section 6.2 lists thirteen rule-73 findings. Where do
+3. Your ADRG's section 6.2 lists seventeen rule-73 findings. Where do
    you fix them, and what do you do about the ADRG in the meantime?
 4. Which of the seven required sections could be regenerated
    automatically after a data refresh, and which would need rewriting

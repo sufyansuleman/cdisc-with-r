@@ -471,7 +471,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Write a function that takes the generated define.xml and reports, for every variable, what its 2.1 <code>Type</code> and <code>Source</code> <strong>would</strong> be. Use the mapping the session established for <code>CRF</code> and <code>eDT</code>, and work out the rest yourself from §4.3.2.1 - <code>Derived</code> and <code>Assigned</code> both survive into 2.1, but they still need a <code>Source</code>, and the SDTM table constrains which sources are valid for each.</p>
 <p>Then answer, with the count to back it up:</p>
 <ul>
-<li>How many of the 48 variables can you assign a 2.1 <code>Source</code> to with confidence, and how many are genuinely ambiguous from the workbook alone?</li>
+<li>How many of the variables in the generated document can you assign a 2.1 <code>Source</code> to with confidence, and how many are genuinely ambiguous from the workbook alone? Report the total you found, and say why it is not the same as the number of rows in <code>VARIABLE_METADATA</code>.</li>
 <li>For the ambiguous ones, what information would you need, and who in a real sponsor would have it?</li>
 </ul></li>
 <li><p><strong>(Semi-guided) Cost out the upgrade.</strong> You have been asked whether the study should ship Define-XML 2.1.</p>

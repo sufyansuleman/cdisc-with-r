@@ -460,10 +460,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="task" class="level2" data-number="29.3">
 <h2 data-number="29.3" class="anchored" data-anchor-id="task"><span class="header-section-number">29.3</span> Task</h2>
 <ol type="1">
-<li><p><strong>(Guided) Close the rule-73 finding.</strong> The session’s section 6.2 reports thirteen variables with <code>Origin Type="Derived"</code> and no <code>MethodOID</code>.</p>
+<li><p><strong>(Guided) Close the rule-73 finding.</strong> The session’s section 6.2 reports seventeen variables with <code>Origin Type="Derived"</code> and no <code>MethodOID</code>. Thirteen are dataset-level and four are value-level.</p>
 <p>Fix it where it belongs. Work on a copy of <code>data/spec/SDTM_METADATA.xlsx</code>, add the missing entries to <code>COMPUTATION_METHOD</code>, reference them from <code>COMPUTATIONMETHODOID</code> in <code>VARIABLE_METADATA</code>, regenerate with <code>R/build_define.R</code>, and re-run the check.</p>
-<p>The derivations must describe what <code>R/build_sdtm.R</code> actually does. Read it. Do not write “derived per SAP” thirteen times; a method that says nothing is worse than an honest finding, because it suppresses the finding without supplying the information.</p>
-<p>Then answer: <code>LBDRVFL</code> is one of the thirteen and it is null on every record in the study. What should its computation method say, and is <code>Derived</code> even the right origin for it? Justify from the Define-XML origin definitions rather than from convenience.</p></li>
+<p>The derivations must describe what <code>R/build_sdtm.R</code> actually does. Read it. Do not write “derived per SAP” seventeen times; a method that says nothing is worse than an honest finding, because it suppresses the finding without supplying the information.</p>
+<p>Then answer: <code>LBDRVFL</code> is one of the seventeen and it is null on every record in the study. What should its computation method say, and is <code>Derived</code> even the right origin for it? Justify from the Define-XML origin definitions rather than from convenience.</p></li>
 <li><p><strong>(The trap) Regenerate everything and find what moved.</strong> Re-run <code>R/build_adrg_components.R</code> after your fix.</p>
 <p>Section 6.2 should now be clean. Check whether anything <strong>else</strong> changed, and explain each difference you find. In particular, look at the standards inventory. It reads the Define-XML version out of the regenerated file rather than restating it, which is either a safeguard or a trap depending on what you changed.</p>
 <p>Then answer: the session argues the ADRG’s generated tables should never be hand-maintained. You have just regenerated six tables from one workbook edit. What would have gone wrong if section 6.2 had been a paragraph someone typed?</p></li>
@@ -480,7 +480,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="acceptance-criteria" class="level2" data-number="29.4">
 <h2 data-number="29.4" class="anchored" data-anchor-id="acceptance-criteria"><span class="header-section-number">29.4</span> Acceptance criteria</h2>
 <ul class="task-list">
-<li><label><input type="checkbox">All thirteen <code>COMPUTATION_METHOD</code> entries added, each describing the actual derivation in <code>R/build_sdtm.R</code></label></li>
+<li><label><input type="checkbox">All seventeen findings closed: thirteen <code>COMPUTATION_METHOD</code> entries referenced from <code>VARIABLE_METADATA</code>, and four from <code>VALUELEVEL_METADATA</code>, each describing the actual derivation in <code>R/build_sdtm.R</code></label></li>
 <li><label><input type="checkbox">Regenerated define.xml still validates against the 2.0 schema</label></li>
 <li><label><input type="checkbox">The rule-73 check returns zero findings</label></li>
 <li><label><input type="checkbox">The <code>LBDRVFL</code> origin question answered from the Define-XML origin definitions</label></li>
@@ -498,7 +498,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Task 1: the thirteen are mostly DM reference dates and LB standardised results. <code>R/build_sdtm.R</code> has the logic; <code>study_day()</code> in particular is worth quoting rather than paraphrasing. For <code>LBDRVFL</code>, re-read what <a href="../exercises/sdtm-findings.html">Findings</a> established about why it is null, then check the Define-XML <code>Type</code> definitions - <code>Derived</code> means a value “calculated by an algorithm or reproducible rule”, and a variable with no values has not been calculated by anything.</p>
+<p>Task 1: the thirteen dataset-level findings are mostly DM reference dates and LB standardised results; the four value-level ones are the <code>LBSTRESN</code> definitions, and they are fixed in <code>VALUELEVEL_METADATA</code> rather than <code>VARIABLE_METADATA</code>. <code>R/build_sdtm.R</code> has the logic; <code>study_day()</code> in particular is worth quoting rather than paraphrasing. For <code>LBDRVFL</code>, re-read what <a href="../exercises/sdtm-findings.html">Findings</a> established about why it is null, then check the Define-XML <code>Type</code> definitions - <code>Derived</code> means a value “calculated by an algorithm or reproducible rule”, and a variable with no values has not been calculated by anything.</p>
 <p>Task 2: <code>R/build_adrg_components.R</code> reads the Define-XML version from the <code>MetaDataVersion</code> element. If your regeneration changed it, the inventory changes with it and that is the safeguard working. If you edited <code>DEFINE_HEADER_METADATA</code> you may have changed something you did not intend.</p>
 <p>Task 3: the numbers are all in <a href="../exercises/adlb.html">ADLB</a>, the 342 pairs, the <code>ADY &lt;= 1</code> rule, and the -1.116 versus -1.138 comparison. The Completion Guidelines section 3.4 lists the questions the section must answer; answer those, in order, in prose. Resist writing a paragraph about why baseline definitions matter in general: a reviewer wants this study’s rule, not a tutorial.</p>
 </div>

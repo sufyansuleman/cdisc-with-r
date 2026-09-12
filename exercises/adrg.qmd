@@ -28,8 +28,8 @@ adrg <- list.files("data/adrg", full.names = TRUE) |>
 ## Task
 
 1. **(Guided) Close the rule-73 finding.** The session's section 6.2
-   reports thirteen variables with `Origin Type="Derived"` and no
-   `MethodOID`.
+   reports seventeen variables with `Origin Type="Derived"` and no
+   `MethodOID`. Thirteen are dataset-level and four are value-level.
 
    Fix it where it belongs. Work on a copy of
    `data/spec/SDTM_METADATA.xlsx`, add the missing entries to
@@ -38,11 +38,11 @@ adrg <- list.files("data/adrg", full.names = TRUE) |>
    the check.
 
    The derivations must describe what `R/build_sdtm.R` actually does.
-   Read it. Do not write "derived per SAP" thirteen times; a method
+   Read it. Do not write "derived per SAP" seventeen times; a method
    that says nothing is worse than an honest finding, because it
    suppresses the finding without supplying the information.
 
-   Then answer: `LBDRVFL` is one of the thirteen and it is null on
+   Then answer: `LBDRVFL` is one of the seventeen and it is null on
    every record in the study. What should its computation method say,
    and is `Derived` even the right origin for it? Justify from the
    Define-XML origin definitions rather than from convenience.
@@ -83,8 +83,10 @@ adrg <- list.files("data/adrg", full.names = TRUE) |>
 
 ## Acceptance criteria
 
-- [ ] All thirteen `COMPUTATION_METHOD` entries added, each describing
-      the actual derivation in `R/build_sdtm.R`
+- [ ] All seventeen findings closed: thirteen `COMPUTATION_METHOD`
+      entries referenced from `VARIABLE_METADATA`, and four from
+      `VALUELEVEL_METADATA`, each describing the actual derivation in
+      `R/build_sdtm.R`
 - [ ] Regenerated define.xml still validates against the 2.0 schema
 - [ ] The rule-73 check returns zero findings
 - [ ] The `LBDRVFL` origin question answered from the Define-XML origin
@@ -98,8 +100,10 @@ adrg <- list.files("data/adrg", full.names = TRUE) |>
 ::: {.callout-tip}
 ## Hint
 
-Task 1: the thirteen are mostly DM reference dates and LB standardised
-results. `R/build_sdtm.R` has the logic; `study_day()` in particular is
+Task 1: the thirteen dataset-level findings are mostly DM reference
+dates and LB standardised results; the four value-level ones are the
+`LBSTRESN` definitions, and they are fixed in `VALUELEVEL_METADATA`
+rather than `VARIABLE_METADATA`. `R/build_sdtm.R` has the logic; `study_day()` in particular is
 worth quoting rather than paraphrasing. For `LBDRVFL`, re-read what
 [Findings](sdtm-findings.qmd) established about why it is null, then
 check the Define-XML `Type` definitions - `Derived` means a value

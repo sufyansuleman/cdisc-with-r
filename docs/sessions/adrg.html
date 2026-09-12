@@ -433,6 +433,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#example-3-the-conformance-summary" id="toc-example-3-the-conformance-summary" class="nav-link" data-scroll-target="#example-3-the-conformance-summary"><span class="header-section-number">15.6</span> Example 3: The Conformance Summary</a>
   <ul class="collapse">
   <li><a href="#reading-the-output-line-by-line-1" id="toc-reading-the-output-line-by-line-1" class="nav-link" data-scroll-target="#reading-the-output-line-by-line-1"><span class="header-section-number">15.6.1</span> Reading the Output Line by Line</a></li>
+  <li><a href="#the-same-rule-two-xpaths-two-answers" id="toc-the-same-rule-two-xpaths-two-answers" class="nav-link" data-scroll-target="#the-same-rule-two-xpaths-two-answers"><span class="header-section-number">15.6.2</span> The Same Rule, Two XPaths, Two Answers</a></li>
   </ul></li>
   <li><a href="#the-half-that-cannot-be-generated" id="toc-the-half-that-cannot-be-generated" class="nav-link" data-scroll-target="#the-half-that-cannot-be-generated"><span class="header-section-number">15.7</span> The Half That Cannot Be Generated</a>
   <ul class="collapse">
@@ -988,7 +989,7 @@ Tip
 <tr class="even">
 <td style="text-align: left;">Define-XML 73</td>
 <td style="text-align: left;">MethodOID required when Origin Type is ‘Derived’</td>
-<td style="text-align: right;">13</td>
+<td style="text-align: right;">17</td>
 </tr>
 </tbody>
 </table>
@@ -1004,18 +1005,80 @@ Tip
 <div class="cell-output cell-output-stdout">
 <pre><code>Missing MethodOID: IT.DM.RFSTDTC, IT.DM.RFENDTC, IT.DM.RFXSTDTC,
 IT.DM.RFXENDTC, IT.DM.RFPENDTC, IT.DM.DTHFL, IT.LB.LBSEQ,
-IT.LB.LBSTRESC, IT.LB.LBSTRESN, IT.LB.LBSTRESU, IT.LB.LBSTNRLO,
+IT.LB.LBSTRESC, IT.LB.LBSTRESN, IT.LB.LBSTRESN.ALT.ALT,
+IT.LB.LBSTRESN.CREAT.CREAT, IT.LB.LBSTRESN.GLUC.GLUC,
+IT.LB.LBSTRESN.HBA1C.HBA1C, IT.LB.LBSTRESU, IT.LB.LBSTNRLO,
 IT.LB.LBSTNRHI, IT.LB.LBDRVFL</code></pre>
 </div>
 </div>
 <section id="reading-the-output-line-by-line-1" class="level3" data-number="15.6.1">
 <h3 data-number="15.6.1" class="anchored" data-anchor-id="reading-the-output-line-by-line-1"><span class="header-section-number">15.6.1</span> Reading the Output Line by Line</h3>
-<p>Thirteen variables in GLPX-1’s define.xml have <code>Origin Type="Derived"</code> and no <code>MethodOID</code>: nothing states how they were derived. The cause is upstream, in the specification workbook: <code>COMPUTATION_METHOD</code> defines five methods, but twenty-three variables are marked derived.</p>
+<p>Seventeen variables in GLPX-1’s define.xml have <code>Origin Type="Derived"</code> and no <code>MethodOID</code>: nothing states how they were derived. The cause is upstream, in the specification workbook: <code>COMPUTATION_METHOD</code> defines five methods, but twenty-three variables are marked derived.</p>
 <p><strong>This finding is left in deliberately, and reported rather than quietly fixed.</strong> Two reasons, and both are the point of section 6:</p>
 <ol type="1">
 <li>It is what a real conformance summary looks like. A submission with zero findings is rarer than people expect, and the section exists because findings are normal. What matters is that each one is <em>known, stated, and explained</em>, not that the list is empty.</li>
 <li>Fixing it belongs in the workbook, not in the XML and not in the ADRG, exactly as <a href="../sessions/define-from-specs.html">the previous session</a> argued. The ADRG reports the state of the submission; it does not launder it.</li>
 </ol>
+</section>
+<section id="the-same-rule-two-xpaths-two-answers" class="level3" data-number="15.6.2">
+<h3 data-number="15.6.2" class="anchored" data-anchor-id="the-same-rule-two-xpaths-two-answers"><span class="header-section-number">15.6.2</span> The Same Rule, Two XPaths, Two Answers</h3>
+<p>Before trusting that seventeen, look at how it was counted. Rule 73 says a <code>Derived</code> origin needs a <code>MethodOID</code> on the <code>ItemRef</code> that points at it. So you find the derived <code>ItemDef</code>s and check their <code>ItemRef</code>s. The obvious way to write that is wrong.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>define <span class="ot">&lt;-</span> <span class="fu">read_xml</span>(<span class="st">"data/define/define.sdtm.xml"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>derived <span class="ot">&lt;-</span> <span class="fu">xml_attr</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xml_find_all</span>(define, <span class="st">"//d1:ItemDef[def:Origin/@Type='Derived']"</span>), <span class="st">"OID"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>count_missing <span class="ot">&lt;-</span> <span class="cf">function</span>(path) {</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">map_lgl</span>(derived, <span class="cf">function</span>(oid) {</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    ref <span class="ot">&lt;-</span> <span class="fu">xml_find_first</span>(define, <span class="fu">sprintf</span>(<span class="st">"%s[@ItemOID='%s']"</span>, path, oid))</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(ref) <span class="sc">&amp;&amp;</span> <span class="fu">is.na</span>(<span class="fu">xml_attr</span>(ref, <span class="st">"MethodOID"</span>))</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  }))</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">narrow =</span> <span class="fu">count_missing</span>(<span class="st">"//d1:ItemGroupDef/d1:ItemRef"</span>),</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">wide   =</span> <span class="fu">count_missing</span>(<span class="st">"//d1:ItemRef"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>narrow   wide 
+    13     17 </code></pre>
+</div>
+</div>
+<p>Same rule, same document, same day. Four findings appear or disappear depending on one path fragment.</p>
+<p>The narrow version looks reasonable: variables live in datasets, so their <code>ItemRef</code>s live in <code>ItemGroupDef</code>. But <strong>value-level definitions are referenced from <code>def:ValueListDef</code></strong>, not from <code>ItemGroupDef</code>. For those four, <code>xml_find_first()</code> returns a missing node, <code>!is.na(ref)</code> is <code>FALSE</code>, and they are dropped.</p>
+<p>Not skipped with a warning. Dropped.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">keep</span>(derived, <span class="cf">function</span>(oid) {</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    ref <span class="ot">&lt;-</span> <span class="fu">xml_find_first</span>(define, <span class="fu">sprintf</span>(<span class="st">"//d1:ItemRef[@ItemOID='%s']"</span>, oid))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(ref) <span class="sc">&amp;&amp;</span> <span class="fu">is.na</span>(<span class="fu">xml_attr</span>(ref, <span class="st">"MethodOID"</span>))</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  }),</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">keep</span>(derived, <span class="cf">function</span>(oid) {</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    ref <span class="ot">&lt;-</span> <span class="fu">xml_find_first</span>(</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>      define, <span class="fu">sprintf</span>(<span class="st">"//d1:ItemGroupDef/d1:ItemRef[@ItemOID='%s']"</span>, oid))</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(ref) <span class="sc">&amp;&amp;</span> <span class="fu">is.na</span>(<span class="fu">xml_attr</span>(ref, <span class="st">"MethodOID"</span>))</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "IT.LB.LBSTRESN.ALT.ALT"     "IT.LB.LBSTRESN.CREAT.CREAT"
+[3] "IT.LB.LBSTRESN.GLUC.GLUC"   "IT.LB.LBSTRESN.HBA1C.HBA1C"</code></pre>
+</div>
+</div>
+<p>The four value-level <code>LBSTRESN</code> definitions, the ones <a href="../sessions/define-xml.html">Define-XML</a> built to give each lab parameter its own units and ranges. They are derived, they have no method, and the narrow check never looked at them.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>A check that reports zero is saying one of two things
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>There are no findings</em>, or <em>I did not look there</em>. These are not the same claim and the output is identical.</p>
+<p>You cannot tell them apart by reading the number. You can only tell them apart by reading the check, or by running it against a document you have broken on purpose and confirming it complains.</p>
+<p>This matters more than it sounds. Conformance tooling is how a sponsor convinces itself a submission is sound. A check with an unadvertised blind spot does not fail loudly, it reassures quietly, which is the one behaviour you cannot afford in an instrument you are using to decide whether you are done.</p>
+</div>
+</div>
 <p>A real ADRG’s issues summary would carry, for each finding, an explanation of why it is acceptable or what was done about it. Writing that explanation is a judgement call, which brings us to the rest of the document.</p>
 </section>
 </section>
@@ -1120,7 +1183,7 @@ IT.LB.LBSTNRHI, IT.LB.LBDRVFL</code></pre>
 <section id="comprehension-check" class="level2" data-number="15.10">
 <h2 data-number="15.10" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">15.10</span> Comprehension Check</h2>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1129,12 +1192,12 @@ IT.LB.LBSTNRHI, IT.LB.LBDRVFL</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>The TCG says the ADRG “purposefully duplicates” information found in the protocol, SAP and define.xml. Why is that not a design flaw?</li>
 <li>GLPX-1’s define.xml records that <code>AGE</code> has <code>Origin Type="Derived"</code>. What can it not record, and which ADRG section carries it?</li>
-<li>Your ADRG’s section 6.2 lists thirteen rule-73 findings. Where do you fix them, and what do you do about the ADRG in the meantime?</li>
+<li>Your ADRG’s section 6.2 lists seventeen rule-73 findings. Where do you fix them, and what do you do about the ADRG in the meantime?</li>
 <li>Which of the seven required sections could be regenerated automatically after a data refresh, and which would need rewriting by hand?</li>
 <li>A colleague’s ADRG has an empty Data Conformance Summary. What is the most likely explanation?</li>
 </ol>
@@ -1142,7 +1205,7 @@ IT.LB.LBSTNRHI, IT.LB.LBDRVFL</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1151,7 +1214,7 @@ IT.LB.LBSTNRHI, IT.LB.LBDRVFL</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><p><strong>Because the reviewer needs a single point of orientation.</strong> The information exists elsewhere, but scattered across documents in different formats written for different purposes. The ADRG’s job is to be the one place someone with no memory of the study can start, and that job requires repeating things (TCG v6.0, §2.3).</p></li>
