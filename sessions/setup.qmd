@@ -237,8 +237,12 @@ sessions, or the ones before Define-XML, until then.
 ::: {.callout-tip}
 ### Still stuck?
 
-Open an issue at
-[github.com/sufyansuleman/cdisc-with-r/issues](https://github.com/sufyansuleman/cdisc-with-r/issues)
+Ask in
+[GitHub Discussions](https://github.com/sufyansuleman/cdisc-with-r/discussions),
 with the output of `renv::status()` and `sessionInfo()`. Those two
 together identify almost every setup problem.
+
+If you are confident it is a fault in the course rather than in your
+machine, open an
+[issue](https://github.com/sufyansuleman/cdisc-with-r/issues) instead.
 :::

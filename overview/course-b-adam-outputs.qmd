@@ -71,6 +71,10 @@ Course A's, and Exercises 6 and 9 are the longest in the course.
 As in Course A. Nothing is recorded. If you miss an evening, work the
 session yourself in the book before the next one and do the homework
 exercise as your check.
+
+If you get stuck doing that, ask in
+[GitHub Discussions](https://github.com/sufyansuleman/cdisc-with-r/discussions)
+rather than waiting for the next evening.
 :::
 
 ## What you will have at the end

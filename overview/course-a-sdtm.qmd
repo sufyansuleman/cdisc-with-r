@@ -89,6 +89,10 @@ miss one, work through that session in the book yourself before the
 next evening: every code chunk runs against data that ships with the
 repository, and the outputs shown in the book are the outputs you will
 get. The homework exercise is the check that you got there.
+
+If you get stuck doing that, ask in
+[GitHub Discussions](https://github.com/sufyansuleman/cdisc-with-r/discussions)
+rather than waiting for the next evening.
 :::
 
 ## What you will have at the end

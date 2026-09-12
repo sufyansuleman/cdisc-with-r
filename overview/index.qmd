@@ -46,6 +46,10 @@ are built around running code, not watching it.
   session
 - **Homework** between evenings, about an hour, reviewed at the start of
   the next session
+- **Questions between evenings** go to
+  [GitHub Discussions](https://github.com/sufyansuleman/cdisc-with-r/discussions),
+  which is also where setup problems get sorted out in week one and
+  where anything announced between sessions is posted
 
 ## What you need
 
