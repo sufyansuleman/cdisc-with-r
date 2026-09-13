@@ -584,6 +584,7 @@ Tip
 </section>
 <section id="background-the-shape-nobody-standardised" class="level2" data-number="13.3">
 <h2 data-number="13.3" class="anchored" data-anchor-id="background-the-shape-nobody-standardised"><span class="header-section-number">13.3</span> Background: The Shape Nobody Standardised</h2>
+<p><strong>Reading task, about 15 minutes.</strong> Everything up to now had a standard to follow. Outputs do not, and that is the subject of this session.</p>
 <p><em>Estimated time: ~15 minutes (reading)</em></p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -617,6 +618,7 @@ Tip
 </section>
 <section id="example-1-the-demographics-and-disposition-table" class="level2" data-number="13.4">
 <h2 data-number="13.4" class="anchored" data-anchor-id="example-1-the-demographics-and-disposition-table"><span class="header-section-number">13.4</span> Example 1: The Demographics and Disposition Table</h2>
+<p><strong>Worked example, about 20 minutes.</strong> One stop, four chunks. Every number in the finished table has to be traceable to a row, and that is harder than it sounds.</p>
 <p><em>Estimated time: ~20 minutes (worked example)</em></p>
 <p>Read the one dataset every table in this session ultimately answers to:</p>
 <div class="cell">
@@ -790,6 +792,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 6 minutes.</strong> Pick one number in the finished table and trace it back to the rows it came from. If you cannot, neither can a reviewer.</p>
 <p>Run all four chunks. Every row of every one of these tables is a <code>count()</code> or a <code>summarise()</code> on <code>ADSL</code> alone: no new logic, only presentation of a value derived in <a href="../sessions/adsl.html">ADSL</a> and cited there.</p>
 <p>Two things worth checking on the numbers themselves. First, <code>AGE</code>’s two missing subjects per arm are exactly the four subjects from D1, whose incomplete birth dates you met in <a href="../sessions/sdtm-dm.html">The DM Domain</a>. They are still missing here, four sessions later, because nothing between then and now had a reason to impute them. Second, <code>EOSSTT</code> here reads 181/19 for GLPX and 186/14 for Placebo, which is the same 367/33 split you first counted in <a href="../sessions/the-trial-glpx001.html">The GLPX-1 Trial</a>, now shown by arm rather than pooled. Same subjects, same numbers, different question asked of them.</p>
 </div>
@@ -813,6 +816,7 @@ Tip
 </section>
 <section id="example-2-a-table-and-a-listing-from-the-same-events" class="level2" data-number="13.5">
 <h2 data-number="13.5" class="anchored" data-anchor-id="example-2-a-table-and-a-listing-from-the-same-events"><span class="header-section-number">13.5</span> Example 2: A Table and a Listing, from the Same Events</h2>
+<p><strong>Worked example, about 25 minutes.</strong> Two stops. The same events summarised two ways, and the denominator is the whole argument.</p>
 <p><em>Estimated time: ~25 minutes (worked example)</em></p>
 <p>A <strong>table</strong> counts. A <strong>listing</strong> enumerates. They can describe exactly the same underlying records and still look nothing alike, because they answer different questions: “how many?” against “which ones, in full?” GLPX-1 gives you a case where you can watch both happen to the same event.</p>
 <section id="the-table-how-many-subjects-not-how-many-events" class="level3" data-number="13.5.1">
@@ -929,6 +933,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 5 minutes.</strong> Work out what the denominator is before you read on. Getting it wrong changes these percentages substantially, and the wrong version looks perfectly reasonable.</p>
 <p>75.5% of GLPX subjects and 55.0% of Placebo subjects had at least one TEAE: the same two numbers <a href="../sessions/adae.html">ADAE</a>’s denominator-lesson chunk produced, arrived at the same way, now sitting in the shape a CSR table would actually publish them in.</p>
 <p>Filtering to <code>AOCCIFL == "Y"</code> for severity, rather than <code>TRTEMFL == "Y"</code> alone, is what stops a subject with one Mild and one Severe event from appearing in both rows of the severity table. Every subject contributes to exactly one severity cell: the same “exactly one flag per subject” discipline <code>ABLFL</code> enforced for baseline in <a href="../sessions/adlb.html">ADLB</a>.</p>
 <p>Worth pausing on, because it is the wrong instinct made concrete: 151 GLPX subjects had <em>any</em> TEAE, but only 13 + 67 + 71 = 151 appear across the three severity rows: the arithmetic checks, because <code>AOCCIFL</code> gives exactly one severity per subject who had any event. Had the table instead filtered only on <code>TRTEMFL == "Y"</code> and counted every severity a subject ever reached, those three numbers would sum to more than 151, because a subject can be Mild once and Moderate later.</p>
@@ -1026,6 +1031,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 4 minutes.</strong> One subject, one row. Ask what a listing gives a reviewer that the table above it cannot.</p>
 <p>One row: <code>GLPX1-110-004</code>, Hypoglycaemia, 2024-03-23, Severe, treatment-emergent, GLPX 10 mg. You met this subject in <a href="../sessions/adae.html">ADAE</a> as the study’s single serious event.</p>
 <p>Now count the same event, the way a table would:</p>
 <div class="cell">
@@ -1044,6 +1050,7 @@ Tip
 </section>
 <section id="example-3-the-figure-the-baseline-machinery-was-for" class="level2" data-number="13.6">
 <h2 data-number="13.6" class="anchored" data-anchor-id="example-3-the-figure-the-baseline-machinery-was-for"><span class="header-section-number">13.6</span> Example 3: The Figure the Baseline Machinery Was For</h2>
+<p><strong>Worked example, about 20 minutes.</strong> One stop. This figure is the payoff for four sessions of baseline work.</p>
 <p><em>Estimated time: ~20 minutes (worked example)</em></p>
 <p>Every argument <a href="../sessions/adlb.html">ADLB</a> made about <code>ABLFL</code>, why “the BASELINE visit” was the wrong definition, why the SAP’s “last value on or before first dose” was the right one, why it mattered enough to check against the data rather than assume, existed to produce one chart: the mean change from baseline in HbA1c over time, by arm. This is that chart.</p>
 <div class="cell">
@@ -1145,6 +1152,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 5 minutes.</strong> Before reading our commentary, decide what this figure does not tell you. It is persuasive, and persuasive is when to be careful.</p>
 <p>Run the chunk. GLPX 10 mg separates from placebo almost immediately and the gap widens every visit, reaching -1.41 against -0.30 by week 26: the same treatment effect <a href="../sessions/adlb.html">ADLB</a> reported as a table of numbers, now as the chart a clinical study report would actually publish.</p>
 <p>Colour and shape both carry treatment arm, using <code>R/palette.R</code>’s <code>arm_colours</code>: the same Okabe-Ito palette convention established for the very first figure in <a href="../sessions/the-trial-glpx001.html">The GLPX-1 Trial</a>, carried through every figure in this course without exception. A colourblind reader loses nothing; identity never rests on colour alone.</p>
 <p>Error bars are standard error at each visit, computed from the same <code>n</code> and <code>CHG</code> values in the table above them, another number you can trace back, this time to a formula rather than a single row, but no less checkable for it.</p>
@@ -1186,6 +1194,7 @@ Tip
 </section>
 <section id="what-can-go-wrong" class="level2" data-number="13.7">
 <h2 data-number="13.7" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">13.7</span> What Can Go Wrong</h2>
+<p><strong>Reading task, about 10 minutes.</strong> No code. Mostly about tables that are correct and still mislead.</p>
 <p><em>Estimated time: ~10 minutes (reading)</em></p>
 <p><strong>Computing a denominator from the dataset being summarised.</strong> The single most consequential error in this session, exactly as it was in <a href="../sessions/adae.html">ADAE</a>. A table’s <code>N</code> comes from ADSL, stated before anything else is computed.</p>
 <p><strong>Counting events instead of subjects.</strong> A TEAE table answers “how many <em>subjects</em>,” not “how many <em>events</em>.” Skip the de-duplication (<code>distinct()</code> or an occurrence flag) and a subject with several events inflates the count and can push a percentage past 100%.</p>
@@ -1202,10 +1211,12 @@ Tip
 </section>
 <section id="exercises" class="level2" data-number="13.8">
 <h2 data-number="13.8" class="anchored" data-anchor-id="exercises"><span class="header-section-number">13.8</span> Exercises</h2>
+<p><strong>Exercise, about 15 minutes.</strong> Do these before the next session.</p>
 <p>Practice: <a href="../exercises/tlf.html">Exercise 7: Tables, Listings and Figures</a>.</p>
 </section>
 <section id="comprehension-check" class="level2" data-number="13.9">
 <h2 data-number="13.9" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">13.9</span> Comprehension Check</h2>
+<p><strong>Self-test, about 5 minutes.</strong> Answer before expanding.</p>
 <ol type="1">
 <li>Every table in this session states its <code>N</code> before it states any percentage, and that <code>N</code> always comes from ADSL. Why not compute it from whichever dataset the table is summarising?</li>
 <li>The severity table uses <code>AOCCIFL == "Y"</code>, not <code>TRTEMFL == "Y"</code> alone. What would go wrong with the severity row totals if you filtered on <code>TRTEMFL</code> alone?</li>

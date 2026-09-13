@@ -440,8 +440,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#a-note-on-ts.xpt" id="toc-a-note-on-ts.xpt" class="nav-link" data-scroll-target="#a-note-on-ts.xpt"><span class="header-section-number">15.7.1</span> A note on <code>ts.xpt</code></a></li>
   </ul></li>
   <li><a href="#what-can-go-wrong" id="toc-what-can-go-wrong" class="nav-link" data-scroll-target="#what-can-go-wrong"><span class="header-section-number">15.8</span> What Can Go Wrong</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">15.9</span> Exercises</a></li>
-  <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">15.10</span> Comprehension Check</a></li>
+  <li><a href="#discussion-which-sentences-could-a-script-have-written" id="toc-discussion-which-sentences-could-a-script-have-written" class="nav-link" data-scroll-target="#discussion-which-sentences-could-a-script-have-written"><span class="header-section-number">15.9</span> Discussion: Which Sentences Could a Script Have Written?</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">15.10</span> Exercises</a></li>
+  <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">15.11</span> Comprehension Check</a></li>
   </ul>
 </nav>
     </div>
@@ -477,8 +478,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Total core time: about 80 minutes.</strong></p>
+<p><strong>Total core time: about 100 minutes.</strong></p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Section</th>
@@ -518,6 +524,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Reading</td>
 </tr>
 <tr class="odd">
+<td>Discussion: Which Sentences Could a Script Have Written?</td>
+<td>10 min</td>
+<td>Discussion</td>
+</tr>
+<tr class="even">
 <td>Exercises + Comprehension Check</td>
 <td>15 min</td>
 <td>Practice / Self-test</td>
@@ -591,6 +602,7 @@ Tip
 </section>
 <section id="background-the-document-that-says-why" class="level2" data-number="15.3">
 <h2 data-number="15.3" class="anchored" data-anchor-id="background-the-document-that-says-why"><span class="header-section-number">15.3</span> Background: The Document That Says Why</h2>
+<p><strong>Reading task, about 20 minutes.</strong> Mostly regulatory, all of it cited. Read it; the rest of the session assumes you know what the document is for.</p>
 <p><em>Estimated time: ~20 minutes (reading)</em></p>
 <p><a href="../sessions/define-xml.html">Define-XML</a> built a document that records, in machine-readable form, what every variable is and where it came from. That is a great deal of information. It is also, in a specific and important way, silent.</p>
 <p><code>def:Origin Type="Derived"</code> tells a reviewer that <code>AGE</code> was computed. A <code>MethodDef</code> can even tell them the algorithm. Neither tells them that four subjects in GLPX-1 have no age at all, that this is because their birth dates arrived partial, and that the study chose to leave them null rather than impute. That is a decision, with a rationale, and XML has no element for a rationale.</p>
@@ -686,6 +698,7 @@ Tip
 </section>
 <section id="example-1-the-inventory-sections" class="level2" data-number="15.4">
 <h2 data-number="15.4" class="anchored" data-anchor-id="example-1-the-inventory-sections"><span class="header-section-number">15.4</span> Example 1: The Inventory Sections</h2>
+<p><strong>Worked example, about 15 minutes.</strong> Tables generated from the data rather than typed. Notice how little of the ADRG this actually covers.</p>
 <p><em>Estimated time: ~15 minutes (worked example)</em></p>
 <p>Sections 1.3 and 3.1 are tables. Neither should ever be typed.</p>
 <section id="study-data-standards-and-dictionary-inventory" class="level3" data-number="15.4.1">
@@ -803,6 +816,7 @@ Tip
 </section>
 <section id="example-2-treatment-and-imputation" class="level2" data-number="15.5">
 <h2 data-number="15.5" class="anchored" data-anchor-id="example-2-treatment-and-imputation"><span class="header-section-number">15.5</span> Example 2: Treatment and Imputation</h2>
+<p><strong>Worked example, about 15 minutes.</strong> Two more generated sections, and the first sign of what generation cannot reach.</p>
 <p><em>Estimated time: ~15 minutes (worked example)</em></p>
 <section id="treatment-variables" class="level3" data-number="15.5.1">
 <h3 data-number="15.5.1" class="anchored" data-anchor-id="treatment-variables"><span class="header-section-number">15.5.1</span> 3.2 Treatment Variables</h3>
@@ -960,6 +974,7 @@ Tip
 </section>
 <section id="example-3-the-conformance-summary" class="level2" data-number="15.6">
 <h2 data-number="15.6" class="anchored" data-anchor-id="example-3-the-conformance-summary"><span class="header-section-number">15.6</span> Example 3: The Conformance Summary</h2>
+<p><strong>Worked example, about 10 minutes.</strong> Our own submission has real findings in it. Read them rather than skipping to the explanation, and pay attention to how the count is arrived at.</p>
 <p><em>Estimated time: ~10 minutes (worked example)</em></p>
 <p>Section 6 is required, and section 6.2 asks for an issues summary. <a href="../sessions/define-xml.html">Define-XML</a> built the machinery: two Specification-sourced conformance rules that no schema check will catch. Run them against this study’s own define.xml and report what comes back.</p>
 <div class="cell">
@@ -1084,6 +1099,7 @@ IT.LB.LBSTNRHI, IT.LB.LBDRVFL</code></pre>
 </section>
 <section id="the-half-that-cannot-be-generated" class="level2" data-number="15.7">
 <h2 data-number="15.7" class="anchored" data-anchor-id="the-half-that-cannot-be-generated"><span class="header-section-number">15.7</span> The Half That Cannot Be Generated</h2>
+<p><strong>Reading task, about 10 minutes.</strong> The argument the whole session was building to. Worth reading slowly.</p>
 <p><em>Estimated time: ~10 minutes (reading)</em></p>
 <p>Everything above was a table computed from data. Now count what is left. Of the seven required sections, these cannot be generated at all:</p>
 <table class="caption-top table">
@@ -1168,6 +1184,7 @@ IT.LB.LBSTNRHI, IT.LB.LBDRVFL</code></pre>
 </section>
 <section id="what-can-go-wrong" class="level2" data-number="15.8">
 <h2 data-number="15.8" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">15.8</span> What Can Go Wrong</h2>
+<p><strong>Reading task, about 5 minutes.</strong> No code.</p>
 <ul>
 <li><strong>Hand-maintaining the generated tables.</strong> The core-variables table copied from the last study’s ADRG will be wrong in a way nobody notices, because it looks right. Compute it.</li>
 <li><strong>An empty issues summary.</strong> If section 6.2 is empty, the likeliest explanation is that nothing was checked, not that nothing was found.</li>
@@ -1176,12 +1193,25 @@ IT.LB.LBSTNRHI, IT.LB.LBDRVFL</code></pre>
 <li><strong>Writing the ADRG last.</strong> Every table above was derivable the moment the datasets existed. The sections that need a human are the ones whose reasoning is freshest while the work is being done, and hardest to reconstruct six months later.</li>
 </ul>
 </section>
-<section id="exercises" class="level2" data-number="15.9">
-<h2 data-number="15.9" class="anchored" data-anchor-id="exercises"><span class="header-section-number">15.9</span> Exercises</h2>
+<section id="discussion-which-sentences-could-a-script-have-written" class="level2" data-number="15.9">
+<h2 data-number="15.9" class="anchored" data-anchor-id="discussion-which-sentences-could-a-script-have-written"><span class="header-section-number">15.9</span> Discussion: Which Sentences Could a Script Have Written?</h2>
+<p><strong>Discussion, about 10 minutes.</strong> Alone, write your answer down; in a session, this is the argument.</p>
+<p>Take any paragraph from a reviewer’s guide, including the model section 3.4 in the exercise.</p>
+<ol type="1">
+<li><strong>One minute, on your own.</strong> Underline every sentence a script could have produced from the data and define.xml alone.</li>
+<li><strong>Five minutes, together.</strong> Compare underlinings. The disagreements are the interesting part: people differ on sentences that state a number <em>and</em> say what it means.</li>
+<li><strong>The rest.</strong> For the sentences nobody could generate, name who in a sponsor organisation actually holds that information. If the answer is “the statistician who left”, you have found why this document exists.</li>
+</ol>
+<p>If everything in a section could have been generated, it probably should have been. If nothing could, check it is really about this study.</p>
+</section>
+<section id="exercises" class="level2" data-number="15.10">
+<h2 data-number="15.10" class="anchored" data-anchor-id="exercises"><span class="header-section-number">15.10</span> Exercises</h2>
+<p><strong>Exercise, about 15 minutes.</strong> Do these before the next session.</p>
 <p><a href="../exercises/adrg.html">Exercise 10: The Analysis Data Reviewer’s Guide</a> asks you to close the rule-73 finding at its source, and to draft the one narrative section this course can honestly ask you to write.</p>
 </section>
-<section id="comprehension-check" class="level2" data-number="15.10">
-<h2 data-number="15.10" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">15.10</span> Comprehension Check</h2>
+<section id="comprehension-check" class="level2" data-number="15.11">
+<h2 data-number="15.11" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">15.11</span> Comprehension Check</h2>
+<p><strong>Self-test, about 10 minutes.</strong> Answer before expanding.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">

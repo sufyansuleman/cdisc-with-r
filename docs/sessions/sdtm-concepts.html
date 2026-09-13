@@ -580,6 +580,7 @@ Tip
 </section>
 <section id="background-the-model-behind-the-datasets" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="background-the-model-behind-the-datasets"><span class="header-section-number">4.3</span> Background: The Model Behind the Datasets</h2>
+<p><strong>Reading task, about 25 minutes.</strong> The longest read in the course, and the one that pays for itself most. Everything in Part 2 is an application of what is here.</p>
 <p><em>Estimated time: ~25 minutes (reading)</em></p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -680,6 +681,7 @@ Tip
 </section>
 <section id="example-1-anatomy-of-a-domain" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="example-1-anatomy-of-a-domain"><span class="header-section-number">4.4</span> Example 1: Anatomy of a Domain</h2>
+<p><strong>Worked example, about 20 minutes.</strong> One stop, and it asks you to break something on purpose to see what the check does.</p>
 <p><em>Estimated time: ~20 minutes (worked example)</em></p>
 <p>Take the five raw GLPX files and, using nothing but the ideas above, answer three questions about each: which SDTM domain does it become, which observation class is that domain in, and what is its topic variable? This is the first thing a programmer does with a new study, and it is done on paper before any code:</p>
 <div class="cell">
@@ -730,6 +732,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 5 minutes.</strong> Do the part where you change a code and re-run. Watching a check fail teaches you more than watching it pass.</p>
 <p>Run both chunks. Every row of the second should read <code>TRUE</code>: <code>DM</code>, <code>EX</code>, <code>AE</code>, <code>LB</code>, <code>VS</code> are all valid domain codes. Now change one code to something plausible-but-wrong (<code>"LBS"</code>, say, or <code>"VITALS"</code>) and re-run. Watch it come back <code>FALSE</code>. That is the whole discipline of this course in one line: <strong>you did not have to know the codelist, you had to check it.</strong></p>
 </div>
 </div>
@@ -775,6 +778,7 @@ Tip
 </section>
 <section id="example-2-original-result-vs-standardised-result" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="example-2-original-result-vs-standardised-result"><span class="header-section-number">4.5</span> Example 2: Original Result vs Standardised Result</h2>
+<p><strong>Worked example, about 20 minutes.</strong> Read the output carefully here. Both checks pass, and passing is not the same as being right.</p>
 <p><em>Estimated time: ~20 minutes (worked example)</em></p>
 <p>This is where Findings pay off the modelling. A findings result is not one value in one column; it is kept twice (as collected, and standardised) and both are preserved. Take one subject’s glucose across visits from the raw lab file:</p>
 <div class="cell">
@@ -849,6 +853,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 5 minutes.</strong> Both checks say <code>TRUE</code>. Before reading on, work out what is still wrong with this record.</p>
 <p>Run the three chunks. Both CT checks return <code>TRUE</code>: the vendor’s <code>GLUC</code> and <code>mmol/L</code> happen to be legal SDTM values. But look carefully at the mapped table’s week-8 row before reading on. Something is missing, and it is not the result.</p>
 </div>
 </div>
@@ -911,6 +916,7 @@ Tip
 </section>
 <section id="what-can-go-wrong" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">4.6</span> What Can Go Wrong</h2>
+<p><strong>Reading task, about 10 minutes.</strong> No code. These are the misunderstandings that make the rest of SDTM harder than it needs to be.</p>
 <p><em>Estimated time: ~10 minutes (reading)</em></p>
 <p><strong>Treating SDTM as “rename the columns”</strong></p>
 <p>The recurring error from <a href="../sessions/why-standards.html">Why Standards</a>, now with a name. Renaming is a fraction of the work; classifying each dataset into its observation class, giving each record the right identifier spine, and constraining values to controlled terminology are the substance. If your mental model is a lookup table of old name → new name, the DM and findings sessions will not make sense.</p>
@@ -955,6 +961,7 @@ Tip
 </section>
 <section id="comprehension-check" class="level2" data-number="4.8">
 <h2 data-number="4.8" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">4.8</span> Comprehension Check</h2>
+<p><strong>Self-test, about 10 minutes.</strong> Answer before expanding.</p>
 <p><em>Estimated time: ~10 minutes</em></p>
 <ol type="1">
 <li>What is the difference between the SDTM and the SDTMIG, and why does this course use v3.4 specifically?</li>

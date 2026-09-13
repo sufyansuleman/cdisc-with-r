@@ -477,7 +477,8 @@ window.Quarto = {
   </ul></li>
   <li><a href="#what-can-go-wrong" id="toc-what-can-go-wrong" class="nav-link" data-scroll-target="#what-can-go-wrong"><span class="header-section-number">2.6</span> What Can Go Wrong</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">2.7</span> Exercises</a></li>
-  <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">2.8</span> Comprehension Check</a></li>
+  <li><a href="#discussion-which-number-would-you-publish" id="toc-discussion-which-number-would-you-publish" class="nav-link" data-scroll-target="#discussion-which-number-would-you-publish"><span class="header-section-number">2.8</span> Discussion: Which Number Would You Publish?</a></li>
+  <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">2.9</span> Comprehension Check</a></li>
   </ul>
 </nav>
     </div>
@@ -513,7 +514,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Total core time: about 75 minutes.</strong></p>
+<p><strong>Total core time: about 85 minutes.</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -549,6 +550,11 @@ window.Quarto = {
 <td>Reading</td>
 </tr>
 <tr class="even">
+<td>Discussion: Which Number Would You Publish?</td>
+<td>10 min</td>
+<td>Discussion</td>
+</tr>
+<tr class="odd">
 <td>Comprehension Check</td>
 <td>10 min</td>
 <td>Self-test</td>
@@ -603,6 +609,7 @@ Tip
 </section>
 <section id="background-data-that-can-only-be-read-by-its-author" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="background-data-that-can-only-be-read-by-its-author"><span class="header-section-number">2.3</span> Background: Data That Can Only Be Read by Its Author</h2>
+<p><strong>Reading task, about 15 minutes.</strong> Read to the end of “Why not just write good documentation instead?” before you run any code. This section is the argument the rest of the course rests on.</p>
 <p><em>Estimated time: ~15 minutes (reading)</em></p>
 <p>Here is the single idea that ties this session together, and arguably the whole course:</p>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -712,6 +719,7 @@ Tip
 </section>
 <section id="example-1-five-files-five-conventions" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="example-1-five-files-five-conventions"><span class="header-section-number">2.4</span> Example 1: Five Files, Five Conventions</h2>
+<p><strong>Worked example, about 20 minutes.</strong> Run each chunk as you reach it. There are two “Run It Yourself” stops in this section, and each one asks you a question before you read the answer. Stopping is the point: if you read straight through, you get the conclusion without the reasoning that makes it stick.</p>
 <p><em>Estimated time: ~20 minutes (worked example)</em></p>
 <p>GLPX-1 is a simulated Phase III trial of a GLP-1-class agent in type 2 diabetes. <a href="../sessions/the-trial-glpx001.html">The next session</a> introduces it properly. For now you only need to know that its raw data is what a study team actually receives: an export from the EDC system where sites enter data, plus a separate file from the central laboratory that analyses the blood samples. Two organisations, two sets of habits.</p>
 <p>Load all five raw files and look at nothing but their shape:</p>
@@ -749,6 +757,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 5 minutes.</strong> Run it, then answer the question at the end of this block before scrolling on.</p>
 <p>Run the chunk above. You should see five files: <code>ae_raw.csv</code> (389 rows), <code>dm_raw.csv</code> (401), <code>ex_raw.csv</code> (400), <code>lb_raw.csv</code> (12,389) and <code>vs_raw.csv</code> (12,788).</p>
 <p>Before reading on, look only at the <code>columns</code> column and answer one question: <strong>if you had to write a single function that returned the subject identifier from any of these five files, what would it look like?</strong></p>
 </div>
@@ -849,6 +858,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 3 minutes.</strong> Run it, then decide what you would do about this subject before reading what we did.</p>
 <p>Run the chunk above. Exactly one subject comes back: <code>111-003</code>, whom the EDC records as <code>F</code> and the lab records as <code>M</code>.</p>
 <p>Now sit with the awkward part: <strong>which one is right?</strong> The data cannot tell you. Nothing in either file is malformed. Both values are perfectly valid. They simply disagree, and you have no way to resolve it from the data alone.</p>
 </div>
@@ -904,6 +914,7 @@ Tip
 </section>
 <section id="example-2-one-question-three-answers" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="example-2-one-question-three-answers"><span class="header-section-number">2.5</span> Example 2: One Question, Three Answers</h2>
+<p><strong>Worked example, about 15 minutes.</strong> Two more stops. The second one asks you to commit to an answer before you see the data.</p>
 <p><em>Estimated time: ~15 minutes (worked example)</em></p>
 <p>Naming and structure are the visible problems. Vocabulary is the one that will actually hurt you, because it produces answers rather than errors.</p>
 <p>Here is a question a regulator genuinely asks, and one of the simplest questions available: <strong>how many subjects had nausea?</strong></p>
@@ -939,6 +950,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 5 minutes.</strong> This one needs you to actually read a list of 25 things. Do not skim it; the whole point is that skimming is what produced the list.</p>
 <p>Run the chunk above and read the whole list: all 25 rows, not just the top. Find every row that a clinician would call nausea. There are four of them.</p>
 </div>
 </div>
@@ -1041,6 +1053,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 4 minutes.</strong> Commit to a number before you run it. Writing your guess down first is what makes the result land.</p>
 <p>Run the chunk above. You should get <strong>61</strong>, <strong>65</strong> and <strong>66</strong>.</p>
 <p>Before reading on: which of those three numbers would you put in a safety table? Notice that you cannot answer that question from the data either.</p>
 </div>
@@ -1100,6 +1113,7 @@ Tip
 </section>
 <section id="what-can-go-wrong" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">2.6</span> What Can Go Wrong</h2>
+<p><strong>Reading task, about 10 minutes.</strong> No code to run. These are the mistakes people make with the ideas above, and they are easier to recognise now than to diagnose later.</p>
 <p><em>Estimated time: ~10 minutes (reading)</em></p>
 <p><strong>Treating standardisation as renaming</strong></p>
 <p>The most common misreading of this session is “so I should call the column <code>USUBJID</code> instead of <code>subjid</code>.” Renaming is the easiest third of the job and the least important. Example 1 showed structure differing (one row per event vs per subject per visit per test) and Example 2 showed vocabulary differing. <code>rename()</code> addresses neither. If your mental model of SDTM is a lookup table of old name → new name, Part 2 will not make sense.</p>
@@ -1131,8 +1145,20 @@ Tip
 <p>This session has no exercise set. It makes an argument rather than teaching a technique, and the argument is best tested by the <a href="#comprehension-check">Comprehension Check</a> below.</p>
 <p>The first exercises arrive with <a href="../sessions/sdtm-dm.html">The DM Domain</a>, by which point you will have something to build. If you want to do something now, re-run Example 2’s three nausea rules against <code>Diarrhoea</code> instead, and see how many different answers you can defend.</p>
 </section>
-<section id="comprehension-check" class="level2" data-number="2.8">
-<h2 data-number="2.8" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">2.8</span> Comprehension Check</h2>
+<section id="discussion-which-number-would-you-publish" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="discussion-which-number-would-you-publish"><span class="header-section-number">2.8</span> Discussion: Which Number Would You Publish?</h2>
+<p><strong>Discussion, about 10 minutes.</strong> If you are reading alone, write your answer down before moving on; if you are in a session, this is the one we argue about.</p>
+<p>Example 2 produced three defensible nausea counts: <strong>61</strong>, <strong>65</strong> and <strong>66</strong>. All three came from the same data, and none of them is a bug.</p>
+<ol type="1">
+<li><strong>One minute, on your own.</strong> Pick the number you would put in a clinical study report, and write one sentence saying why.</li>
+<li><strong>Five minutes, together.</strong> Compare. You will not all pick the same one. Find out what the disagreement is actually about, because it is not arithmetic.</li>
+<li><strong>The rest.</strong> Answer the harder question: what would have to be written down, and by whom, for all three of you to have arrived at the same number without talking to each other?</li>
+</ol>
+<p>That last question is the course. Everything from here on is an answer to it.</p>
+</section>
+<section id="comprehension-check" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">2.9</span> Comprehension Check</h2>
+<p><strong>Self-test, about 10 minutes.</strong> Answer all of them before you expand the answers. Guessing and checking teaches you less than being wrong and finding out why.</p>
 <p><em>Estimated time: ~10 minutes</em></p>
 <ol type="1">
 <li>In your own words, why can’t a thorough data dictionary for each trial replace a standard?</li>

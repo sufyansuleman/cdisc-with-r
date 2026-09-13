@@ -17,7 +17,7 @@ dx <- "refs/DefineV2111_0"
 ::: {.callout-note}
 ### Session at a Glance
 
-**Total core time: about 85 minutes.**
+**Total core time: about 105 minutes.**
 
 | Section | Time | Type |
 |---|---|---|
@@ -96,6 +96,10 @@ After completing this session you will be able to:
 
 ## Background: The Workbook Is the Deliverable
 
+**Reading task, about 15 minutes.** This session changes who you are.
+In the last one you wrote the XML; here somebody hands you a
+spreadsheet and the XML is generated. Read before running.
+
 *Estimated time: ~15 minutes (reading)*
 
 Here is the thing that surprises people coming to clinical programming
@@ -127,6 +131,10 @@ of, which is a genuine cost and also genuinely how this works. `R/build_define.R
 in for the standards group this course does not have.
 
 ## Example 1: Reading a Real Specification
+
+**Worked example, about 20 minutes.** Look at the workbook properly.
+The sheet names and column names are the vocabulary for the whole
+session.
 
 *Estimated time: ~20 minutes (worked example)*
 
@@ -193,6 +201,9 @@ downstream to notice, because it looks like content rather than
 metadata. It is worth a guard.
 
 ## Example 2: Generating define.xml From It
+
+**Worked example, about 15 minutes.** One command does the work. The
+interesting part is what it validates against.
 
 *Estimated time: ~15 minutes (worked example)*
 
@@ -268,6 +279,9 @@ four `def:WhereClauseDef`s. That is the leverage the workbook route
 buys you.
 
 ## Example 3: What the Tool Could Not Say
+
+**Worked example, about 15 minutes.** The heart of the session. Read
+every output here rather than skimming to the conclusion.
 
 *Estimated time: ~15 minutes (worked example)*
 
@@ -397,6 +411,9 @@ types, the relocated class) follows from that one declaration.
 
 ## Example 4: Reading the Metadata Back
 
+**Worked example, about 10 minutes.** Short round trip, to show the
+metadata is machine-readable in both directions.
+
 *Estimated time: ~10 minutes (worked example)*
 
 A define.xml is machine-readable, which means the trip runs both ways.
@@ -437,6 +454,9 @@ of claims the submission can be tested against, by someone who does not
 trust you and does not have to ask.
 
 ## What Can Go Wrong
+
+**Reading task, about 10 minutes.** No code. Mostly about trusting a
+generator that is a version behind the standard.
 
 *Estimated time: ~10 minutes (reading)*
 
@@ -483,11 +503,15 @@ supposed to catch and a schema will not.
 
 ## Exercises
 
+**Exercise, about 15 minutes.** Do these before the next session.
+
 [Exercise 9: Define-XML from a Specification Workbook](../exercises/define-from-specs.qmd)
 adds a domain to the workbook, regenerates, and asks what it would take
 to close the gap to 2.1.
 
 ## Comprehension Check
+
+**Self-test, about 10 minutes.** Answer before expanding.
 
 ::: {.callout-note collapse="true"}
 ### Questions

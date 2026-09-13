@@ -15,7 +15,7 @@ library(knitr)
 ::: {.callout-note}
 ### Session at a Glance
 
-**Total core time: about 85 minutes.**
+**Total core time: about 110 minutes.**
 
 | Section | Time | Type |
 |---|---|---|
@@ -25,6 +25,7 @@ library(knitr)
 | Example 2: What transport cannot say | 15 min | Worked example |
 | Example 3: The size question, honestly | 15 min | Worked example |
 | What Can Go Wrong | 10 min | Reading |
+| Discussion: Does a Better Format Make It Submittable? | 10 min | Discussion |
 | Exercises + Comprehension Check | 15 min | Practice / Self-test |
 
 The last session in the course, and the only one about how data
@@ -96,6 +97,10 @@ After completing this session you will be able to:
   overclaiming
 
 ## Background: The Format the Standards Bent Around
+
+**Reading task, about 20 minutes.** The last background section in the
+course, and it reframes a constraint you have been living with since
+session one without being told about it.
 
 *Estimated time: ~20 minutes (reading)*
 
@@ -178,6 +183,9 @@ file:
 > uses the file extension .json (Dataset-JSON v1.1, Introduction)
 
 ## Example 1: The Same Domain, Twice
+
+**Worked example, about 20 minutes.** The same data written two ways.
+Compare the files, not just the code.
 
 *Estimated time: ~20 minutes (worked example)*
 
@@ -265,6 +273,10 @@ against the XSD. Both of GLPX-1's files pass.
 
 ## Example 2: What Transport Cannot Say
 
+**Worked example, about 15 minutes.** One stop, and it closes a thread
+running since ADAE: the difference between a missing value and an empty
+one.
+
 *Estimated time: ~15 minutes (worked example)*
 
 [ADAE](adae.qmd) made a point at some length: subject `GLPX1-103-199`
@@ -283,6 +295,10 @@ Which raises a question nobody asks: does the format we actually submit
 in preserve it too?
 
 ### Run It Yourself
+
+**Your turn, about 6 minutes.** Predict what each of the three values
+looks like after a round trip through each format. One of them does not
+survive, and which one matters.
 
 Three values: a string, a genuine missing, and an empty string:
 
@@ -347,6 +363,9 @@ distinctions survives in the CSV and in the define.xml. Submitted as
 transport format, the character ones quietly stop existing.
 
 ## Example 3: The Size Question, Honestly
+
+**Worked example, about 15 minutes.** Our numbers point the opposite way
+to CDISC's. Read why before deciding who is right.
 
 *Estimated time: ~15 minutes (worked example)*
 
@@ -434,6 +453,9 @@ declarations.
 
 ## What Can Go Wrong
 
+**Reading task, about 10 minutes.** No code. Mostly about assuming a new
+format removes an old obligation.
+
 *Estimated time: ~10 minutes (reading)*
 
 - **Assuming the format preserves your distinctions.** Example 2 is the
@@ -462,7 +484,30 @@ declarations.
 - **"The rows are objects."** They are arrays, which is precisely why
   the format is not far larger than transport.
 
+## Discussion: Does a Better Format Make It Submittable?
+
+**Discussion, about 10 minutes.** Alone, write your answer down; in a
+session, this is the last argument of the course.
+
+Dataset-JSON will happily store a variable called
+`LAB_RESULT_NUMERIC`. Transport v5 will not.
+
+1. **One minute, on your own.** Is a dataset with that variable name
+   submittable as SDTM? Yes or no, and name the document that settles
+   it.
+2. **Five minutes, together.** Somebody will argue the eight-character
+   limit was only ever a transport limitation and should now go away.
+   Argue it out. It is a better argument than it first appears.
+3. **The rest.** Which other conventions you have learned in this course
+   exist only because of the file format, and which would you keep even
+   if the format disappeared tomorrow?
+
+The course ends where it started: a format can carry anything, and
+agreeing what the contents mean is a separate job that never goes away.
+
 ## Exercises
+
+**Exercise, about 15 minutes.** The last exercise set in the course.
 
 [Exercise 11, Dataset-JSON](../exercises/dataset-json.qmd) asks you to
 break the eight-character rule and find out what happens, and to settle
@@ -470,6 +515,8 @@ the size question on data where the lengths are planned rather than
 observed.
 
 ## Comprehension Check
+
+**Self-test, about 10 minutes.** Answer before expanding.
 
 ::: {.callout-note collapse="true"}
 ### Questions

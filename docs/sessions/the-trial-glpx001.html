@@ -561,6 +561,7 @@ Tip
 </section>
 <section id="background-the-protocol-is-a-prediction-machine" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="background-the-protocol-is-a-prediction-machine"><span class="header-section-number">3.3</span> Background: The Protocol Is a Prediction Machine</h2>
+<p><strong>Reading task, about 20 minutes.</strong> Read this before you open any data. The whole point of the next section is that you can predict what is in the files, and you cannot do that once you have already looked.</p>
 <p><em>Estimated time: ~20 minutes (reading)</em></p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -741,6 +742,7 @@ Tip
 </section>
 <section id="example-1-predict-the-data-before-opening-it" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="example-1-predict-the-data-before-opening-it"><span class="header-section-number">3.4</span> Example 1: Predict the Data Before Opening It</h2>
+<p><strong>Worked example, about 20 minutes.</strong> Write your predictions down before running anything. A prediction you keep in your head quietly adjusts itself once you see the answer.</p>
 <p><em>Estimated time: ~20 minutes (worked example)</em></p>
 <p>The design table above is enough to predict four of the five file shapes. Do the arithmetic first, honestly, before looking:</p>
 <ul>
@@ -787,6 +789,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 6 minutes.</strong> Write your five row counts down first, then run it. You want to know which ones you got wrong, and by how much.</p>
 <p>Run the chunk above. Two files match the prediction and two miss by hundreds: <code>dm_raw</code> is <strong>+1</strong>, <code>ex_raw</code> is exactly right, <code>lb_raw</code> is <strong>−411</strong>, and <code>vs_raw</code> is <strong>−412</strong>.</p>
 <p>Before reading on, try to explain the pattern yourself. Why would the two <em>visit-driven</em> files be short by almost exactly the same amount? And why is <code>dm_raw</code>: the simplest file in the study: the one with too <em>many</em> rows?</p>
 </div>
@@ -888,6 +891,7 @@ Tip
 </section>
 <section id="example-2-reading-the-trials-story-in-the-raw-data" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="example-2-reading-the-trials-story-in-the-raw-data"><span class="header-section-number">3.5</span> Example 2: Reading the Trial’s Story in the Raw Data</h2>
+<p><strong>Worked example, about 20 minutes.</strong> Two chunks and one figure. Read the numbers before you read our commentary on them.</p>
 <p><em>Estimated time: ~20 minutes (worked example)</em></p>
 <p>Shape is only the first layer. The values tell the trial’s story: who was randomised where and when, who stayed, and what the drug did.</p>
 <section id="randomisation-and-enrolment" class="level3" data-number="3.5.1">
@@ -990,6 +994,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 6 minutes.</strong> Look at the table before the figure. The figure is persuasive and will do your thinking for you if you let it.</p>
 <p>Run both chunks. In the table, both arms should start indistinguishable (screening means 8.37 vs 8.45) and then separate: by week 26 the GLPX arm mean is <strong>6.90%</strong> against placebo’s <strong>8.14%</strong>. The plot shows the same story as two diverging lines.</p>
 <p>Now look at the <code>n</code> column and answer honestly: what is quietly happening to the denominators as the weeks pass?</p>
 </div>
@@ -1085,6 +1090,7 @@ Tip
 </section>
 <section id="what-can-go-wrong" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">3.6</span> What Can Go Wrong</h2>
+<p><strong>Reading task, about 10 minutes.</strong> No code. These are the wrong conclusions people draw from a trial description, and they are cheaper to meet here than in a protocol review.</p>
 <p><em>Estimated time: ~10 minutes (reading)</em></p>
 <p><strong>Treating the data as the trial</strong></p>
 <p>The files record what was <em>captured</em>, not everything that happened. <code>ae_raw</code> holds the adverse events that sites entered; a symptom a subject never mentioned is nowhere. The 33 early discontinuations appear only as absent rows: the data does not say <em>why</em> any of them left. Statements like “there were 389 adverse events” should always be heard as “389 were recorded.”</p>
@@ -1118,6 +1124,7 @@ Tip
 </section>
 <section id="comprehension-check" class="level2" data-number="3.8">
 <h2 data-number="3.8" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">3.8</span> Comprehension Check</h2>
+<p><strong>Self-test, about 10 minutes.</strong> Answer before expanding.</p>
 <p><em>Estimated time: ~10 minutes</em></p>
 <ol type="1">
 <li>Why did <code>ex_raw</code> match its predicted row count exactly while <code>lb_raw</code> fell 411 rows short? Both cover the same 400 subjects.</li>

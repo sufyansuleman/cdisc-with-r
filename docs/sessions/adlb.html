@@ -436,8 +436,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#common-misinterpretations" id="toc-common-misinterpretations" class="nav-link" data-scroll-target="#common-misinterpretations"><span class="header-section-number">12.6.1</span> Common misinterpretations</a></li>
   </ul></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">12.7</span> Exercises</a></li>
-  <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">12.8</span> Comprehension Check</a></li>
+  <li><a href="#discussion-which-baseline-would-you-defend" id="toc-discussion-which-baseline-would-you-defend" class="nav-link" data-scroll-target="#discussion-which-baseline-would-you-defend"><span class="header-section-number">12.7</span> Discussion: Which Baseline Would You Defend?</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">12.8</span> Exercises</a></li>
+  <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">12.9</span> Comprehension Check</a></li>
   </ul>
 </nav>
     </div>
@@ -473,7 +474,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Total core time: about 95 minutes.</strong></p>
+<p><strong>Total core time: about 105 minutes.</strong></p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -514,6 +515,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Reading</td>
 </tr>
 <tr class="even">
+<td>Discussion: Which Baseline Would You Defend?</td>
+<td>10 min</td>
+<td>Discussion</td>
+</tr>
+<tr class="odd">
 <td>Exercises + Comprehension Check</td>
 <td>5 min</td>
 <td>Practice / Self-test</td>
@@ -568,6 +574,7 @@ Tip
 </section>
 <section id="background-one-row-per-subject-parameter-timepoint" class="level2" data-number="12.3">
 <h2 data-number="12.3" class="anchored" data-anchor-id="background-one-row-per-subject-parameter-timepoint"><span class="header-section-number">12.3</span> Background: One Row per Subject, Parameter, Timepoint</h2>
+<p><strong>Reading task, about 25 minutes.</strong> BDS is the structure most analysis datasets use. Read it properly; the rest of Course B assumes it.</p>
 <p><em>Estimated time: ~25 minutes (reading)</em></p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -665,6 +672,7 @@ Tip
 </section>
 <section id="example-1-parameters-values-and-analysis-timing" class="level2" data-number="12.4">
 <h2 data-number="12.4" class="anchored" data-anchor-id="example-1-parameters-values-and-analysis-timing"><span class="header-section-number">12.4</span> Example 1: Parameters, Values and Analysis Timing</h2>
+<p><strong>Worked example, about 25 minutes.</strong> Two stops. This is where one column stops meaning one thing.</p>
 <p><em>Estimated time: ~25 minutes (worked example)</em></p>
 <p>Both inputs, as in ADAE: the measurements from SDTM, the subject-level context from ADSL.</p>
 <div class="cell">
@@ -766,6 +774,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 5 minutes.</strong> Before running, predict how many rows one subject and one parameter should produce, and what distinguishes them.</p>
 <p>Run both chunks. Eight rows for one subject and one parameter, which is the BDS shape in miniature: same subject, same <code>PARAM</code>, one row per timepoint.</p>
 <p>Look at <code>ADY</code>. Screening is negative at -16, and the sequence steps up to 181 by week 26 without ever passing through zero. That is the study-day rule from <a href="../sessions/sdtm-dm.html">The DM Domain</a>, now anchored to first dose rather than to <code>RFSTDTC</code>.</p>
 </div>
@@ -839,6 +848,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 4 minutes.</strong> A passing controlled-terminology check. Read which codelist it passed against and satisfy yourself that is the right one.</p>
 <p><code>ANRIND</code> validates against <code>NRIND</code> (<code>C78736</code>), whose members are <code>ABNORMAL</code>, <code>HIGH</code>, <code>LOW</code> and <code>NORMAL</code>.</p>
 <p>Then read the counts, because they are a reminder of what trial this is. HbA1c is <code>HIGH</code> on 3,080 of 3,097 records and <code>NORMAL</code> on 17; glucose is <code>HIGH</code> on 3,084. In a type 2 diabetes trial that is not a data problem, it is the disease. ALT and creatinine, which are safety labs rather than efficacy ones, sit mostly <code>NORMAL</code>, as you would hope.</p>
 <p>A reference-range indicator answers “is this value inside the normal range.” It does not answer “is this value concerning,” and in a population selected for an abnormal lab it will say <code>HIGH</code> almost everywhere.</p>
@@ -848,6 +858,7 @@ Tip
 </section>
 <section id="example-2-baseline-change-and-the-flag-that-matters" class="level2" data-number="12.5">
 <h2 data-number="12.5" class="anchored" data-anchor-id="example-2-baseline-change-and-the-flag-that-matters"><span class="header-section-number">12.5</span> Example 2: Baseline, Change, and the Flag That Matters</h2>
+<p><strong>Worked example, about 25 minutes.</strong> The most consequential example in the course. Two defensible baseline definitions give two different headline results, and you have to choose one.</p>
 <p><em>Estimated time: ~25 minutes (worked example)</em></p>
 <p>Now derive baseline from the SAP’s definition: the last non-missing value on or before first dose. Under the no-day-zero rule, <code>ADY == 1</code> is the dosing day itself, so “on or before” is <code>ADY &lt;= 1</code>.</p>
 <div class="cell">
@@ -886,6 +897,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 6 minutes.</strong> Two things to compare, and they disagree. Work out which record each rule is picking before you read the explanation.</p>
 <p>Two things to read here.</p>
 <p>First, <strong>no baseline is post-dose</strong>. That was the point of defining baseline by dosing date rather than by visit label, and the check confirms the definition did what it claimed.</p>
 <p>Second, the baseline is not at the same visit for everyone: 642 subject-parameter pairs take it from the BASELINE visit and 958 from SCREENING. That is not an inconsistency. It is one rule, applied to subjects whose visits happened on different days relative to their own first dose, which is what a real schedule looks like.</p>
@@ -1085,6 +1097,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 6 minutes.</strong> Two baseline definitions, two answers. Decide which you would put in a study report, and be ready to say why. This is the discussion below.</p>
 <p>The week-26 treatment difference in HbA1c is <strong>-1.116</strong> using the SAP’s baseline and <strong>-1.138</strong> using SDTM’s operational flag. A gap of 0.022 percentage points.</p>
 <p>Be careful how you read that. It is <strong>small</strong>, and this course is not going to claim a trial would turn on it. It is also <strong>real</strong>, it is <strong>not the number the SAP defined</strong>, and nothing in the code would have told you it was wrong. It came from using an operational flag to answer an analysis question, and 75 of 400 subjects had a different baseline HbA1c as a result.</p>
 <p>Errors of this shape do not announce themselves. They produce plausible numbers, slightly wrong, from code that runs cleanly. That is why the standard puts the decision in a variable with a name, and why “which flag did you use” is a reasonable question to be asked at a review.</p>
@@ -1164,6 +1177,7 @@ Tip
 </section>
 <section id="what-can-go-wrong" class="level2" data-number="12.6">
 <h2 data-number="12.6" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">12.6</span> What Can Go Wrong</h2>
+<p><strong>Reading task, about 10 minutes.</strong> No code. Mostly about baseline choices that look like technicalities and are not.</p>
 <p><em>Estimated time: ~10 minutes (reading)</em></p>
 <p><strong>Using the SDTM baseline flag for analysis.</strong> <code>--LOBXFL</code> is operationally derived; <code>ABLFL</code> records the SAP’s decision, and only <code>ABLFL</code> signifies baseline for analysis (ADaMIG v1.3, §3.5; SDTMIG v3.4, §4.5.9). In this dataset the two disagree on 21% of subject-parameter pairs.</p>
 <p><strong>Trusting the visit label.</strong> Defining baseline as “the BASELINE visit” would have made 958 of 1,600 baselines post-dose here. Check a baseline definition against the dosing dates, not the visit name.</p>
@@ -1181,12 +1195,25 @@ Tip
 <p><strong>“There must be a codelist for <code>PARAMCD</code> somewhere.”</strong> There is not. Analysis parameters are sponsor-defined, like <code>AGEGR1</code> and <code>ASEV</code> before them.</p>
 </section>
 </section>
-<section id="exercises" class="level2" data-number="12.7">
-<h2 data-number="12.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">12.7</span> Exercises</h2>
+<section id="discussion-which-baseline-would-you-defend" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="discussion-which-baseline-would-you-defend"><span class="header-section-number">12.7</span> Discussion: Which Baseline Would You Defend?</h2>
+<p><strong>Discussion, about 10 minutes.</strong> Alone, write your answer down; in a session, this is the argument.</p>
+<p>The SAP’s baseline and SDTM’s <code>LBLOBXFL</code> disagree on <strong>342 of 1,600</strong> subject-parameter pairs. The week-26 treatment difference in HbA1c is <strong>-1.116</strong> one way and <strong>-1.138</strong> the other.</p>
+<ol type="1">
+<li><strong>One minute, on your own.</strong> Which number goes in the clinical study report, and what is your one-sentence justification?</li>
+<li><strong>Five minutes, together.</strong> The gap is 0.022. Somebody will say it is too small to matter. Decide, as a group, whether that is an argument or an excuse.</li>
+<li><strong>The rest.</strong> Suppose the gap had been large enough to change the conclusion. Does that change which definition is correct, and if not, what does it change?</li>
+</ol>
+<p>The point is not that one number is right. It is that the choice was made before anyone saw either number, and that is what makes it legitimate.</p>
+</section>
+<section id="exercises" class="level2" data-number="12.8">
+<h2 data-number="12.8" class="anchored" data-anchor-id="exercises"><span class="header-section-number">12.8</span> Exercises</h2>
+<p><strong>Exercise, about 15 minutes.</strong> Do these before the next session.</p>
 <p>Practice: <a href="../exercises/adlb.html">Exercise 6: ADLB</a>.</p>
 </section>
-<section id="comprehension-check" class="level2" data-number="12.8">
-<h2 data-number="12.8" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">12.8</span> Comprehension Check</h2>
+<section id="comprehension-check" class="level2" data-number="12.9">
+<h2 data-number="12.9" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">12.9</span> Comprehension Check</h2>
+<p><strong>Self-test, about 5 minutes.</strong> Answer before expanding.</p>
 <ol type="1">
 <li>GLPX-1’s <code>ABLFL</code> lands on SCREENING for 958 subject-parameter pairs and on BASELINE for 642. Is that an inconsistency? Explain in one sentence.</li>
 <li>Every disagreement between <code>ABLFL</code> and <code>LBLOBXFL</code> in this dataset is at <code>ADY == 1</code>. What is it about <code>ADY == 1</code> that causes this, and which definition does each flag use?</li>

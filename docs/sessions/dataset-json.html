@@ -436,8 +436,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#common-misinterpretations" id="toc-common-misinterpretations" class="nav-link" data-scroll-target="#common-misinterpretations"><span class="header-section-number">16.7.1</span> Common misinterpretations</a></li>
   </ul></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">16.8</span> Exercises</a></li>
-  <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">16.9</span> Comprehension Check</a></li>
+  <li><a href="#discussion-does-a-better-format-make-it-submittable" id="toc-discussion-does-a-better-format-make-it-submittable" class="nav-link" data-scroll-target="#discussion-does-a-better-format-make-it-submittable"><span class="header-section-number">16.8</span> Discussion: Does a Better Format Make It Submittable?</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">16.9</span> Exercises</a></li>
+  <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">16.10</span> Comprehension Check</a></li>
   </ul>
 </nav>
     </div>
@@ -473,8 +474,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Total core time: about 85 minutes.</strong></p>
+<p><strong>Total core time: about 110 minutes.</strong></p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Section</th>
@@ -514,6 +520,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Reading</td>
 </tr>
 <tr class="odd">
+<td>Discussion: Does a Better Format Make It Submittable?</td>
+<td>10 min</td>
+<td>Discussion</td>
+</tr>
+<tr class="even">
 <td>Exercises + Comprehension Check</td>
 <td>15 min</td>
 <td>Practice / Self-test</td>
@@ -577,6 +588,7 @@ Tip
 </section>
 <section id="background-the-format-the-standards-bent-around" class="level2" data-number="16.3">
 <h2 data-number="16.3" class="anchored" data-anchor-id="background-the-format-the-standards-bent-around"><span class="header-section-number">16.3</span> Background: The Format the Standards Bent Around</h2>
+<p><strong>Reading task, about 20 minutes.</strong> The last background section in the course, and it reframes a constraint you have been living with since session one without being told about it.</p>
 <p><em>Estimated time: ~20 minutes (reading)</em></p>
 <p>Every session in Part 2 referred to files this course never made. <code>def:ArchiveLocationID="dm.xpt"</code>. <code>&lt;def:leaf xlink:href="lb.xpt"&gt;</code>. GLPX-1’s data has lived in CSV throughout, because CSV is convenient for teaching. A real submission does not use CSV.</p>
 <p>It uses <strong>SAS Transport Format Version 5</strong>. Not SAS’s current format: a specific, frozen one that “dates from 1989 and was first available as part of SAS version 5” (Transport for the Next Generation v1.0). The FDA is unambiguous about its standing:</p>
@@ -625,6 +637,7 @@ Tip
 </section>
 <section id="example-1-the-same-domain-twice" class="level2" data-number="16.4">
 <h2 data-number="16.4" class="anchored" data-anchor-id="example-1-the-same-domain-twice"><span class="header-section-number">16.4</span> Example 1: The Same Domain, Twice</h2>
+<p><strong>Worked example, about 20 minutes.</strong> The same data written two ways. Compare the files, not just the code.</p>
 <p><em>Estimated time: ~20 minutes (worked example)</em></p>
 <p><code>R/build_dataset_json.R</code> writes DM and LB in both formats. Variable labels come from <code>data/spec/SDTM_METADATA.xlsx</code>: the same workbook <a href="../sessions/define-from-specs.html">the previous session</a> used to generate define.xml, so the transport file, the metadata document and the JSON all tell one story.</p>
 <div class="cell">
@@ -832,6 +845,7 @@ Tip
 </section>
 <section id="example-2-what-transport-cannot-say" class="level2" data-number="16.5">
 <h2 data-number="16.5" class="anchored" data-anchor-id="example-2-what-transport-cannot-say"><span class="header-section-number">16.5</span> Example 2: What Transport Cannot Say</h2>
+<p><strong>Worked example, about 15 minutes.</strong> One stop, and it closes a thread running since ADAE: the difference between a missing value and an empty one.</p>
 <p><em>Estimated time: ~15 minutes (worked example)</em></p>
 <p><a href="../sessions/adae.html">ADAE</a> made a point at some length: subject <code>GLPX1-103-199</code> has an adverse event with no start date, so <code>TRTEMFL</code> is <strong>null</strong>, not <code>"N"</code>. “We do not know whether this event was treatment-emergent” is a different claim from “this event was not treatment-emergent,” and the dataset must not conflate them.</p>
 <p>The specification is explicit that Dataset-JSON preserves the distinction:</p>
@@ -841,6 +855,7 @@ Tip
 <p>Which raises a question nobody asks: does the format we actually submit in preserve it too?</p>
 <section id="run-it-yourself" class="level3" data-number="16.5.1">
 <h3 data-number="16.5.1" class="anchored" data-anchor-id="run-it-yourself"><span class="header-section-number">16.5.1</span> Run It Yourself</h3>
+<p><strong>Your turn, about 6 minutes.</strong> Predict what each of the three values looks like after a round trip through each format. One of them does not survive, and which one matters.</p>
 <p>Three values: a string, a genuine missing, and an empty string:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>probe <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">ID =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), <span class="at">VAL =</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="cn">NA_character_</span>, <span class="st">""</span>))</span>
@@ -901,6 +916,7 @@ Tip
 </section>
 <section id="example-3-the-size-question-honestly" class="level2" data-number="16.6">
 <h2 data-number="16.6" class="anchored" data-anchor-id="example-3-the-size-question-honestly"><span class="header-section-number">16.6</span> Example 3: The Size Question, Honestly</h2>
+<p><strong>Worked example, about 15 minutes.</strong> Our numbers point the opposite way to CDISC’s. Read why before deciding who is right.</p>
 <p><em>Estimated time: ~15 minutes (worked example)</em></p>
 <p>Dataset-JSON’s stated aims include “the efficient use of storage space,” against transport format’s “up to 70% wasted space.” So the JSON should be smaller. Ours is not:</p>
 <div class="cell">
@@ -1026,6 +1042,7 @@ $CDISC
 </section>
 <section id="what-can-go-wrong" class="level2" data-number="16.7">
 <h2 data-number="16.7" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">16.7</span> What Can Go Wrong</h2>
+<p><strong>Reading task, about 10 minutes.</strong> No code. Mostly about assuming a new format removes an old obligation.</p>
 <p><em>Estimated time: ~10 minutes (reading)</em></p>
 <ul>
 <li><strong>Assuming the format preserves your distinctions.</strong> Example 2 is the case in point. A pipeline that is careful about null-versus-<code>"N"</code> all the way through ADaM, and then submits transport format, has thrown the distinction away at the last step for every character variable.</li>
@@ -1043,12 +1060,25 @@ $CDISC
 </ul>
 </section>
 </section>
-<section id="exercises" class="level2" data-number="16.8">
-<h2 data-number="16.8" class="anchored" data-anchor-id="exercises"><span class="header-section-number">16.8</span> Exercises</h2>
+<section id="discussion-does-a-better-format-make-it-submittable" class="level2" data-number="16.8">
+<h2 data-number="16.8" class="anchored" data-anchor-id="discussion-does-a-better-format-make-it-submittable"><span class="header-section-number">16.8</span> Discussion: Does a Better Format Make It Submittable?</h2>
+<p><strong>Discussion, about 10 minutes.</strong> Alone, write your answer down; in a session, this is the last argument of the course.</p>
+<p>Dataset-JSON will happily store a variable called <code>LAB_RESULT_NUMERIC</code>. Transport v5 will not.</p>
+<ol type="1">
+<li><strong>One minute, on your own.</strong> Is a dataset with that variable name submittable as SDTM? Yes or no, and name the document that settles it.</li>
+<li><strong>Five minutes, together.</strong> Somebody will argue the eight-character limit was only ever a transport limitation and should now go away. Argue it out. It is a better argument than it first appears.</li>
+<li><strong>The rest.</strong> Which other conventions you have learned in this course exist only because of the file format, and which would you keep even if the format disappeared tomorrow?</li>
+</ol>
+<p>The course ends where it started: a format can carry anything, and agreeing what the contents mean is a separate job that never goes away.</p>
+</section>
+<section id="exercises" class="level2" data-number="16.9">
+<h2 data-number="16.9" class="anchored" data-anchor-id="exercises"><span class="header-section-number">16.9</span> Exercises</h2>
+<p><strong>Exercise, about 15 minutes.</strong> The last exercise set in the course.</p>
 <p><a href="../exercises/dataset-json.html">Exercise 11, Dataset-JSON</a> asks you to break the eight-character rule and find out what happens, and to settle the size question on data where the lengths are planned rather than observed.</p>
 </section>
-<section id="comprehension-check" class="level2" data-number="16.9">
-<h2 data-number="16.9" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">16.9</span> Comprehension Check</h2>
+<section id="comprehension-check" class="level2" data-number="16.10">
+<h2 data-number="16.10" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">16.10</span> Comprehension Check</h2>
+<p><strong>Self-test, about 10 minutes.</strong> Answer before expanding.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">

@@ -558,6 +558,7 @@ Tip
 </section>
 <section id="background-the-roster-every-analysis-starts-from" class="level2" data-number="10.3">
 <h2 data-number="10.3" class="anchored" data-anchor-id="background-the-roster-every-analysis-starts-from"><span class="header-section-number">10.3</span> Background: The Roster Every Analysis Starts From</h2>
+<p><strong>Reading task, about 20 minutes.</strong> ADSL is the dataset every other analysis dataset borrows from. Read the whole thing before building.</p>
 <p><em>Estimated time: ~20 minutes (reading)</em></p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -624,6 +625,7 @@ Tip
 </section>
 <section id="example-1-the-adsl-spine" class="level2" data-number="10.4">
 <h2 data-number="10.4" class="anchored" data-anchor-id="example-1-the-adsl-spine"><span class="header-section-number">10.4</span> Example 1: The ADSL Spine</h2>
+<p><strong>Worked example, about 25 minutes.</strong> Three stops. Two of them are checks that pass, and the useful question is what they are checking.</p>
 <p><em>Estimated time: ~25 minutes (worked example)</em></p>
 <p>Start from the persisted SDTM DM: one row per subject already, because that is what DM is:</p>
 <div class="cell">
@@ -666,6 +668,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 4 minutes.</strong> Every subject returns zero. Ask yourself whether that is reassuring or suspicious before you read the answer.</p>
 <p>Run the chunk. Every one of the 400 subjects has <code>diff_days = 0</code>: first dose fell on the randomization date, for all of them. That makes <code>RANDDT = TRTSDT</code> <strong>true in this dataset</strong>, which is exactly why it needs saying out loud that it is an artefact of how the trial was simulated, not a property of randomized trials. A real study would take <code>RANDDT</code> from DS and would find the two dates differing routinely.</p>
 </div>
 </div>
@@ -742,6 +745,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 5 minutes.</strong> Four subjects fall into no age group. Decide what you would do about them before reading what the SAP would have to say.</p>
 <p>Run both chunks. 303 subjects are <code>&lt;65</code>, 93 are <code>&gt;=65</code>, and <strong>four are null</strong>. Those are the four subjects from <a href="../sessions/sdtm-dm.html">The DM Domain</a> whose birth dates were incomplete, so <code>AGE</code> could not be derived without imputing. That null propagates: no age, no age group.</p>
 <p>This is legal. Nulls are allowed in ADaM variables unless otherwise specified (ADaMIG v1.3, §3), and <code>AGE</code> being Required means the <em>variable</em> must be present, not that every value is populated. But legal is not the same as decided. See the note below.</p>
 </div>
@@ -836,12 +840,14 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 4 minutes.</strong> Four passing checks. Read what each one asserts; a check you do not understand is not evidence.</p>
 <p>All four come back <code>TRUE</code>. Nothing new was introduced, that is the point. Because these values were carried unmodified from SDTM, they remain valid CT; had we “tidied” <code>RACE</code> into nicer labels under the same variable name, we would have broken both the codelist and §3.1.1’s same-name rule in one move.</p>
 </div>
 </div>
 </section>
 <section id="example-2-population-flags-and-disposition" class="level2" data-number="10.5">
 <h2 data-number="10.5" class="anchored" data-anchor-id="example-2-population-flags-and-disposition"><span class="header-section-number">10.5</span> Example 2: Population Flags and Disposition</h2>
+<p><strong>Worked example, about 20 minutes.</strong> One stop. Flags look trivial until you need to explain who is excluded and why.</p>
 <p><em>Estimated time: ~20 minutes (worked example)</em></p>
 <p>Population flags are derived from <em>conditions</em>, never copied and never hard-coded. GLPX-1 makes this feel almost too easy (every randomized subject was dosed, so every flag comes out <code>"Y"</code>) but writing the condition is what makes the dataset defensible, and it is what would catch the subject who was randomized and never dosed:</p>
 <div class="cell">
@@ -916,6 +922,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 5 minutes.</strong> Everyone is in every population. Work out why that is true here and why it almost never is in a real study.</p>
 <p>Run both chunks. All 400 subjects are <code>"Y"</code> on all three flags, with no nulls. Then 367 subjects completed and 33 discontinued, and the duration summary shows why that distinction matters: completers all sit at 183 days, while discontinuing subjects range from 41 to 169. Those 33 are exactly the dropouts you first counted back in <a href="../sessions/the-trial-glpx001.html">The GLPX-1 Trial</a>. The number has survived the whole pipeline intact.</p>
 </div>
 </div>
@@ -1015,6 +1022,7 @@ Tip
 </section>
 <section id="what-can-go-wrong" class="level2" data-number="10.6">
 <h2 data-number="10.6" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">10.6</span> What Can Go Wrong</h2>
+<p><strong>Reading task, about 10 minutes.</strong> No code. Mostly about copying SDTM values into ADSL without checking whether they still mean the same thing.</p>
 <p><em>Estimated time: ~10 minutes (reading)</em></p>
 <p><strong>More than one row per subject</strong></p>
 <p>ADSL is one record per subject, full stop (ADaMIG v1.3, §3.2). The usual culprit is a join to a multi-record source (a subject with two enrolment records, two exposure periods, two disposition events) that silently fans the dataset out. Every downstream denominator inherits the error. Check <code>nrow()</code> against <code>n_distinct(USUBJID)</code> after every join, and remember it was a real risk here: subject <code>101-012</code> has two raw enrolment records, resolved back in <a href="../sessions/sdtm-dm.html">The DM Domain</a>.</p>
@@ -1050,10 +1058,12 @@ Tip
 </section>
 <section id="exercises" class="level2" data-number="10.7">
 <h2 data-number="10.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">10.7</span> Exercises</h2>
+<p><strong>Exercise, about 10 minutes.</strong> Do these before the next session.</p>
 <p>Work through <a href="../exercises/adsl.html">Exercise 4: ADSL</a>, which extends this ADSL with a second age grouping and an analysis-age case, and asks you to construct a population-flag scenario where the flags legitimately disagree.</p>
 </section>
 <section id="comprehension-check" class="level2" data-number="10.8">
 <h2 data-number="10.8" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">10.8</span> Comprehension Check</h2>
+<p><strong>Self-test, about 10 minutes.</strong> Answer before expanding.</p>
 <p><em>Estimated time: ~5 minutes</em></p>
 <ol type="1">
 <li>ADSL has 400 rows and 400 subjects. After joining an exposure dataset it has 412 rows. What has gone wrong, and which ADaMIG requirement does the result now violate?</li>

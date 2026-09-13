@@ -12,7 +12,7 @@ library(sdtm.terminology)
 ::: {.callout-note}
 ### Session at a Glance
 
-**Total core time: about 100 minutes.**
+**Total core time: about 110 minutes.**
 
 | Section | Time | Type |
 |---|---|---|
@@ -81,6 +81,9 @@ After completing this session you will be able to:
 
 ## Background: What a Findings Row Is
 
+**Reading task, about 20 minutes.** Findings is the largest domain
+class and the one with the most structure. Read before building.
+
 *Estimated time: ~20 minutes (reading)*
 
 ::: {.callout-important}
@@ -145,6 +148,10 @@ artefact* to remove, not a real second measurement to keep. Nothing
 derived it, so nothing could legitimately have produced it twice.
 
 ## Example 1: Building LB, Results, Units, and a Duplicate
+
+**Worked example, about 25 minutes.** One stop. This example contains a
+record that is byte-for-byte identical to another one, and deciding
+what to do about it is the interesting part.
 
 *Estimated time: ~25 minutes (worked example)*
 
@@ -245,6 +252,10 @@ is_term("mmol/L", clst_code = "C71620")
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 6 minutes.** One of these values is missing and one
+is legal. Decide what you would do about the missing one before you
+see what we did.
+
 Run the chunks. The blank returns `FALSE` (not a unit), and `mmol/L`
 returns `TRUE`. Notice the shape of the fix: the value was **recovered
 from a documented source and logged**, not invented to fill the column.
@@ -253,6 +264,9 @@ be to leave it null and query, never to assume.
 :::
 
 ## Example 2: Reference Ranges, a Real Outlier, and Baseline
+
+**Worked example, about 25 minutes.** The outlier here is real, not an
+error. Resist the urge to clean it.
 
 *Estimated time: ~25 minutes (worked example)*
 
@@ -378,6 +392,10 @@ analysis.
 
 ## The Finished SDTM, Saved
 
+**Reading task, about 10 minutes.** Short. This is where the pipeline
+script is introduced properly, and every later session reads what it
+writes.
+
 *Estimated time: ~10 minutes (reading)*
 
 You have now built all four of GLPX-1's domains across three sessions
@@ -424,6 +442,9 @@ c(rows = nrow(built), subjects = n_distinct(built$USUBJID))
 ```
 
 ## What Can Go Wrong
+
+**Reading task, about 10 minutes.** No code. Mostly about units and
+about treating unusual values as mistakes.
 
 *Estimated time: ~10 minutes (reading)*
 
@@ -489,12 +510,16 @@ pipeline exists to provide; the way to change it is to change
 
 ## Exercises
 
+**Exercise, about 15 minutes.** Do these before the next session.
+
 The Findings exercise builds the **VS** domain (the structural twin of
 LB, with one deliberate difference to catch: [Exercise 3) SDTM: Findings
 (Labs & Vital Signs)](../exercises/sdtm-findings.qmd). Solutions are in
 the paid tier.
 
 ## Comprehension Check
+
+**Self-test, about 10 minutes.** Answer before expanding.
 
 *Estimated time: ~10 minutes*
 

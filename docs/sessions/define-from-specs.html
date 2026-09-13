@@ -476,7 +476,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Total core time: about 85 minutes.</strong></p>
+<p><strong>Total core time: about 105 minutes.</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -593,6 +593,7 @@ Tip
 </section>
 <section id="background-the-workbook-is-the-deliverable" class="level2" data-number="14.3">
 <h2 data-number="14.3" class="anchored" data-anchor-id="background-the-workbook-is-the-deliverable"><span class="header-section-number">14.3</span> Background: The Workbook Is the Deliverable</h2>
+<p><strong>Reading task, about 15 minutes.</strong> This session changes who you are. In the last one you wrote the XML; here somebody hands you a spreadsheet and the XML is generated. Read before running.</p>
 <p><em>Estimated time: ~15 minutes (reading)</em></p>
 <p>Here is the thing that surprises people coming to clinical programming from other data work: <strong>in most sponsors, nobody writes define.xml.</strong></p>
 <p>The document that people write, argue about, review, version and sign off is a <strong>specification workbook</strong>: an Excel file, one sheet per kind of metadata, maintained by a standards or data-management group. It lists every dataset, every variable, its type, its length, its label, its origin, its codelist and its derivation. It is a controlled document. It exists before any of the datasets do, because it is what programming is written <em>against</em>.</p>
@@ -605,6 +606,7 @@ Tip
 </section>
 <section id="example-1-reading-a-real-specification" class="level2" data-number="14.4">
 <h2 data-number="14.4" class="anchored" data-anchor-id="example-1-reading-a-real-specification"><span class="header-section-number">14.4</span> Example 1: Reading a Real Specification</h2>
+<p><strong>Worked example, about 20 minutes.</strong> Look at the workbook properly. The sheet names and column names are the vocabulary for the whole session.</p>
 <p><em>Estimated time: ~20 minutes (worked example)</em></p>
 <p>GLPX-1’s workbook covers two domains, DM and LB. Start with its shape:</p>
 <div class="cell">
@@ -692,6 +694,7 @@ Tip
 </section>
 <section id="example-2-generating-define.xml-from-it" class="level2" data-number="14.5">
 <h2 data-number="14.5" class="anchored" data-anchor-id="example-2-generating-define.xml-from-it"><span class="header-section-number">14.5</span> Example 2: Generating define.xml From It</h2>
+<p><strong>Worked example, about 15 minutes.</strong> One command does the work. The interesting part is what it validates against.</p>
 <p><em>Estimated time: ~15 minutes (worked example)</em></p>
 <p><code>defineR::write_define()</code> reads the workbook and writes the document. That is the whole production step:</p>
 <div class="cell">
@@ -759,6 +762,7 @@ Tip
 </section>
 <section id="example-3-what-the-tool-could-not-say" class="level2" data-number="14.6">
 <h2 data-number="14.6" class="anchored" data-anchor-id="example-3-what-the-tool-could-not-say"><span class="header-section-number">14.6</span> Example 3: What the Tool Could Not Say</h2>
+<p><strong>Worked example, about 15 minutes.</strong> The heart of the session. Read every output here rather than skimming to the conclusion.</p>
 <p><em>Estimated time: ~15 minutes (worked example)</em></p>
 <p>Now the part that matters.</p>
 <div class="cell">
@@ -880,6 +884,7 @@ xlink &lt;-&gt; http://www.w3.org/1999/xlink</code></pre>
 </section>
 <section id="example-4-reading-the-metadata-back" class="level2" data-number="14.7">
 <h2 data-number="14.7" class="anchored" data-anchor-id="example-4-reading-the-metadata-back"><span class="header-section-number">14.7</span> Example 4: Reading the Metadata Back</h2>
+<p><strong>Worked example, about 10 minutes.</strong> Short round trip, to show the metadata is machine-readable in both directions.</p>
 <p><em>Estimated time: ~10 minutes (worked example)</em></p>
 <p>A define.xml is machine-readable, which means the trip runs both ways. <code>metacore</code> parses a published define.xml into an R object:</p>
 <div class="cell">
@@ -925,6 +930,7 @@ xlink &lt;-&gt; http://www.w3.org/1999/xlink</code></pre>
 </section>
 <section id="what-can-go-wrong" class="level2" data-number="14.8">
 <h2 data-number="14.8" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">14.8</span> What Can Go Wrong</h2>
+<p><strong>Reading task, about 10 minutes.</strong> No code. Mostly about trusting a generator that is a version behind the standard.</p>
 <p><em>Estimated time: ~10 minutes (reading)</em></p>
 <p><strong>The tool validates against the wrong schema.</strong> <code>defineR</code>’s own <code>check = TRUE</code> produces <code>check.sdtm.pdf</code>, and the document validates cleanly, against 2.0. A green check from a tool tells you the tool is satisfied. <code>R/build_define.R</code> therefore asserts <em>both</em> schemas explicitly, and is written to complain if the 2.1 result ever changes, so that a future <code>defineR</code> gaining 2.1 support is noticed rather than silently assumed.</p>
 <p><strong>The workbook has no place for what you know.</strong> This is the failure mode with no error message. You know GLPX-1’s lab results come from a central laboratory. The 2.0 <code>ORIGIN</code> column cannot record it. Nothing warns you, nothing fails, and the information is simply absent from the deliverable. <strong>A metadata format’s limits become your metadata’s limits, silently.</strong></p>
@@ -942,10 +948,12 @@ xlink &lt;-&gt; http://www.w3.org/1999/xlink</code></pre>
 </section>
 <section id="exercises" class="level2" data-number="14.9">
 <h2 data-number="14.9" class="anchored" data-anchor-id="exercises"><span class="header-section-number">14.9</span> Exercises</h2>
+<p><strong>Exercise, about 15 minutes.</strong> Do these before the next session.</p>
 <p><a href="../exercises/define-from-specs.html">Exercise 9: Define-XML from a Specification Workbook</a> adds a domain to the workbook, regenerates, and asks what it would take to close the gap to 2.1.</p>
 </section>
 <section id="comprehension-check" class="level2" data-number="14.10">
 <h2 data-number="14.10" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">14.10</span> Comprehension Check</h2>
+<p><strong>Self-test, about 10 minutes.</strong> Answer before expanding.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">

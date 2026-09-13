@@ -12,7 +12,7 @@ library(sdtm.terminology)
 ::: {.callout-note}
 ### Session at a Glance
 
-**Total core time: about 95 minutes.**
+**Total core time: about 105 minutes.**
 
 | Section | Time | Type |
 |---|---|---|
@@ -21,6 +21,7 @@ library(sdtm.terminology)
 | Example 1: Parameters, values and analysis timing | 25 min | Worked example |
 | Example 2: Baseline, change, and the flag that matters | 25 min | Worked example |
 | What Can Go Wrong | 10 min | Reading |
+| Discussion: Which Baseline Would You Defend? | 10 min | Discussion |
 | Exercises + Comprehension Check | 5 min | Practice / Self-test |
 
 The last session of Part 3, and the one the baseline thread has been
@@ -75,6 +76,9 @@ After completing this session you will be able to:
   what that disagreement costs
 
 ## Background: One Row per Subject, Parameter, Timepoint
+
+**Reading task, about 25 minutes.** BDS is the structure most analysis
+datasets use. Read it properly; the rest of Course B assumes it.
 
 *Estimated time: ~25 minutes (reading)*
 
@@ -288,6 +292,9 @@ dates rather than trusting the visit label.
 
 ## Example 1: Parameters, Values and Analysis Timing
 
+**Worked example, about 25 minutes.** Two stops. This is where one
+column stops meaning one thing.
+
 *Estimated time: ~25 minutes (worked example)*
 
 Both inputs, as in ADAE: the measurements from SDTM, the subject-level
@@ -371,6 +378,10 @@ adlb_spine |>
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 5 minutes.** Before running, predict how many rows
+one subject and one parameter should produce, and what distinguishes
+them.
+
 Run both chunks. Eight rows for one subject and one parameter, which is
 the BDS shape in miniature: same subject, same `PARAM`, one row per
 timepoint.
@@ -447,6 +458,10 @@ c(codelist  = nrind_code,
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 4 minutes.** A passing controlled-terminology check.
+Read which codelist it passed against and satisfy yourself that is the
+right one.
+
 `ANRIND` validates against `NRIND` (`C78736`), whose members are
 `ABNORMAL`, `HIGH`, `LOW` and `NORMAL`.
 
@@ -463,6 +478,10 @@ everywhere.
 :::
 
 ## Example 2: Baseline, Change, and the Flag That Matters
+
+**Worked example, about 25 minutes.** The most consequential example in
+the course. Two defensible baseline definitions give two different
+headline results, and you have to choose one.
 
 *Estimated time: ~25 minutes (worked example)*
 
@@ -494,6 +513,10 @@ adlb |> filter(ABLFL == "Y") |> count(AVISIT, post_dose = ADY > 1)
 
 ::: {.callout-tip}
 ### Run It Yourself
+
+**Your turn, about 6 minutes.** Two things to compare, and they
+disagree. Work out which record each rule is picking before you read
+the explanation.
 
 Two things to read here.
 
@@ -639,6 +662,10 @@ c(difference_adam = round(result$mean_CHG_adam[1] - result$mean_CHG_adam[2], 3),
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 6 minutes.** Two baseline definitions, two answers.
+Decide which you would put in a study report, and be ready to say why.
+This is the discussion below.
+
 The week-26 treatment difference in HbA1c is **-1.116** using the SAP's
 baseline and **-1.138** using SDTM's operational flag. A gap of 0.022
 percentage points.
@@ -733,6 +760,9 @@ to it.
 
 ## What Can Go Wrong
 
+**Reading task, about 10 minutes.** No code. Mostly about baseline
+choices that look like technicalities and are not.
+
 *Estimated time: ~10 minutes (reading)*
 
 **Using the SDTM baseline flag for analysis.** `--LOBXFL` is
@@ -792,11 +822,37 @@ particular analysis is what `ANLzzFL` and the population flags are for.
 Analysis parameters are sponsor-defined, like `AGEGR1` and `ASEV` before
 them.
 
+## Discussion: Which Baseline Would You Defend?
+
+**Discussion, about 10 minutes.** Alone, write your answer down; in a
+session, this is the argument.
+
+The SAP's baseline and SDTM's `LBLOBXFL` disagree on **342 of 1,600**
+subject-parameter pairs. The week-26 treatment difference in HbA1c is
+**-1.116** one way and **-1.138** the other.
+
+1. **One minute, on your own.** Which number goes in the clinical study
+   report, and what is your one-sentence justification?
+2. **Five minutes, together.** The gap is 0.022. Somebody will say it is
+   too small to matter. Decide, as a group, whether that is an argument
+   or an excuse.
+3. **The rest.** Suppose the gap had been large enough to change the
+   conclusion. Does that change which definition is correct, and if not,
+   what does it change?
+
+The point is not that one number is right. It is that the choice was
+made before anyone saw either number, and that is what makes it
+legitimate.
+
 ## Exercises
+
+**Exercise, about 15 minutes.** Do these before the next session.
 
 Practice: [Exercise 6: ADLB](../exercises/adlb.qmd).
 
 ## Comprehension Check
+
+**Self-test, about 5 minutes.** Answer before expanding.
 
 1. GLPX-1's `ABLFL` lands on SCREENING for 958 subject-parameter pairs
    and on BASELINE for 642. Is that an inconsistency? Explain in one

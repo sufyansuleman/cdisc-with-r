@@ -17,7 +17,7 @@ dx <- "refs/DefineV2111_0"
 ::: {.callout-note}
 ### Session at a Glance
 
-**Total core time: about 95 minutes.**
+**Total core time: about 105 minutes.**
 
 | Section | Time | Type |
 |---|---|---|
@@ -121,6 +121,10 @@ After completing this session you will be able to:
 
 ## Background: A Web Held Together by Arbitrary Names
 
+**Reading task, about 20 minutes.** The central idea here is that the
+names holding the document together mean nothing. It is strange, and it
+is worth sitting with before you build anything.
+
 *Estimated time: ~20 minutes (reading)*
 
 Everything Part 2 has produced so far is a table. `dm.csv` has 400 rows
@@ -208,6 +212,10 @@ declares, nothing about the *name* will tell you. The link is either
 there or it is not, and only checking finds out.
 
 ## Example 1: A define.xml for DM, Built by Hand
+
+**Worked example, about 25 minutes.** You build a schema-valid document
+element by element. Run each chunk as you reach it; the order the
+elements go in is load-bearing, and skipping ahead breaks it.
 
 *Estimated time: ~25 minutes (worked example)*
 
@@ -449,6 +457,9 @@ session is about: **if it validates, is it right?**
 
 ## Example 2: Origin Grows a Second Attribute
 
+**Worked example, about 15 minutes.** Short, and it settles a question
+left open back in Findings.
+
 *Estimated time: ~15 minutes (worked example)*
 
 [Findings](sdtm-findings.qmd) made a claim about GLPX-1's central lab
@@ -557,6 +568,10 @@ dataset has no column for.
 
 ## Example 3: Declaring the Standard, and a Decision Made Three Sessions Ago
 
+**Worked example, about 15 minutes.** This one closes a loop opened in
+Part 3. Read the version note carefully; it is the kind of detail that
+costs a submission.
+
 *Estimated time: ~15 minutes (worked example)*
 
 [ADAE](adae.qmd) made a structural decision that mattered enough to
@@ -640,6 +655,10 @@ The same discipline the course applied to SDTM terminology with
 `sdtm.terminology` rather than reading the CT PDF, applied one level up.
 
 ## What Can Go Wrong
+
+**Reading task, about 10 minutes.** Includes a document that validates
+perfectly and is still broken, and one of our own files failing a real
+conformance rule.
 
 *Estimated time: ~10 minutes (reading)*
 
@@ -784,12 +803,17 @@ Fixing it means adding a `MethodDef` that states the derivation and a
 
 ## Exercises
 
+**Exercise, about 15 minutes.** Do these before the next session. You
+will need the CDISC Define-XML package downloaded first.
+
 [Exercise 8: Define-XML](../exercises/define-xml.qmd) extends this
 document: a `MethodDef` to resolve rule 73, an `ItemGroupDef` for LB
 with value-level metadata, and the variable this course cannot populate
 at all.
 
 ## Comprehension Check
+
+**Self-test, about 10 minutes.** Answer before expanding.
 
 ::: {.callout-note collapse="true"}
 ### Questions

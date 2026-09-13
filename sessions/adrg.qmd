@@ -13,7 +13,7 @@ library(knitr)
 ::: {.callout-note}
 ### Session at a Glance
 
-**Total core time: about 80 minutes.**
+**Total core time: about 100 minutes.**
 
 | Section | Time | Type |
 |---|---|---|
@@ -23,6 +23,7 @@ library(knitr)
 | Example 2: Treatment and imputation | 15 min | Worked example |
 | Example 3: The conformance summary | 10 min | Worked example |
 | The half that cannot be generated | 10 min | Reading |
+| Discussion: Which Sentences Could a Script Have Written? | 10 min | Discussion |
 | Exercises + Comprehension Check | 15 min | Practice / Self-test |
 
 Reads after [Define-XML](define-xml.qmd) and
@@ -97,6 +98,10 @@ After completing this session you will be able to:
   the findings are your own
 
 ## Background: The Document That Says Why
+
+**Reading task, about 20 minutes.** Mostly regulatory, all of it cited.
+Read it; the rest of the session assumes you know what the document is
+for.
 
 *Estimated time: ~20 minutes (reading)*
 
@@ -202,6 +207,9 @@ current publication, do not trust a section number you remember.
 
 ## Example 1: The Inventory Sections
 
+**Worked example, about 15 minutes.** Tables generated from the data
+rather than typed. Notice how little of the ADRG this actually covers.
+
 *Estimated time: ~15 minutes (worked example)*
 
 Sections 1.3 and 3.1 are tables. Neither should ever be typed.
@@ -263,6 +271,9 @@ the last study's ADRG.
 
 ## Example 2: Treatment and Imputation
 
+**Worked example, about 15 minutes.** Two more generated sections, and
+the first sign of what generation cannot reach.
+
 *Estimated time: ~15 minutes (worked example)*
 
 ### 3.2 Treatment Variables
@@ -320,6 +331,10 @@ The `Class` column is the same vocabulary
 [ADAE](adae.qmd) made and defended.
 
 ## Example 3: The Conformance Summary
+
+**Worked example, about 10 minutes.** Our own submission has real
+findings in it. Read them rather than skipping to the explanation, and
+pay attention to how the count is arrived at.
 
 *Estimated time: ~10 minutes (worked example)*
 
@@ -442,6 +457,9 @@ the document.
 
 ## The Half That Cannot Be Generated
 
+**Reading task, about 10 minutes.** The argument the whole session was
+building to. Worth reading slowly.
+
 *Estimated time: ~10 minutes (reading)*
 
 Everything above was a table computed from data. Now count what is
@@ -510,6 +528,8 @@ what this session teaches.
 
 ## What Can Go Wrong
 
+**Reading task, about 5 minutes.** No code.
+
 - **Hand-maintaining the generated tables.** The core-variables table
   copied from the last study's ADRG will be wrong in a way nobody
   notices, because it looks right. Compute it.
@@ -525,13 +545,38 @@ what this session teaches.
   whose reasoning is freshest while the work is being done, and
   hardest to reconstruct six months later.
 
+## Discussion: Which Sentences Could a Script Have Written?
+
+**Discussion, about 10 minutes.** Alone, write your answer down; in a
+session, this is the argument.
+
+Take any paragraph from a reviewer's guide, including the model section
+3.4 in the exercise.
+
+1. **One minute, on your own.** Underline every sentence a script could
+   have produced from the data and define.xml alone.
+2. **Five minutes, together.** Compare underlinings. The disagreements
+   are the interesting part: people differ on sentences that state a
+   number *and* say what it means.
+3. **The rest.** For the sentences nobody could generate, name who in a
+   sponsor organisation actually holds that information. If the answer
+   is "the statistician who left", you have found why this document
+   exists.
+
+If everything in a section could have been generated, it probably should
+have been. If nothing could, check it is really about this study.
+
 ## Exercises
+
+**Exercise, about 15 minutes.** Do these before the next session.
 
 [Exercise 10: The Analysis Data Reviewer's Guide](../exercises/adrg.qmd)
 asks you to close the rule-73 finding at its source, and to draft the
 one narrative section this course can honestly ask you to write.
 
 ## Comprehension Check
+
+**Self-test, about 10 minutes.** Answer before expanding.
 
 ::: {.callout-note collapse="true"}
 ### Questions

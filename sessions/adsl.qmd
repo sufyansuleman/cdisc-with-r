@@ -72,6 +72,9 @@ After completing this session you will be able to:
 
 ## Background: The Roster Every Analysis Starts From
 
+**Reading task, about 20 minutes.** ADSL is the dataset every other
+analysis dataset borrows from. Read the whole thing before building.
+
 *Estimated time: ~20 minutes (reading)*
 
 ::: {.callout-important}
@@ -250,6 +253,9 @@ with DS.
 
 ## Example 1: The ADSL Spine
 
+**Worked example, about 25 minutes.** Three stops. Two of them are
+checks that pass, and the useful question is what they are checking.
+
 *Estimated time: ~25 minutes (worked example)*
 
 Start from the persisted SDTM DM: one row per subject already, because
@@ -287,6 +293,9 @@ count(randdt_check, diff_days)
 
 ::: {.callout-tip}
 ### Run It Yourself
+
+**Your turn, about 4 minutes.** Every subject returns zero. Ask yourself
+whether that is reassuring or suspicious before you read the answer.
 
 Run the chunk. Every one of the 400 subjects has `diff_days = 0`: first
 dose fell on the randomization date, for all of them. That makes
@@ -344,6 +353,10 @@ adsl_spine |> filter(is.na(AGE)) |> select(USUBJID, AGE, AGEU, AGEGR1, AGEGR1N)
 
 ::: {.callout-tip}
 ### Run It Yourself
+
+**Your turn, about 5 minutes.** Four subjects fall into no age group.
+Decide what you would do about them before reading what the SAP would
+have to say.
 
 Run both chunks. 303 subjects are `<65`, 93 are `>=65`, and **four are
 null**. Those are the four subjects from [The DM Domain](sdtm-dm.qmd)
@@ -404,6 +417,9 @@ ct_check |> select(variable, codelist, n_values, all_valid)
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 4 minutes.** Four passing checks. Read what each one
+asserts; a check you do not understand is not evidence.
+
 All four come back `TRUE`. Nothing new was introduced, that is the
 point. Because these values were carried unmodified from SDTM, they
 remain valid CT; had we "tidied" `RACE` into nicer labels under the same
@@ -412,6 +428,9 @@ same-name rule in one move.
 :::
 
 ## Example 2: Population Flags and Disposition
+
+**Worked example, about 20 minutes.** One stop. Flags look trivial
+until you need to explain who is excluded and why.
 
 *Estimated time: ~20 minutes (worked example)*
 
@@ -470,6 +489,9 @@ adsl |>
 
 ::: {.callout-tip}
 ### Run It Yourself
+
+**Your turn, about 5 minutes.** Everyone is in every population. Work
+out why that is true here and why it almost never is in a real study.
 
 Run both chunks. All 400 subjects are `"Y"` on all three flags, with no
 nulls. Then 367 subjects completed and 33 discontinued, and the
@@ -561,6 +583,10 @@ committing `data/sdtm/`, one link further along.
 
 ## What Can Go Wrong
 
+**Reading task, about 10 minutes.** No code. Mostly about copying SDTM
+values into ADSL without checking whether they still mean the same
+thing.
+
 *Estimated time: ~10 minutes (reading)*
 
 **More than one row per subject**
@@ -649,12 +675,16 @@ codelist. An unchecked value is unchecked, not verified.
 
 ## Exercises
 
+**Exercise, about 10 minutes.** Do these before the next session.
+
 Work through [Exercise 4: ADSL](../exercises/adsl.qmd), which extends
 this ADSL with a second age grouping and an analysis-age case, and asks
 you to construct a population-flag scenario where the flags legitimately
 disagree.
 
 ## Comprehension Check
+
+**Self-test, about 10 minutes.** Answer before expanding.
 
 *Estimated time: ~5 minutes*
 

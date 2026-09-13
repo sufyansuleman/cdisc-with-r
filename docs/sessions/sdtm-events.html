@@ -458,7 +458,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Total core time: about 75 minutes.</strong></p>
+<p><strong>Total core time: about 85 minutes.</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -549,6 +549,7 @@ Tip
 </section>
 <section id="background-what-an-events-row-is" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="background-what-an-events-row-is"><span class="header-section-number">6.3</span> Background: What an Events Row Is</h2>
+<p><strong>Reading task, about 15 minutes.</strong> Events are the first domain class with a real structural decision in it. Read before building.</p>
 <p><em>Estimated time: ~15 minutes (reading)</em></p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -583,6 +584,7 @@ Tip
 </section>
 <section id="example-1-from-raw-events-to-ae-rows" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="example-1-from-raw-events-to-ae-rows"><span class="header-section-number">6.4</span> Example 1: From Raw Events to AE Rows</h2>
+<p><strong>Worked example, about 20 minutes.</strong> One stop, on the subject whose events do not behave.</p>
 <p><em>Estimated time: ~20 minutes (worked example)</em></p>
 <p>Start with the raw adverse-event file and the DM dataset you built and saved in the previous session:</p>
 <div class="cell">
@@ -647,12 +649,14 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 5 minutes.</strong> Look at this subject’s two events and decide whether they are one event or two before reading our answer.</p>
 <p>Run both chunks. Subject <code>101-037</code> should come back with two events, <code>AESEQ</code> 1 and 2, each with a verbatim <code>AETERM</code> and an empty <code>AEDECOD</code>. Look back at <a href="../sessions/why-standards.html">Why Standards</a>: the raw <code>AETERM</code> column is where <code>Nausea</code>, <code>NAUSEA</code>, <code>Diarrea</code> and <code>nausea and vomitting</code> all live. Every one of those is preserved here exactly as written, because <code>AETERM</code> is verbatim, and fixing the spelling is the coder’s job, recorded in <code>AEDECOD</code>, not ours to guess.</p>
 </div>
 </div>
 </section>
 <section id="example-2-qualifying-and-timing-the-event" class="level2" data-number="6.5">
 <h2 data-number="6.5" class="anchored" data-anchor-id="example-2-qualifying-and-timing-the-event"><span class="header-section-number">6.5</span> Example 2: Qualifying and Timing the Event</h2>
+<p><strong>Worked example, about 20 minutes.</strong> One stop. This is where a value that looks obviously fine turns out not to be controlled terminology.</p>
 <p><em>Estimated time: ~20 minutes (worked example)</em></p>
 <section id="severity-is-not-seriousness" class="level3" data-number="6.5.1">
 <h3 data-number="6.5.1" class="anchored" data-anchor-id="severity-is-not-seriousness"><span class="header-section-number">6.5.1</span> Severity is not seriousness</h3>
@@ -735,6 +739,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 5 minutes.</strong> <code>RECOVERED</code> looks like a perfectly reasonable value. Work out why the check rejects it before you read on.</p>
 <p>Run the chunk. The raw <code>RECOVERED</code> returns <code>FALSE</code>. It is not in the outcome codelist, while the mapped <code>RECOVERED/RESOLVED</code> returns <code>TRUE</code>. Every GLPX-1 event resolved, so after mapping, <code>AEOUT</code> is a single value across the file; there are no ongoing events to represent. (Had there been, an event still ongoing at last contact would carry a null <code>AEENDTC</code>; the relative-timing variable <code>AEENRF</code> exists for expressing “ongoing” against the study reference period, per SDTMIG v3.4, §4.4.7, but this trial gives us no occasion to use it.)</p>
 </div>
 </div>
@@ -785,6 +790,7 @@ Tip
 </section>
 <section id="what-can-go-wrong" class="level2" data-number="6.6">
 <h2 data-number="6.6" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">6.6</span> What Can Go Wrong</h2>
+<p><strong>Reading task, about 10 minutes.</strong> No code. Mostly about what an absent value means, which is the thread this course keeps pulling.</p>
 <p><em>Estimated time: ~10 minutes (reading)</em></p>
 <p><strong>Conflating seriousness and severity</strong></p>
 <p>The most consequential AE error there is. A count of <code>AESEV = "SEVERE"</code> is not a count of serious adverse events; the SAE count comes from <code>AESER = "Y"</code>. In GLPX-1 the two numbers are wildly different (many severe events, one serious one) and reporting the wrong column misstates the trial’s safety profile.</p>
@@ -815,10 +821,12 @@ Tip
 </section>
 <section id="exercises" class="level2" data-number="6.7">
 <h2 data-number="6.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">6.7</span> Exercises</h2>
+<p><strong>Exercise, about 15 minutes.</strong> Do these before the next session.</p>
 <p>The AE exercise set is in <a href="../exercises/sdtm-events.html">Exercise 2: SDTM: Events</a>: completing the domain slice, deriving the study days, and articulating the severity/seriousness distinction on real rows. Solutions are in the paid tier.</p>
 </section>
 <section id="comprehension-check" class="level2" data-number="6.8">
 <h2 data-number="6.8" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">6.8</span> Comprehension Check</h2>
+<p><strong>Self-test, about 10 minutes.</strong> Answer before expanding.</p>
 <p><em>Estimated time: ~10 minutes</em></p>
 <ol type="1">
 <li>A subject had no adverse events. How many AE rows do they have, and why?</li>

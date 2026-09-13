@@ -78,6 +78,10 @@ After completing this session you will be able to:
 
 ## Background: The Protocol Is a Prediction Machine
 
+**Reading task, about 20 minutes.** Read this before you open any data.
+The whole point of the next section is that you can predict what is in
+the files, and you cannot do that once you have already looked.
+
 *Estimated time: ~20 minutes (reading)*
 
 ::: {.callout-important}
@@ -191,6 +195,10 @@ number?" is always worth asking.
 
 ## Example 1: Predict the Data Before Opening It
 
+**Worked example, about 20 minutes.** Write your predictions down
+before running anything. A prediction you keep in your head quietly
+adjusts itself once you see the answer.
+
 *Estimated time: ~20 minutes (worked example)*
 
 The design table above is enough to predict four of the five file
@@ -229,6 +237,10 @@ tibble(
 
 ::: {.callout-tip}
 ### Run It Yourself
+
+**Your turn, about 6 minutes.** Write your five row counts down first,
+then run it. You want to know which ones you got wrong, and by how
+much.
 
 Run the chunk above. Two files match the prediction and two miss by
 hundreds: `dm_raw` is **+1**, `ex_raw` is exactly right, `lb_raw` is
@@ -314,6 +326,9 @@ reconciled against the protocol; event data cannot. That distinction (*findings 
 load-bearing idea in [SDTM Concepts](sdtm-concepts.qmd).
 
 ## Example 2: Reading the Trial's Story in the Raw Data
+
+**Worked example, about 20 minutes.** Two chunks and one figure. Read
+the numbers before you read our commentary on them.
 
 *Estimated time: ~20 minutes (worked example)*
 
@@ -401,6 +416,10 @@ hba1c_means |>
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 6 minutes.** Look at the table before the figure.
+The figure is persuasive and will do your thinking for you if you let
+it.
+
 Run both chunks. In the table, both arms should start indistinguishable
 (screening means 8.37 vs 8.45) and then separate: by week 26 the GLPX
 arm mean is **6.90%** against placebo's **8.14%**. The plot shows the
@@ -472,6 +491,10 @@ formally, and precisely, in [SDTM Concepts](sdtm-concepts.qmd).
 :::
 
 ## What Can Go Wrong
+
+**Reading task, about 10 minutes.** No code. These are the wrong
+conclusions people draw from a trial description, and they are cheaper
+to meet here than in a protocol review.
 
 *Estimated time: ~10 minutes (reading)*
 
@@ -549,6 +572,8 @@ on `ae_raw` and articulate, in one sentence, why it cannot be done.
 The first full exercise set arrives with [The DM Domain](sdtm-dm.qmd).
 
 ## Comprehension Check
+
+**Self-test, about 10 minutes.** Answer before expanding.
 
 *Estimated time: ~10 minutes*
 

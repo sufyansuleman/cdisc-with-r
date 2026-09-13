@@ -85,6 +85,10 @@ After completing this session you will be able to:
 
 ## Background: The Model Behind the Datasets
 
+**Reading task, about 25 minutes.** The longest read in the course, and
+the one that pays for itself most. Everything in Part 2 is an
+application of what is here.
+
 *Estimated time: ~25 minutes (reading)*
 
 ::: {.callout-important}
@@ -237,6 +241,9 @@ depends on the distinction.
 
 ## Example 1: Anatomy of a Domain
 
+**Worked example, about 20 minutes.** One stop, and it asks you to
+break something on purpose to see what the check does.
+
 *Estimated time: ~20 minutes (worked example)*
 
 Take the five raw GLPX files and, using nothing but the ideas above,
@@ -276,6 +283,9 @@ glpx_map |>
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 5 minutes.** Do the part where you change a code and
+re-run. Watching a check fail teaches you more than watching it pass.
+
 Run both chunks. Every row of the second should read `TRUE`: `DM`,
 `EX`, `AE`, `LB`, `VS` are all valid domain codes. Now change one code
 to something plausible-but-wrong (`"LBS"`, say, or `"VITALS"`) and
@@ -299,6 +309,9 @@ domain-specific column is added.
 :::
 
 ## Example 2: Original Result vs Standardised Result
+
+**Worked example, about 20 minutes.** Read the output carefully here.
+Both checks pass, and passing is not the same as being right.
 
 *Estimated time: ~20 minutes (worked example)*
 
@@ -361,6 +374,9 @@ c(
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 5 minutes.** Both checks say `TRUE`. Before reading
+on, work out what is still wrong with this record.
+
 Run the three chunks. Both CT checks return `TRUE`: the vendor's
 `GLUC` and `mmol/L` happen to be legal SDTM values. But look carefully
 at the mapped table's week-8 row before reading on. Something is
@@ -398,6 +414,10 @@ problem**, and it located it in a specific variable with a specific
 rule, not in a vague sense that "something looks off."
 
 ## What Can Go Wrong
+
+**Reading task, about 10 minutes.** No code. These are the
+misunderstandings that make the rest of SDTM harder than it needs to
+be.
 
 *Estimated time: ~10 minutes (reading)*
 
@@ -486,6 +506,8 @@ Worked solutions are in the paid tier; the habit the exercise builds
 (class first, then topic, then *check* the code) is the whole method.
 
 ## Comprehension Check
+
+**Self-test, about 10 minutes.** Answer before expanding.
 
 *Estimated time: ~10 minutes*
 

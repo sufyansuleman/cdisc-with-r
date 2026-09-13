@@ -434,8 +434,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#example-2-rfstdtc-and-the-study-day-rule" id="toc-example-2-rfstdtc-and-the-study-day-rule" class="nav-link" data-scroll-target="#example-2-rfstdtc-and-the-study-day-rule"><span class="header-section-number">5.5</span> Example 2: RFSTDTC and the Study-Day Rule</a></li>
   <li><a href="#what-can-go-wrong" id="toc-what-can-go-wrong" class="nav-link" data-scroll-target="#what-can-go-wrong"><span class="header-section-number">5.6</span> What Can Go Wrong</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">5.7</span> Exercises</a></li>
-  <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">5.8</span> Comprehension Check</a></li>
+  <li><a href="#discussion-which-sex-is-correct" id="toc-discussion-which-sex-is-correct" class="nav-link" data-scroll-target="#discussion-which-sex-is-correct"><span class="header-section-number">5.7</span> Discussion: Which Sex Is Correct?</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">5.8</span> Exercises</a></li>
+  <li><a href="#comprehension-check" id="toc-comprehension-check" class="nav-link" data-scroll-target="#comprehension-check"><span class="header-section-number">5.9</span> Comprehension Check</a></li>
   </ul>
 </nav>
     </div>
@@ -471,7 +472,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Total core time: about 100 minutes.</strong></p>
+<p><strong>Total core time: about 115 minutes.</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -507,11 +508,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Reading</td>
 </tr>
 <tr class="even">
+<td>Discussion: Which Sex Is Correct?</td>
+<td>10 min</td>
+<td>Discussion</td>
+</tr>
+<tr class="odd">
 <td>Exercises</td>
 <td>15 min</td>
 <td>Practice</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Comprehension Check</td>
 <td>10 min</td>
 <td>Self-test</td>
@@ -568,6 +574,7 @@ Tip
 </section>
 <section id="background-the-dm-contract" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="background-the-dm-contract"><span class="header-section-number">5.3</span> Background: The DM Contract</h2>
+<p><strong>Reading task, about 20 minutes.</strong> DM is the domain every other domain depends on. Read the whole contract before building any of it.</p>
 <p><em>Estimated time: ~20 minutes (reading)</em></p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -659,6 +666,7 @@ Tip
 </section>
 <section id="example-1-building-dm-from-the-raw-files" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="example-1-building-dm-from-the-raw-files"><span class="header-section-number">5.4</span> Example 1: Building DM from the Raw Files</h2>
+<p><strong>Worked example, about 30 minutes.</strong> The longest example in Part 2, with three stops. It builds a real domain from a real export, including the two subjects the export gets wrong.</p>
 <p><em>Estimated time: ~30 minutes (worked example)</em></p>
 <section id="one-person-one-row" class="level3" data-number="5.4.1">
 <h3 data-number="5.4.1" class="anchored" data-anchor-id="one-person-one-row"><span class="header-section-number">5.4.1</span> One person, one row</h3>
@@ -702,6 +710,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 6 minutes.</strong> Before you run it, decide which of the two enrolment rows you would keep, and why. The code makes a choice; you should have made yours first.</p>
 <p>Run both chunks. You should see 401 collapse to 400, with rows and subjects now equal. Before moving on, note what we did <em>not</em> do: we did not delete a false record. Both raw rows were true. We decided (as the standard requires the sponsor to decide) how one person’s site change is represented, and the answer is “in one row, with the detail carried elsewhere.”</p>
 </div>
 </div>
@@ -875,6 +884,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 5 minutes.</strong> Four subjects get no age. Look at why before reading on, and ask yourself whether you would have imputed something instead.</p>
 <p>Run the chunk. 396 subjects get a derived age; the four D1 subjects get <code>NA</code> in both AGE and AGEU. Ask yourself which you would rather defend to a reviewer: four honest nulls, or four ages computed from invented birthdays. (In a real study, ages for such subjects are often <em>collected</em> on the CRF precisely because the birth date is withheld, GLPX-1’s CRF did not, so nulls it is.)</p>
 </div>
 </div>
@@ -1028,6 +1038,7 @@ expected_cols_present
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 4 minutes.</strong> Four checks pass. Read what each one is actually asserting, because passing checks is how wrong data gets shipped.</p>
 <p>Run the two chunks: four checks, four <code>TRUE</code>s, and <code>dm</code> is a 400-row, 26-column DM dataset. Notice which columns you built by <em>copying</em> (SITEID, RACE), which by <em>deciding</em> (the one-row rule, USUBJID’s format, SEX’s source, AGE’s nulls), and which by <em>deriving</em> (the reference dates). The copying was trivial. The dataset’s value is entirely in the deciding, which is why those decisions were made explicitly and, in a real study, live in the study’s documentation.</p>
 <p>Also absent, deliberately: the Permissible variables the study never collected (<code>INVID</code>, <code>INVNAM</code>, <code>DMDTC</code>, <code>DMDY</code>) are left out entirely - included-if-collected is exactly what Permissible means (SDTMIG v3.4, §4.1.5), while the Expected-but-empty columns (<code>RFICDTC</code>, <code>DTHFL</code>, <code>ARMNRS</code>) are present and null. The difference between those two fates is the difference between Permissible and Expected.</p>
 </div>
@@ -1036,6 +1047,7 @@ expected_cols_present
 </section>
 <section id="example-2-rfstdtc-and-the-study-day-rule" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="example-2-rfstdtc-and-the-study-day-rule"><span class="header-section-number">5.5</span> Example 2: RFSTDTC and the Study-Day Rule</h2>
+<p><strong>Worked example, about 15 minutes.</strong> One stop. The study-day function here is used by every later session, so it is worth understanding rather than copying.</p>
 <p><em>Estimated time: ~15 minutes (worked example)</em></p>
 <p>DM now gives every subject a clock. <a href="../sessions/the-trial-glpx001.html">The Trial</a> promised the precise rule for reading it, and here it is, verbatim from the guide (SDTMIG v3.4, §4.4.4): the reference start date is study day 1; the study day increments by 1 for each date after it; dates before it count down from <strong>−1</strong>; <strong>there is no study day 0</strong>. As formulas:</p>
 <ul>
@@ -1140,12 +1152,14 @@ expected_cols_present
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 5 minutes.</strong> Work out what study day the dosing day itself should be before you look. Almost everyone gets this wrong the first time, and the reason is worth meeting now.</p>
 <p>Run both chunks. The screening draw lands on study day <strong>−15</strong>, before the clock started, so negative, with no zero crossed on the way - and the baseline draw on day <strong>2</strong>, because the sample was taken the day after first dose. Nominal week 26 lands on day 184. All three are the reality behind the tidy visit labels: <code>--DY</code> records when things <em>actually</em> happened on the subject’s own clock. When you build full findings domains in <a href="../sessions/sdtm-findings.html">Findings</a>, this function is applied to every dated record in the study.</p>
 </div>
 </div>
 </section>
 <section id="what-can-go-wrong" class="level2" data-number="5.6">
 <h2 data-number="5.6" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">5.6</span> What Can Go Wrong</h2>
+<p><strong>Reading task, about 10 minutes.</strong> No code. These are the DM mistakes that only surface three domains later.</p>
 <p><em>Estimated time: ~10 minutes (reading)</em></p>
 <p><strong>Keeping both rows for a re-enrolled subject “to be safe”</strong></p>
 <p>Safety is exactly what it isn’t. Two DM rows for one person breaks the parent-domain contract, joins duplicate, counts inflate, and every downstream domain inherits the ambiguity. The standard’s rule is one record per subject with the detail carried supplementally (SDTMIG v3.4, §5.2, assumption 2). Keeping both rows is not caution; it is deferring a decision to everyone who uses the data after you.</p>
@@ -1176,12 +1190,25 @@ expected_cols_present
 </div>
 </div>
 </section>
-<section id="exercises" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">5.7</span> Exercises</h2>
+<section id="discussion-which-sex-is-correct" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="discussion-which-sex-is-correct"><span class="header-section-number">5.7</span> Discussion: Which Sex Is Correct?</h2>
+<p><strong>Discussion, about 10 minutes.</strong> Alone, write your answer down; in a session, this is the argument.</p>
+<p>Subject <code>111-003</code> is recorded as <code>F</code> in the EDC and <code>M</code> by the laboratory. One of them is wrong. You cannot phone the site.</p>
+<ol type="1">
+<li><strong>One minute, on your own.</strong> Pick one, and write the single sentence you would put in the data management log to justify it.</li>
+<li><strong>Five minutes, together.</strong> Compare sentences, not answers. Two people can pick <code>F</code> for completely different reasons, and only one of those reasons survives an audit.</li>
+<li><strong>The rest.</strong> What would you do if the lab value changed the subject’s reference ranges, and therefore whether their results were flagged abnormal?</li>
+</ol>
+<p>There is a defensible answer and the session gives it. What there is no defensible version of is picking one silently.</p>
+</section>
+<section id="exercises" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="exercises"><span class="header-section-number">5.8</span> Exercises</h2>
+<p><strong>Exercise, about 15 minutes.</strong> Do these before the next session; they are reviewed at the start of it.</p>
 <p>The DM exercise set is in <a href="../exercises/sdtm-dm.html">Exercise 1: SDTM: The DM Domain</a>: finishing the build for a column subset, defending the AGE nulls, and writing the decision log for the two resolved conflicts. Solutions are in the paid tier.</p>
 </section>
-<section id="comprehension-check" class="level2" data-number="5.8">
-<h2 data-number="5.8" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">5.8</span> Comprehension Check</h2>
+<section id="comprehension-check" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">5.9</span> Comprehension Check</h2>
+<p><strong>Self-test, about 10 minutes.</strong> Answer before expanding.</p>
 <p><em>Estimated time: ~10 minutes</em></p>
 <ol type="1">
 <li>Subject <code>101-012</code> has two genuine enrolment records. Why does DM get exactly one row, and where does the site-change information belong?</li>

@@ -11,7 +11,7 @@ library(tidyverse)
 ::: {.callout-note}
 ### Session at a Glance
 
-**Total core time: about 75 minutes.**
+**Total core time: about 85 minutes.**
 
 | Section | Time | Type |
 |---|---|---|
@@ -20,6 +20,7 @@ library(tidyverse)
 | Example 1: Five Files, Five Conventions | 20 min | Worked example |
 | Example 2: One Question, Three Answers | 15 min | Worked example |
 | What Can Go Wrong | 10 min | Reading |
+| Discussion: Which Number Would You Publish? | 10 min | Discussion |
 | Comprehension Check | 10 min | Self-test |
 
 This session is shorter than most and has no exercise set: it is the
@@ -75,6 +76,10 @@ After completing this session you will be able to:
   this course builds
 
 ## Background: Data That Can Only Be Read by Its Author
+
+**Reading task, about 15 minutes.** Read to the end of "Why not just
+write good documentation instead?" before you run any code. This
+section is the argument the rest of the course rests on.
 
 *Estimated time: ~15 minutes (reading)*
 
@@ -234,6 +239,12 @@ that each sponsor adapts to taste is a dictionary with extra steps.
 
 ## Example 1: Five Files, Five Conventions
 
+**Worked example, about 20 minutes.** Run each chunk as you reach it.
+There are two "Run It Yourself" stops in this section, and each one
+asks you a question before you read the answer. Stopping is the point:
+if you read straight through, you get the conclusion without the
+reasoning that makes it stick.
+
 *Estimated time: ~20 minutes (worked example)*
 
 GLPX-1 is a simulated Phase III trial of a GLP-1-class agent in type
@@ -264,6 +275,9 @@ tibble(
 
 ::: {.callout-tip}
 ### Run It Yourself
+
+**Your turn, about 5 minutes.** Run it, then answer the question at the
+end of this block before scrolling on.
 
 Run the chunk above. You should see five files: `ae_raw.csv` (389
 rows), `dm_raw.csv` (401), `ex_raw.csv` (400), `lb_raw.csv` (12,389)
@@ -340,6 +354,9 @@ edc_sex |>
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 3 minutes.** Run it, then decide what you would do
+about this subject before reading what we did.
+
 Run the chunk above. Exactly one subject comes back: `111-003`, whom
 the EDC records as `F` and the lab records as `M`.
 
@@ -409,6 +426,9 @@ data.
 
 ## Example 2: One Question, Three Answers
 
+**Worked example, about 15 minutes.** Two more stops. The second one
+asks you to commit to an answer before you see the data.
+
 *Estimated time: ~15 minutes (worked example)*
 
 Naming and structure are the visible problems. Vocabulary is the one
@@ -431,6 +451,10 @@ ae |> count(AETERM, sort = TRUE)
 
 ::: {.callout-tip}
 ### Run It Yourself
+
+**Your turn, about 5 minutes.** This one needs you to actually read a
+list of 25 things. Do not skim it; the whole point is that skimming is
+what produced the list.
 
 Run the chunk above and read the whole list: all 25 rows, not just
 the top. Find every row that a clinician would call nausea. There are
@@ -494,6 +518,9 @@ tibble(
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 4 minutes.** Commit to a number before you run it.
+Writing your guess down first is what makes the result land.
+
 Run the chunk above. You should get **61**, **65** and **66**.
 
 Before reading on: which of those three numbers would you put in a
@@ -536,6 +563,10 @@ principle worth carrying through the whole course: standardisation adds
 an interpretation alongside the original. It does not overwrite it.
 
 ## What Can Go Wrong
+
+**Reading task, about 10 minutes.** No code to run. These are the
+mistakes people make with the ideas above, and they are easier to
+recognise now than to diagnose later.
 
 *Estimated time: ~10 minutes (reading)*
 
@@ -615,7 +646,32 @@ point you will have something to build. If you want to do something
 now, re-run Example 2's three nausea rules against `Diarrhoea` instead,
 and see how many different answers you can defend.
 
+## Discussion: Which Number Would You Publish?
+
+**Discussion, about 10 minutes.** If you are reading alone, write your
+answer down before moving on; if you are in a session, this is the one
+we argue about.
+
+Example 2 produced three defensible nausea counts: **61**, **65** and
+**66**. All three came from the same data, and none of them is a bug.
+
+1. **One minute, on your own.** Pick the number you would put in a
+   clinical study report, and write one sentence saying why.
+2. **Five minutes, together.** Compare. You will not all pick the same
+   one. Find out what the disagreement is actually about, because it is
+   not arithmetic.
+3. **The rest.** Answer the harder question: what would have to be
+   written down, and by whom, for all three of you to have arrived at
+   the same number without talking to each other?
+
+That last question is the course. Everything from here on is an answer
+to it.
+
 ## Comprehension Check
+
+**Self-test, about 10 minutes.** Answer all of them before you expand
+the answers. Guessing and checking teaches you less than being wrong
+and finding out why.
 
 *Estimated time: ~10 minutes*
 

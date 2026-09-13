@@ -76,6 +76,9 @@ After completing this session you will be able to:
 
 ## Background: What ADaM Adds to SDTM
 
+**Reading task, about 25 minutes.** The opening of Course B. If you did
+Course A months ago, this is the section that reconnects it.
+
 *Estimated time: ~25 minutes (reading)*
 
 ::: {.callout-important}
@@ -204,6 +207,9 @@ on different rows for the same subject.
 
 ## Example 1: The Two Shapes, ADSL and BDS
 
+**Worked example, about 20 minutes.** One stop. Two dataset shapes,
+and nearly all of ADaM is one or the other.
+
 *Estimated time: ~20 minutes (worked example)*
 
 Read the finished SDTM and shape a small preview of each ADaM structure
@@ -258,6 +264,9 @@ adlb_hba1c |> filter(USUBJID == "GLPX1-101-026")
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 5 minutes.** Look at the row counts and work out
+what each dataset is one row *per* before reading on.
+
 Run both chunks. The ADSL preview has **400 rows for 400 subjects**:
 one each. The BDS preview returns **8 rows for the one subject** shown:
 one per visit. That is the entire structural distinction: ADSL is one
@@ -282,6 +291,9 @@ and [ADLB](adlb.qmd) sessions. The point now is only the *shape*.
 :::
 
 ## Example 2: Baseline Is an ADaM Decision
+
+**Worked example, about 20 minutes.** This is the thread Course A kept
+deferring. It gets settled here, and then argued about again in ADLB.
 
 *Estimated time: ~20 minutes (worked example)*
 
@@ -314,6 +326,9 @@ adlb |>
 
 ::: {.callout-tip}
 ### Run It Yourself
+
+**Your turn, about 6 minutes.** Two flags that should agree and do not.
+Before reading on, decide which one you would trust.
 
 Run the chunk. Look at the `LBLOBXFL` and `ABLFL` columns side by side
 for this subject: the SDTM flag sits on **screening**, the ADaM flag on
@@ -348,6 +363,9 @@ just a more elaborate one; the traceability requirement is the same.
 :::
 
 ## What Can Go Wrong
+
+**Reading task, about 10 minutes.** No code. Mostly about treating ADaM
+as a reformat of SDTM rather than a set of decisions.
 
 *Estimated time: ~10 minutes (reading)*
 
@@ -428,6 +446,8 @@ If you want to test yourself before moving on, the Comprehension Check
 below is the place to do it.
 
 ## Comprehension Check
+
+**Self-test, about 5 minutes.** Answer before expanding.
 
 *Estimated time: ~5 minutes*
 

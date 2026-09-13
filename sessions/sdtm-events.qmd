@@ -12,7 +12,7 @@ library(sdtm.terminology)
 ::: {.callout-note}
 ### Session at a Glance
 
-**Total core time: about 75 minutes.**
+**Total core time: about 85 minutes.**
 
 | Section | Time | Type |
 |---|---|---|
@@ -78,6 +78,9 @@ After completing this session you will be able to:
 
 ## Background: What an Events Row Is
 
+**Reading task, about 15 minutes.** Events are the first domain class
+with a real structural decision in it. Read before building.
+
 *Estimated time: ~15 minutes (reading)*
 
 ::: {.callout-important}
@@ -135,6 +138,9 @@ Study-day versions (`AESTDY`, `AEENDY`) are derived from the DM
 reference date using the rule from [The DM Domain](sdtm-dm.qmd).
 
 ## Example 1: From Raw Events to AE Rows
+
+**Worked example, about 20 minutes.** One stop, on the subject whose
+events do not behave.
 
 *Estimated time: ~20 minutes (worked example)*
 
@@ -195,6 +201,9 @@ ae |>
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 5 minutes.** Look at this subject's two events and
+decide whether they are one event or two before reading our answer.
+
 Run both chunks. Subject `101-037` should come back with two events,
 `AESEQ` 1 and 2, each with a verbatim `AETERM` and an empty `AEDECOD`.
 Look back at [Why Standards](why-standards.qmd): the raw `AETERM`
@@ -205,6 +214,9 @@ coder's job, recorded in `AEDECOD`, not ours to guess.
 :::
 
 ## Example 2: Qualifying and Timing the Event
+
+**Worked example, about 20 minutes.** One stop. This is where a value
+that looks obviously fine turns out not to be controlled terminology.
 
 *Estimated time: ~20 minutes (worked example)*
 
@@ -279,6 +291,10 @@ c(
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 5 minutes.** `RECOVERED` looks like a perfectly
+reasonable value. Work out why the check rejects it before you read
+on.
+
 Run the chunk. The raw `RECOVERED` returns `FALSE`. It is not in the
 outcome codelist, while the mapped `RECOVERED/RESOLVED` returns `TRUE`.
 Every GLPX-1 event resolved, so after mapping, `AEOUT` is a single
@@ -336,6 +352,9 @@ partial birth dates in DM.
 :::
 
 ## What Can Go Wrong
+
+**Reading task, about 10 minutes.** No code. Mostly about what an
+absent value means, which is the thread this course keeps pulling.
 
 *Estimated time: ~10 minutes (reading)*
 
@@ -400,12 +419,16 @@ the verbatim originals. Editing `AETERM` throws away the source.
 
 ## Exercises
 
+**Exercise, about 15 minutes.** Do these before the next session.
+
 The AE exercise set is in [Exercise 2: SDTM:
 Events](../exercises/sdtm-events.qmd): completing the domain slice,
 deriving the study days, and articulating the severity/seriousness
 distinction on real rows. Solutions are in the paid tier.
 
 ## Comprehension Check
+
+**Self-test, about 10 minutes.** Answer before expanding.
 
 *Estimated time: ~10 minutes*
 

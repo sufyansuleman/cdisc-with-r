@@ -548,6 +548,7 @@ Tip
 </section>
 <section id="background-what-adam-adds-to-sdtm" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="background-what-adam-adds-to-sdtm"><span class="header-section-number">9.3</span> Background: What ADaM Adds to SDTM</h2>
+<p><strong>Reading task, about 25 minutes.</strong> The opening of Course B. If you did Course A months ago, this is the section that reconnects it.</p>
 <p><em>Estimated time: ~25 minutes (reading)</em></p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -594,6 +595,7 @@ Tip
 </section>
 <section id="example-1-the-two-shapes-adsl-and-bds" class="level2" data-number="9.4">
 <h2 data-number="9.4" class="anchored" data-anchor-id="example-1-the-two-shapes-adsl-and-bds"><span class="header-section-number">9.4</span> Example 1: The Two Shapes, ADSL and BDS</h2>
+<p><strong>Worked example, about 20 minutes.</strong> One stop. Two dataset shapes, and nearly all of ADaM is one or the other.</p>
 <p><em>Estimated time: ~20 minutes (worked example)</em></p>
 <p>Read the finished SDTM and shape a small preview of each ADaM structure - not the full builds (those are <a href="../sessions/adsl.html">ADSL</a>, <a href="../sessions/adae.html">ADAE</a> and <a href="../sessions/adlb.html">ADLB</a>), just enough to <em>see</em> the difference in what one row is.</p>
 <p>First, an ADSL-shaped preview: one row per subject, with a planned treatment and a population flag:</p>
@@ -665,6 +667,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 5 minutes.</strong> Look at the row counts and work out what each dataset is one row <em>per</em> before reading on.</p>
 <p>Run both chunks. The ADSL preview has <strong>400 rows for 400 subjects</strong>: one each. The BDS preview returns <strong>8 rows for the one subject</strong> shown: one per visit. That is the entire structural distinction: ADSL is one row per subject; BDS is one row per subject per parameter per timepoint.</p>
 </div>
 </div>
@@ -718,6 +721,7 @@ Tip
 </section>
 <section id="example-2-baseline-is-an-adam-decision" class="level2" data-number="9.5">
 <h2 data-number="9.5" class="anchored" data-anchor-id="example-2-baseline-is-an-adam-decision"><span class="header-section-number">9.5</span> Example 2: Baseline Is an ADaM Decision</h2>
+<p><strong>Worked example, about 20 minutes.</strong> This is the thread Course A kept deferring. It gets settled here, and then argued about again in ADLB.</p>
 <p><em>Estimated time: ~20 minutes (worked example)</em></p>
 <p>In <a href="../sessions/sdtm-findings.html">Findings</a> you derived <code>LBLOBXFL</code>, SDTM’s operational baseline flag, the last value before first dose. The analysis, though, may define baseline differently, and the ADaMIG is explicit that the ADaM baseline can differ from the SDTM one (ADaMIG v1.3, §3.5). Here the analysis defines baseline as the <strong>Baseline visit</strong> value. Build <code>ABLFL</code>, <code>BASE</code> and <code>CHG</code>, and carry the SDTM flag alongside so the two can be compared:</p>
 <div class="cell">
@@ -759,6 +763,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Your turn, about 6 minutes.</strong> Two flags that should agree and do not. Before reading on, decide which one you would trust.</p>
 <p>Run the chunk. Look at the <code>LBLOBXFL</code> and <code>ABLFL</code> columns side by side for this subject: the SDTM flag sits on <strong>screening</strong>, the ADaM flag on <strong>baseline</strong>: two different rows. <code>BASE</code> is the baseline-visit value (8.9), and <code>CHG</code> is each visit’s value minus that. The two flags disagreeing is not an error; it is the ADaMIG’s point made concrete.</p>
 </div>
 </div>
@@ -809,6 +814,7 @@ Tip
 </section>
 <section id="what-can-go-wrong" class="level2" data-number="9.6">
 <h2 data-number="9.6" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">9.6</span> What Can Go Wrong</h2>
+<p><strong>Reading task, about 10 minutes.</strong> No code. Mostly about treating ADaM as a reformat of SDTM rather than a set of decisions.</p>
 <p><em>Estimated time: ~10 minutes (reading)</em></p>
 <p><strong>Treating ADaM as “SDTM with extra columns”</strong></p>
 <p>ADaM is a different shape for a different purpose: analysis-ready, both source and derived, and traceable. Bolting analysis columns onto an SDTM domain gives you neither the structure nor the traceability the standard requires. The two structures (ADSL, BDS) exist precisely so the analysis and its provenance are predictable.</p>
@@ -844,6 +850,7 @@ Tip
 </section>
 <section id="comprehension-check" class="level2" data-number="9.8">
 <h2 data-number="9.8" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">9.8</span> Comprehension Check</h2>
+<p><strong>Self-test, about 5 minutes.</strong> Answer before expanding.</p>
 <p><em>Estimated time: ~5 minutes</em></p>
 <ol type="1">
 <li>In one sentence each, what does “analysis-ready” mean, and what does “traceable” mean, for an ADaM dataset?</li>

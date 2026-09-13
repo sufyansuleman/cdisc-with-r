@@ -12,7 +12,7 @@ library(sdtm.terminology)
 ::: {.callout-note}
 ### Session at a Glance
 
-**Total core time: about 100 minutes.**
+**Total core time: about 115 minutes.**
 
 | Section | Time | Type |
 |---|---|---|
@@ -21,6 +21,7 @@ library(sdtm.terminology)
 | Example 1: Building DM from the raw files | 30 min | Worked example |
 | Example 2: RFSTDTC and the study-day rule | 15 min | Worked example |
 | What Can Go Wrong | 10 min | Reading |
+| Discussion: Which Sex Is Correct? | 10 min | Discussion |
 | Exercises | 15 min | Practice |
 | Comprehension Check | 10 min | Self-test |
 
@@ -82,6 +83,9 @@ After completing this session you will be able to:
 - Check every CT-governed DM value programmatically before submission
 
 ## Background: The DM Contract
+
+**Reading task, about 20 minutes.** DM is the domain every other
+domain depends on. Read the whole contract before building any of it.
 
 *Estimated time: ~20 minutes (reading)*
 
@@ -201,6 +205,10 @@ present because it is Expected, empty because it has nothing to say.
 
 ## Example 1: Building DM from the Raw Files
 
+**Worked example, about 30 minutes.** The longest example in Part 2,
+with three stops. It builds a real domain from a real export, including
+the two subjects the export gets wrong.
+
 *Estimated time: ~30 minutes (worked example)*
 
 ### One person, one row
@@ -239,6 +247,10 @@ c(rows = nrow(dm_person), subjects = n_distinct(dm_person$SUBJID))
 
 ::: {.callout-tip}
 ### Run It Yourself
+
+**Your turn, about 6 minutes.** Before you run it, decide which of the
+two enrolment rows you would keep, and why. The code makes a choice;
+you should have made yours first.
 
 Run both chunks. You should see 401 collapse to 400, with rows and
 subjects now equal. Before moving on, note what we did *not* do: we
@@ -373,6 +385,10 @@ dm_age |> filter(!age_derivable) |> select(SUBJID, BRTHDTC, AGE, AGEU)
 
 ::: {.callout-tip}
 ### Run It Yourself
+
+**Your turn, about 5 minutes.** Four subjects get no age. Look at why
+before reading on, and ask yourself whether you would have imputed
+something instead.
 
 Run the chunk. 396 subjects get a derived age; the four D1 subjects
 get `NA` in both AGE and AGEU. Ask yourself which you would rather
@@ -528,6 +544,10 @@ c(
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 4 minutes.** Four checks pass. Read what each one is
+actually asserting, because passing checks is how wrong data gets
+shipped.
+
 Run the two chunks: four checks, four `TRUE`s, and `dm` is a 400-row,
 26-column DM dataset. Notice which columns you built by *copying*
 (SITEID, RACE), which by *deciding* (the one-row rule, USUBJID's
@@ -545,6 +565,10 @@ two fates is the difference between Permissible and Expected.
 :::
 
 ## Example 2: RFSTDTC and the Study-Day Rule
+
+**Worked example, about 15 minutes.** One stop. The study-day function
+here is used by every later session, so it is worth understanding
+rather than copying.
 
 *Estimated time: ~15 minutes (worked example)*
 
@@ -613,6 +637,10 @@ lb_raw |>
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 5 minutes.** Work out what study day the dosing day
+itself should be before you look. Almost everyone gets this wrong the
+first time, and the reason is worth meeting now.
+
 Run both chunks. The screening draw lands on study day **−15**,
 before the clock started, so negative, with no zero crossed on the way
 - and the baseline draw on day **2**, because the sample was taken the
@@ -624,6 +652,9 @@ applied to every dated record in the study.
 :::
 
 ## What Can Go Wrong
+
+**Reading task, about 10 minutes.** No code. These are the DM mistakes
+that only surface three domains later.
 
 *Estimated time: ~10 minutes (reading)*
 
@@ -702,7 +733,30 @@ day 1, and GLPX-1's reference date is first *exposure*, which for
 some subjects is not the randomisation day at all.
 :::
 
+## Discussion: Which Sex Is Correct?
+
+**Discussion, about 10 minutes.** Alone, write your answer down; in a
+session, this is the argument.
+
+Subject `111-003` is recorded as `F` in the EDC and `M` by the
+laboratory. One of them is wrong. You cannot phone the site.
+
+1. **One minute, on your own.** Pick one, and write the single sentence
+   you would put in the data management log to justify it.
+2. **Five minutes, together.** Compare sentences, not answers. Two
+   people can pick `F` for completely different reasons, and only one of
+   those reasons survives an audit.
+3. **The rest.** What would you do if the lab value changed the
+   subject's reference ranges, and therefore whether their results were
+   flagged abnormal?
+
+There is a defensible answer and the session gives it. What there is no
+defensible version of is picking one silently.
+
 ## Exercises
+
+**Exercise, about 15 minutes.** Do these before the next session; they
+are reviewed at the start of it.
 
 The DM exercise set is in [Exercise 1: SDTM: The DM
 Domain](../exercises/sdtm-dm.qmd): finishing the build for a column
@@ -710,6 +764,8 @@ subset, defending the AGE nulls, and writing the decision log for the
 two resolved conflicts. Solutions are in the paid tier.
 
 ## Comprehension Check
+
+**Self-test, about 10 minutes.** Answer before expanding.
 
 *Estimated time: ~10 minutes*
 

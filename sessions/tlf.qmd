@@ -96,6 +96,9 @@ After completing this session you will be able to:
 
 ## Background: The Shape Nobody Standardised
 
+**Reading task, about 15 minutes.** Everything up to now had a standard
+to follow. Outputs do not, and that is the subject of this session.
+
 *Estimated time: ~15 minutes (reading)*
 
 ::: {.callout-important}
@@ -169,6 +172,10 @@ its denominator from ADSL before it states anything else.
 
 ## Example 1: The Demographics and Disposition Table
 
+**Worked example, about 20 minutes.** One stop, four chunks. Every
+number in the finished table has to be traceable to a row, and that is
+harder than it sounds.
+
 *Estimated time: ~20 minutes (worked example)*
 
 Read the one dataset every table in this session ultimately answers to:
@@ -241,6 +248,10 @@ kable(disp_tbl, caption = "Disposition, n (%)")
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 6 minutes.** Pick one number in the finished table
+and trace it back to the rows it came from. If you cannot, neither can
+a reviewer.
+
 Run all four chunks. Every row of every one of these tables is a
 `count()` or a `summarise()` on `ADSL` alone: no new logic, only
 presentation of a value derived in [ADSL](adsl.qmd) and cited there.
@@ -275,6 +286,9 @@ subject, and why the `COMPLETED` count does too. A number that cannot be
 walked back to a row like this one is not a result. It is a claim.
 
 ## Example 2: A Table and a Listing, from the Same Events
+
+**Worked example, about 25 minutes.** Two stops. The same events
+summarised two ways, and the denominator is the whole argument.
 
 *Estimated time: ~25 minutes (worked example)*
 
@@ -352,6 +366,10 @@ kable(sev_tbl, caption = "Subjects by Worst Treatment-Emergent Severity, n (%)")
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 5 minutes.** Work out what the denominator is before
+you read on. Getting it wrong changes these percentages substantially,
+and the wrong version looks perfectly reasonable.
+
 75.5% of GLPX subjects and 55.0% of Placebo subjects had at least one
 TEAE: the same two numbers [ADAE](adae.qmd)'s denominator-lesson chunk
 produced, arrived at the same way, now sitting in the shape a CSR table
@@ -422,6 +440,9 @@ kable(sae_listing, caption = "Listing of Serious Adverse Events")
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 4 minutes.** One subject, one row. Ask what a listing
+gives a reviewer that the table above it cannot.
+
 One row: `GLPX1-110-004`, Hypoglycaemia, 2024-03-23, Severe,
 treatment-emergent, GLPX 10 mg. You met this subject in
 [ADAE](adae.qmd) as the study's single serious event.
@@ -447,6 +468,9 @@ by a person deciding where to look next.
 :::
 
 ## Example 3: The Figure the Baseline Machinery Was For
+
+**Worked example, about 20 minutes.** One stop. This figure is the
+payoff for four sessions of baseline work.
 
 *Estimated time: ~20 minutes (worked example)*
 
@@ -545,6 +569,10 @@ ggplot(plot_data, aes(x = AVISITN, y = mean_chg, colour = TRTA, shape = TRTA)) +
 ::: {.callout-tip}
 ### Run It Yourself
 
+**Your turn, about 5 minutes.** Before reading our commentary, decide
+what this figure does not tell you. It is persuasive, and persuasive is
+when to be careful.
+
 Run the chunk. GLPX 10 mg separates from placebo almost immediately and
 the gap widens every visit, reaching -1.41 against -0.30 by week 26:
 the same treatment effect [ADLB](adlb.qmd) reported as a table of
@@ -593,6 +621,9 @@ demographics table, a safety table and its listing, and the efficacy
 figure the entire baseline argument existed to produce.
 
 ## What Can Go Wrong
+
+**Reading task, about 10 minutes.** No code. Mostly about tables that
+are correct and still mislead.
 
 *Estimated time: ~10 minutes (reading)*
 
@@ -646,9 +677,13 @@ table with one fewer `group_by()`.
 
 ## Exercises
 
+**Exercise, about 15 minutes.** Do these before the next session.
+
 Practice: [Exercise 7: Tables, Listings and Figures](../exercises/tlf.qmd).
 
 ## Comprehension Check
+
+**Self-test, about 5 minutes.** Answer before expanding.
 
 1. Every table in this session states its `N` before it states any
    percentage, and that `N` always comes from ADSL. Why not compute it

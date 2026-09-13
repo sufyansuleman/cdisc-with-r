@@ -480,7 +480,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Total core time: about 95 minutes.</strong></p>
+<p><strong>Total core time: about 105 minutes.</strong></p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -607,6 +607,7 @@ Tip
 </section>
 <section id="background-a-web-held-together-by-arbitrary-names" class="level2" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="background-a-web-held-together-by-arbitrary-names"><span class="header-section-number">8.3</span> Background: A Web Held Together by Arbitrary Names</h2>
+<p><strong>Reading task, about 20 minutes.</strong> The central idea here is that the names holding the document together mean nothing. It is strange, and it is worth sitting with before you build anything.</p>
 <p><em>Estimated time: ~20 minutes (reading)</em></p>
 <p>Everything Part 2 has produced so far is a table. <code>dm.csv</code> has 400 rows and 27 columns; <code>lb.csv</code> has rows of results with units and reference ranges. A regulatory reviewer receiving those tables would know the column names and nothing else. Not what <code>LBNRIND</code> means. Not whether <code>AGE</code> was collected or derived. Not which version of the SDTMIG the sponsor was implementing when they chose those columns.</p>
 <p><strong>define.xml is where all of that lives.</strong> It is a single XML document submitted alongside the datasets, and it carries the metadata: every dataset, every variable, every codelist, every derivation, and (the part this session keeps coming back to) where each value came from.</p>
@@ -648,6 +649,7 @@ Tip
 </section>
 <section id="example-1-a-define.xml-for-dm-built-by-hand" class="level2" data-number="8.4">
 <h2 data-number="8.4" class="anchored" data-anchor-id="example-1-a-define.xml-for-dm-built-by-hand"><span class="header-section-number">8.4</span> Example 1: A define.xml for DM, Built by Hand</h2>
+<p><strong>Worked example, about 25 minutes.</strong> You build a schema-valid document element by element. Run each chunk as you reach it; the order the elements go in is load-bearing, and skipping ahead breaks it.</p>
 <p><em>Estimated time: ~25 minutes (worked example)</em></p>
 <p>We will build a small but genuinely valid Define-XML v2.1 document describing GLPX-1’s DM domain, with three variables and one codelist. Small, but not a toy: it validates against the same CDISC schema a submission would be checked with.</p>
 <p>The document nests like this, outermost first:</p>
@@ -859,6 +861,7 @@ Tip
 </section>
 <section id="example-2-origin-grows-a-second-attribute" class="level2" data-number="8.5">
 <h2 data-number="8.5" class="anchored" data-anchor-id="example-2-origin-grows-a-second-attribute"><span class="header-section-number">8.5</span> Example 2: Origin Grows a Second Attribute</h2>
+<p><strong>Worked example, about 15 minutes.</strong> Short, and it settles a question left open back in Findings.</p>
 <p><em>Estimated time: ~15 minutes (worked example)</em></p>
 <p><a href="../sessions/sdtm-findings.html">Findings</a> made a claim about GLPX-1’s central lab data that this session can now finish. It said that a central lab result has <code>LBDRVFL</code> null because the value was not derived, and that the same fact is recorded a second time in the Define-XML origin metadata, where the origin is <em>Collected</em>.</p>
 <p>That was right, and it was incomplete. In Define-XML v2.1, origin is not one value:</p>
@@ -991,6 +994,7 @@ Tip
 </section>
 <section id="example-3-declaring-the-standard-and-a-decision-made-three-sessions-ago" class="level2" data-number="8.6">
 <h2 data-number="8.6" class="anchored" data-anchor-id="example-3-declaring-the-standard-and-a-decision-made-three-sessions-ago"><span class="header-section-number">8.6</span> Example 3: Declaring the Standard, and a Decision Made Three Sessions Ago</h2>
+<p><strong>Worked example, about 15 minutes.</strong> This one closes a loop opened in Part 3. Read the version note carefully; it is the kind of detail that costs a submission.</p>
 <p><em>Estimated time: ~15 minutes (worked example)</em></p>
 <p><a href="../sessions/adae.html">ADAE</a> made a structural decision that mattered enough to argue about at length: ADAE is built as <strong>Class = OCCURRENCE DATA STRUCTURE</strong>, not as SubClass = ADVERSE EVENT. At the time, that decision lived in the session’s prose and in the way the variables were derived.</p>
 <p>Define-XML is where it becomes a fact in a file.</p>
@@ -1075,6 +1079,7 @@ Tip
 </section>
 <section id="what-can-go-wrong" class="level2" data-number="8.7">
 <h2 data-number="8.7" class="anchored" data-anchor-id="what-can-go-wrong"><span class="header-section-number">8.7</span> What Can Go Wrong</h2>
+<p><strong>Reading task, about 10 minutes.</strong> Includes a document that validates perfectly and is still broken, and one of our own files failing a real conformance rule.</p>
 <p><em>Estimated time: ~10 minutes (reading)</em></p>
 <p>Example 1 ended on a question: if it validates, is it right? The specification answers it directly, and the answer is no.</p>
 <blockquote class="blockquote">
@@ -1188,10 +1193,12 @@ attr(,"errors")
 </section>
 <section id="exercises" class="level2" data-number="8.8">
 <h2 data-number="8.8" class="anchored" data-anchor-id="exercises"><span class="header-section-number">8.8</span> Exercises</h2>
+<p><strong>Exercise, about 15 minutes.</strong> Do these before the next session. You will need the CDISC Define-XML package downloaded first.</p>
 <p><a href="../exercises/define-xml.html">Exercise 8: Define-XML</a> extends this document: a <code>MethodDef</code> to resolve rule 73, an <code>ItemGroupDef</code> for LB with value-level metadata, and the variable this course cannot populate at all.</p>
 </section>
 <section id="comprehension-check" class="level2" data-number="8.9">
 <h2 data-number="8.9" class="anchored" data-anchor-id="comprehension-check"><span class="header-section-number">8.9</span> Comprehension Check</h2>
+<p><strong>Self-test, about 10 minutes.</strong> Answer before expanding.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
