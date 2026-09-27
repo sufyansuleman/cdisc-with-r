@@ -2,6 +2,8 @@
 
 *SDTM, ADaM and TLFs from scratch using a simulated Phase III trial*
 
+[![DOI](https://zenodo.org/badge/1239168209.svg)](https://doi.org/10.5281/zenodo.22994995)
+
 A free, self-paced, hands-on course on CDISC clinical data standards in
 R. You take raw data from a simulated Phase III trial (codename
 **GLPX-1**) and carry it all the way to submission-ready datasets and
@@ -183,7 +185,26 @@ welcome.
 
 If you use this course in your teaching or research, please cite:
 
-Suleman, S. (2026). *CDISC with R*. https://sufyansuleman.github.io/cdisc-with-r/
+Suleman, S. (2026). *CDISC with R* (Version 1.0.0) [Course].
+Zenodo. https://doi.org/10.5281/zenodo.22994995
+
+BibTeX:
+
+```bibtex
+@misc{suleman_cdisc_with_r,
+  author       = {Suleman, Sufyan},
+  title        = {{CDISC with R: SDTM, ADaM and TLFs from scratch
+                   using a simulated Phase III trial}},
+  year         = {2026},
+  version      = {1.0.0},
+  publisher    = {Zenodo},
+  doi          = {10.5281/zenodo.22994995},
+  url          = {https://sufyansuleman.github.io/cdisc-with-r/}
+}
+```
+
+That DOI always resolves to the most recent version. To cite this
+release specifically, use `10.5281/zenodo.22994996`.
 
 ## Licence
 

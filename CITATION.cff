@@ -1,0 +1,42 @@
+cff-version: 1.2.0
+title: "CDISC with R: SDTM, ADaM and TLFs from scratch using a simulated Phase III trial"
+message: "If you use this course, please cite it using the metadata below."
+type: dataset
+authors:
+  - family-names: Suleman
+    given-names: Sufyan
+    orcid: "https://orcid.org/0000-0001-6612-6915"
+    affiliation: "Department of Biomedicine, Faculty of Health, Aarhus University, Denmark"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.22994995
+    description: "Concept DOI, always resolves to the latest version"
+  - type: doi
+    value: 10.5281/zenodo.22994996
+    description: "Version DOI for release 1.0.0"
+repository-code: "https://github.com/sufyansuleman/cdisc-with-r"
+url: "https://sufyansuleman.github.io/cdisc-with-r/"
+abstract: >-
+  A free, self-paced, hands-on course on CDISC clinical data standards in R.
+  Learners take the raw export from a simulated Phase III trial (GLPX-1) and
+  carry it to submission-shaped output: SDTM domains, ADaM datasets,
+  Define-XML, tables, listings and figures, the Analysis Data Reviewer's
+  Guide, and Dataset-JSON. All data is synthetic; no real patient information
+  appears anywhere. Every figure and number in the course is produced by
+  executed code rather than asserted.
+keywords:
+  - CDISC
+  - SDTM
+  - ADaM
+  - define-XML
+  - Dataset-JSON
+  - TLF
+  - clinical trials
+  - clinical data standards
+  - R
+  - pharmaverse
+  - regulatory submission
+  - clinical programming
+license: CC-BY-NC-SA-4.0
+version: 1.0.0
+date-released: "2026-09-27"
