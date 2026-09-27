@@ -2,8 +2,22 @@
 title: "The Live Course"
 ---
 
-This book is free and self-paced. It is also taught live, in small
-cohorts, as two courses of two-hour evening sessions.
+::: {.callout-important}
+## Not yet scheduled
+
+**The course is self-paced today.** Work straight through the book: every
+session runs on data that ships with the repository, and nothing on this
+page is needed to do that.
+
+The live cohorts described below are planned, not running. When dates are
+set they will be announced here and in
+[GitHub Discussions](https://github.com/sufyansuleman/cdisc-with-r/discussions).
+This page exists so you can see what the live version would involve, and
+so the pacing is visible if you want to follow it on your own.
+:::
+
+This book is free and self-paced. It is also designed to be taught live,
+in small cohorts, as two courses of two-hour evening sessions.
 
 The difference is not the material. It is that in a cohort you type the
 code while someone watches for the place you are about to get stuck, you

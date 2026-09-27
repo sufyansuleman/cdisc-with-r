@@ -397,6 +397,7 @@ document.addEventListener("DOMContentLoaded", function () {
   <li><a href="#who-this-course-is-for" id="toc-who-this-course-is-for" class="nav-link" data-scroll-target="#who-this-course-is-for">Who This Course Is For</a></li>
   <li><a href="#what-this-course-expects-from-you" id="toc-what-this-course-expects-from-you" class="nav-link" data-scroll-target="#what-this-course-expects-from-you">What This Course Expects From You</a></li>
   <li><a href="#how-the-course-is-organised" id="toc-how-the-course-is-organised" class="nav-link" data-scroll-target="#how-the-course-is-organised">How the Course Is Organised</a></li>
+  <li><a href="#help-make-it-better" id="toc-help-make-it-better" class="nav-link" data-scroll-target="#help-make-it-better">Help Make It Better</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -452,10 +453,13 @@ document.addEventListener("DOMContentLoaded", function () {
 <h2 class="unnumbered anchored" data-anchor-id="who-this-course-is-for">Who This Course Is For</h2>
 <ul>
 <li><strong>Statistical programmers and biostatisticians</strong> moving into clinical trial work in the pharmaceutical industry</li>
+<li><strong>Master’s and PhD students</strong> in biostatistics, epidemiology, bioinformatics, health data science or pharmacy, who want to see how clinical trial data is actually shaped before they meet it in a job interview</li>
+<li><strong>People already working in pharma with clinical data</strong> who know the standards but do the work in SAS, and want to see the same pipeline in R</li>
 <li><strong>R users in clinical research</strong> who need to produce or consume CDISC-standard datasets</li>
 <li><strong>Data managers and researchers</strong> preparing data for a regulatory submission who want to understand the pipeline end to end</li>
 </ul>
 <p>You do not need any prior CDISC knowledge. The course assumes you have never opened an Implementation Guide.</p>
+<p>If you are a student, the useful thing here is not the vocabulary. It is that you will have built a real SDTM domain from a messy export, decided what to do about a subject enrolled twice, and defended the decision. That is a different sentence to put in an application than “familiar with CDISC”.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -499,8 +503,22 @@ document.addEventListener("DOMContentLoaded", function () {
 <div class="callout-body-container callout-body">
 <p><strong>All sessions are written.</strong> Every part is complete: prose written, every code chunk executed against the repository’s data, every standards claim cited to the Implementation Guide section it comes from, and every exercise built against numbers that were computed rather than assumed.</p>
 <p>The book is still maintained in the open, so corrections and improvements land continuously.</p>
+<p><strong>It is also still in development in one specific sense.</strong> No cohort has run it yet. The prose has been checked against the standards and every number is executed, but nobody has taught it to twenty people and discovered which explanation collapses under a real question. That is the part that only contact with learners can fix.</p>
 </div>
 </div>
+</section>
+<section id="help-make-it-better" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="help-make-it-better">Help Make It Better</h2>
+<p>If you know this material, you will find things to argue with. Please do.</p>
+<ul>
+<li><strong>Something is wrong.</strong> A standards claim that does not match the Implementation Guide, a version reference that has moved on, an origin or a derivation that would not survive review. These are the most valuable reports of all, and citations are what settle them.</li>
+<li><strong>Something is unclear.</strong> If an explanation lost you, that is a defect in the explanation. Say where you stopped following; you do not need to propose a fix.</li>
+<li><strong>Something is missing.</strong> A domain, a variable, a trap you have hit in real work that the course does not mention.</li>
+<li><strong>You do this for a living and we do it differently.</strong> Sponsors differ and that is fine, but if the course teaches something no sponsor would accept, that is worth knowing.</li>
+</ul>
+<p>Open an <a href="https://github.com/sufyansuleman/cdisc-with-r/issues">issue</a> or a <a href="https://github.com/sufyansuleman/cdisc-with-r/pulls">pull request</a>. For anything that is not a typo, an issue first usually saves work. See <a href="https://github.com/sufyansuleman/cdisc-with-r/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> for what a useful report contains.</p>
+<p><strong>Contributors are credited.</strong> Anyone whose issue or pull request changes the course is named in the repository’s contributor list, and substantial contributions are acknowledged by name in the session they improved. The course carries a DOI, so that credit is citable.</p>
+<p>Questions rather than corrections belong in <a href="https://github.com/sufyansuleman/cdisc-with-r/discussions">Discussions</a>.</p>
 <p>All data in this course is <strong>synthetic</strong>, generated by <a href="https://github.com/sufyansuleman/cdisc-with-r/blob/main/R/simulate_trial.R"><code>R/simulate_trial.R</code></a>. No real patient information is used anywhere. The simulator also plants a small number of deliberate data defects: a duplicated lab record, a missing start date, a sex value that disagrees between two sources. Learning to find and resolve those is most of the job.</p>
 <blockquote class="blockquote">
 <p>Exercises are included in this book. Solutions, extra exercises and instructor material are available in the paid tier.</p>

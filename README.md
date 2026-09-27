@@ -174,12 +174,41 @@ Exercises are part of this public book. Worked solutions, extra
 exercises, specs and instructor material live in the private paid-tier
 repository.
 
+## Status
+
+**All sessions are written**, every code chunk is executed against the
+data in this repository, and every standards claim is cited to the
+Implementation Guide section it comes from.
+
+**It is in development in one specific sense: no cohort has run it yet.**
+Nobody has taught it to a room and found out which explanation collapses
+under a real question. That is the part only contact with learners fixes.
+
+The course is self-paced today. Live cohorts are planned but not
+scheduled; see [the live course pages](https://sufyansuleman.github.io/cdisc-with-r/overview/).
+
 ## Contributing
 
-This repo is the authoring source for the online book. Spotted a typo,
-an unclear explanation, or a standards claim you think is wrong? Issues
-and pull requests are welcome. Corrections to citations are especially
-welcome.
+This repo is the authoring source for the online book, and it is actively
+looking for corrections.
+
+Most valuable, in order: **a standards claim that is wrong**, **an
+explanation that lost you**, **something a sponsor would not accept**, a
+missing trap, then typos. If you work with clinical data for a living,
+the first and third are where your expertise is worth most.
+
+Open an [issue](../../issues) for anything that is not a typo, or a
+[pull request](../../pulls) if you have the fix. Read
+[CONTRIBUTING.md](CONTRIBUTING.md) first for what a useful report
+contains and what is out of scope.
+
+Questions rather than corrections go to
+[Discussions](../../discussions).
+
+**Contributors are credited.** Anyone whose issue or PR changes the
+course appears in the contributor list, substantial contributions are
+acknowledged by name in the session they improved, and can be added to
+`CITATION.cff` so the credit is citable through the DOI.
 
 ## Citation
 
