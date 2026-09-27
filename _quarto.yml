@@ -12,6 +12,11 @@ book:
   author:
     - name: "Sufyan Suleman"
       orcid: "0000-0001-6612-6915"
+  page-footer:
+    left: |
+      Prose [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/), code [MIT](https://opensource.org/license/mit).
+    right: |
+      <span id="visit-count" class="visit-count"></span>
   chapters:
   - index.qmd
   - sessions/setup.qmd
@@ -76,6 +81,23 @@ format:
           <meta property="og:description" content="A free, self-paced, hands-on course on CDISC clinical data standards in R: building SDTM domains, ADaM datasets, and tables, listings and figures from scratch using a simulated Phase III trial.">
           <meta name="twitter:description" content="A free, self-paced, hands-on course on CDISC clinical data standards in R: building SDTM domains, ADaM datasets, and tables, listings and figures from scratch using a simulated Phase III trial.">
           <script data-goatcounter="https://cdiscwithr.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+          <style>.visit-count:empty { display: none; }</style>
+          <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            var el = document.getElementById("visit-count");
+            if (!el) return;
+            fetch("https://cdiscwithr.goatcounter.com/counter/TOTAL.json")
+              .then(function (r) { return r.ok ? r.json() : null; })
+              .then(function (d) {
+                if (!d || !d.count_unique) return;
+                var n = Number(String(d.count_unique).replace(/[^0-9]/g, ""));
+                if (!n) return;
+                el.textContent = n.toLocaleString() +
+                  (n === 1 ? " visitor" : " visitors");
+              })
+              .catch(function () {});
+          });
+          </script>
 
 execute:
   freeze: auto

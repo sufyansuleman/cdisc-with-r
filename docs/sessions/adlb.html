@@ -110,6 +110,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta property="og:description" content="">
 <meta name="twitter:description" content="">
 <script data-goatcounter="https://cdiscwithr.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+<style>.visit-count:empty { display: none; }</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var el = document.getElementById("visit-count");
+  if (!el) return;
+  fetch("https://cdiscwithr.goatcounter.com/counter/TOTAL.json")
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (!d || !d.count_unique) return;
+      var n = Number(String(d.count_unique).replace(/[^0-9]/g, ""));
+      if (!n) return;
+      el.textContent = n.toLocaleString() +
+        (n === 1 ? " visitor" : " visitors");
+    })
+    .catch(function () {});
+});
+</script>
 
 
 </head>
@@ -1661,6 +1678,19 @@ Tip
   </div>
 </nav>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Prose <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>, code <a href="https://opensource.org/license/mit">MIT</a>.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><span id="visit-count" class="visit-count"></span></p>
+</div>
+  </div>
+</footer>
 
 
 
